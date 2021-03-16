@@ -1,3 +1,22 @@
+.custom-navbar {
+  background-color: white;
+  border-bottom: 1px solid #77BC1F;
+}
+
+.custom-link {
+  border: 1px solid green;
+  border-radius: 5px;
+  background-color: #77BC1F;
+  margin: 10px;
+}
+
+.custom-link:hover {
+  opacity: 50%;
+}
+
+.my-navbar-coll {
+  text-align: center;
+}
 
   .bd-placeholder-img {
     font-size: 1.125rem;
