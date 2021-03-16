@@ -11,8 +11,11 @@
 }
 
 .custom-link:hover {
-  color: darkorange;
   opacity: 50%;
+}
+
+.my-navbar-coll {
+  text-align: center;
 }
 
   .bd-placeholder-img {
