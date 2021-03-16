@@ -1,0 +1,25 @@
+affordable houising company
+
+helps people with mental health, demensia
+
+care homes
+
+data of level of vaccination
+
+what areas are vaccine
+
+visual data (map form?)
+
+sort by postcode
+
+manage spikes, and numbers of covid cases
+
+map for vac
+
+make data simple and accessible
+
+let managers, executives, etc to login
+
+login for plugin own data, measure of cases, measure of deaths, status of people
+
+minimum requirements: heat map, map of stats, map of property, see a vaccine data
