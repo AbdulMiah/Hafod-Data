@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder='templates', static_url_path='/static', st
 
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    return render_template('testMain.html')
+    return render_template('generalLayout.html', title='Hafod')
 
 if __name__ == "__main__":
     app.run(debug=True)

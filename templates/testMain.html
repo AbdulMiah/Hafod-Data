@@ -2,11 +2,13 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>TEST Title</title>
+    <title>{{ title }}</title>
   </head>
   <body>
     <h1>This is a test for render_template</h1>
     <h3<b>Hello World!</b></h3><hr>
-    <p>If you see this page, server is working properly</p>
+    <p>{{ description }}</p>
+
+    {% include 'footer.html' %}
   </body>
 </html>
