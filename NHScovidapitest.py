@@ -1,18 +1,23 @@
-# This script is using Python3
-import urllib.request
-import urllib.parse
+#Based off examples gives in https://publichealthengland.github.io/coronavirus-dashboard-api-python-sdk/pages/examples/timestamps.html
+from uk_covid19 import Cov19API
 
-pageURL = "https://api.nhs.uk/conditions/coronavirus-covid-19?url=127.0.0.1:3000/&modules=false"
+england_only = [
+    'areaType=nation',
+    'areaName=Wales'
+]
 
-request_headers = {
-"Accept": "application/json",
-"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"
+cases_and_deaths = {
+    "date": "date",
+    "areaName": "areaName",
+    "areaRegion": "areaRegion",
+    "areaCode": "areaCode",
+    "newCasesByPublishDate": "newCasesByPublishDate",
+    "cumCasesByPublishDate": "cumCasesByPublishDate",
+    "newDeathsByDeathDate": "newDeathsByDeathDate",
+    "cumDeathsByDeathDate": "cumDeathsByDeathDate"
 }
 
-request = urllib.request.Request(pageURL, headers=request_headers)
-contents = urllib.request.urlopen(request).read()
+api = Cov19API(filters=england_only, structure=cases_and_deaths)
 
-#for i in contents:
-#    print(i)
-
-#print(contents)
+data = api.get_json()
+print(data)
