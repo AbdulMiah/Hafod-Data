@@ -1,0 +1,22 @@
+#vaccination{
+  height: 250px;
+  top: 2rem;
+  margin-right: 20px;
+}
+#affected{
+  height: 250px;
+    top: 2rem;
+}
+#vaccinationDesc{
+  height: 20px;
+      top: 2rem;
+        margin-right: 20px;
+}
+#affectedDesc{
+  height: 20px;
+      top: 2rem;
+}
+.carousel-item{
+  height: 15rem;
+  background: #77BC1F;
+}
