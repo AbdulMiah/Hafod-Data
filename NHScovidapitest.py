@@ -1,23 +1,37 @@
 #Based off examples gives in https://publichealthengland.github.io/coronavirus-dashboard-api-python-sdk/pages/examples/timestamps.html
 from uk_covid19 import Cov19API
 
-england_only = [
-    'areaType=nation',
-    'areaName=Wales'
+
+#need to identify ltla areas within Wales
+ltla_areas = [
+  'areaType=ltla',
+  'date=2021-03-15'
 ]
 
+#defines the fields which are displayed
 cases_and_deaths = {
-    "date": "date",
-    "areaName": "areaName",
-    "areaRegion": "areaRegion",
-    "areaCode": "areaCode",
-    "newCasesByPublishDate": "newCasesByPublishDate",
-    "cumCasesByPublishDate": "cumCasesByPublishDate",
-    "newDeathsByDeathDate": "newDeathsByDeathDate",
-    "cumDeathsByDeathDate": "cumDeathsByDeathDate"
+    "Date": "date",
+    "AreaName": "areaName",
+    "AreaType": "areaType",
+    "NewCasesByPublishDate": "newCasesByPublishDate",
+    "NewDeathsByDeathDate": "newDeathsByDeathDate"
 }
 
-api = Cov19API(filters=england_only, structure=cases_and_deaths)
+#defines which filter is used
+filters = ltla_areas
+#the api call
+api = Cov19API(filters, structure=cases_and_deaths)
+#jsonifying the call
+response = api.get_json()
 
-data = api.get_json()
-print(data)
+#response is a dictionary
+#responseInfo is a list of covid cases
+responseInfo = response['data']
+
+print(f"Data last updated:{response['lastUpdate']}")
+
+#used to display all infomation
+i = 0
+while i < len(responseInfo):
+    print(responseInfo[i])
+    i = i + 1
