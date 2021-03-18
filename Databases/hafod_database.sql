@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `AdminCredentials`;
 CREATE TABLE `AdminCredentials` (
 	`AdminID`			INTEGER NOT NULL AUTO_INCREMENT,
     `Username`			VARCHAR(25) NOT NULL,
-    `Email`				VARCHAR(25) NOT NULL,
+    `Email`				VARCHAR(50) NOT NULL,
     `Password`			VARCHAR(25) NOT NULL,
     CONSTRAINT `PK_AdminCredentials` PRIMARY KEY (`AdminID`)
 );
@@ -17,3 +17,15 @@ INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminp
 INSERT INTO `AdminCredentials` VALUES (null, 'test', 'test@test.com', 'testpass');
 INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah123', 'miaham@cardiff.ac.uk', 'abdulpass12');
 select * from AdminCredentials;
+
+CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
+`CasesReportID` INTEGER NOT NULL AUTO_INCREMENT,
+`Date` VARCHAR(10) NOT NULL,
+`AreaName` VARCHAR(40) NOT NULL,
+`AreaType` VARCHAR(20) NOT NULL, 
+`NewCasesOnGivenDay` INTEGER NOT NULL, 
+`ReportedDeathsOnGivenDay` INTEGER NOT NULL,
+CONSTRAINT `PK_CasesReportID` PRIMARY KEY (`CasesReportID`)
+);
+
+SELECT * FROM CovidCaseFigures;
