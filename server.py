@@ -36,7 +36,7 @@ def checkLoginDetails():
         username = request.form.get("username", default="Error")
         email = request.form.get("username", default="Error")
         password = request.form.get("password", default="Error")
-        print("Checking details for", username)
+        print(f"Checking details for '{username}'")
 
         try:
             conn = mysql.connector.connect(**config)
@@ -44,24 +44,25 @@ def checkLoginDetails():
             print("Connected to database successfully")
 
             query = ("SELECT Username, Email, Password FROM AdminCredentials "
-                    "WHERE Username=%s OR Email=%s AND Password=%s")
+                    "WHERE (Username=%s OR Email=%s) AND Password=%s")
 
-            cur.execute(query, username, email, password)
+            cur.execute(query, [username, email, password])
             res = cur.fetchone()
+            msg = "Successfully fetched details from database"
             conn.commit()
-            print("Successfully fetched details from database")
         except conn.Error as e:
-            print("Failed to fetch from database")
-            print("Error:", e)
+            msg = "Failed to fetch from database"
+            print(msg,"\nError:", e)
         finally:
             if res:
-                print("Successfully logged in as:", username)
+                print(f"Successfully logged in as: '{username}'")
                 return redirect("/")
             else:
-                print("Sorry, could not find your details")
+                msg = "Sorry, could not find your details"
             conn.close()
             cur.close()
-            return "Check terminal"
+            print(msg)
+            return msg
 
 # Abdul and Archie Peer Programming
 @app.route("/SendData", methods = ['GET', 'POST'])
