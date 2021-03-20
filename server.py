@@ -25,7 +25,7 @@ def loadMainPage():
     return render_template('generalLayout.html', title='Hafod')
 
 
-# Sort of finished: Abdul - only adds 1 set of data
+# Abdul and Archie Peer Programming
 @app.route("/SendData", methods = ['GET', 'POST'])
 def loadCovidFigures():
     if request.method == 'GET':
@@ -47,7 +47,6 @@ def loadCovidFigures():
         response = api.get_json()
         responseInfo = response['data']
         print(f"Data last updated:{response['lastUpdate']}")
-        allData = []
         i = 0
         while i < len(responseInfo):
             print(responseInfo[i])
@@ -56,7 +55,6 @@ def loadCovidFigures():
             apiAreaType = responseInfo[i]['AreaType']
             NewCasesByPublishDate = responseInfo[i]['NewCasesByPublishDate']
             NewDeathsByDeathDate = responseInfo[i]['NewDeathsByDeathDate']
-            allData += [apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate]
             i += 1
             try:
                 conn = mysql.connector.connect(**config)
@@ -68,7 +66,6 @@ def loadCovidFigures():
                         " VALUES (%s,%s,%s,%s,%s)")
                 val = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate)
                 # print(val)
-
                 cur.execute(query, val)
                 msg =  "Data Set has been uploaded as a post"
                 conn.commit()
