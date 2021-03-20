@@ -16,17 +16,31 @@ CREATE TABLE `AdminCredentials` (
 INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass');
 INSERT INTO `AdminCredentials` VALUES (null, 'test', 'test@test.com', 'testpass');
 INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah123', 'miaham@cardiff.ac.uk', 'abdulpass12');
-SELECT * FROM AdminCredentials;
+select * from AdminCredentials;
 
-DROP TABLE IF EXISTS `CovidCaseFigures`;
+DROP TABLE `AdminLog`;
+
+CREATE TABLE IF NOT EXISTS `AdminLog` (
+`AdminID`			INTEGER,
+`TimeLoggedOn`      TIMESTAMP NOT NULL, 
+`TimeLoggedOff`     TIMESTAMP NOT NULL, 
+CONSTRAINT `FK_AdminID` FOREIGN KEY (`AdminID`) REFERENCES admincredentials(AdminID)
+);
+
+INSERT INTO `AdminLog` VALUES (1, NOW(), NOW()+1000);
+SELECT * FROM AdminLog;
+
+DROP TABLE `CovidCaseFigures`;
 CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
 `CasesReportID` 			INTEGER NOT NULL AUTO_INCREMENT,
 `Date` 						VARCHAR(10) NOT NULL,
-`AreaName` 					VARCHAR(40) NOT NULL,
-`AreaType` 					VARCHAR(20) NOT NULL, 
-`NewCasesOnGivenDay`  		INTEGER NOT NULL, 
-`ReportedDeathsOnGivenDay`	INTEGER,
+`AreaName`					VARCHAR(40) NOT NULL,
+`AreaType` 					VARCHAR(20) NOT NULL,
+`NewCasesOnGivenDay` 		INTEGER,
+`ReportedDeathsOnGivenDay`  INTEGER,
 CONSTRAINT `PK_CasesReportID` PRIMARY KEY (`CasesReportID`)
 );
 
+INSERT INTO `covidcasefigures` VALUES (null, '2021-04-03', 'Cardiff', 'ltlt', 1, Null);
 SELECT * FROM CovidCaseFigures;
+
