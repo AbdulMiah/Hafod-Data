@@ -26,8 +26,8 @@ def loadMainPage():
 
 
 # Sort of finished: Abdul - only adds 1 set of data
-@app.route("/ResendData", methods = ['GET', 'POST'])
-def reloadCovidFigures():
+@app.route("/SendData", methods = ['GET', 'POST'])
+def loadCovidFigures():
     if request.method == 'GET':
         ltla_areas = [
         'areaType=ltla',
@@ -47,7 +47,7 @@ def reloadCovidFigures():
         response = api.get_json()
         responseInfo = response['data']
         print(f"Data last updated:{response['lastUpdate']}")
-
+        allData = []
         i = 0
         while i < len(responseInfo):
             print(responseInfo[i])
@@ -56,14 +56,8 @@ def reloadCovidFigures():
             apiAreaType = responseInfo[i]['AreaType']
             NewCasesByPublishDate = responseInfo[i]['NewCasesByPublishDate']
             NewDeathsByDeathDate = responseInfo[i]['NewDeathsByDeathDate']
-        # for i in responseInfo:
-        #     apiDate = i['Date']
-        #     apiAreaName = i['AreaName']
-        #     apiAreaType = i['AreaType']
-        #     NewCasesByPublishDate = i['NewCasesByPublishDate']
-        #     NewDeathsByDeathDate = i['NewDeathsByDeathDate']
-        #     msg = "Uploading data (Pray for it to work)"
-
+            allData += [apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate]
+            i += 1
             try:
                 conn = mysql.connector.connect(**config)
                 cur = conn.cursor()
@@ -87,65 +81,9 @@ def reloadCovidFigures():
                 cur.close()
                 print(msg)
                 print("End of insertion")
-                return msg
-            i = i + 1
+        return msg
 
 
-##Unfinished - Archie xx
-@app.route("/SendData", methods = ['GET', 'POST'])
-def loadCovidFigures():
-    if request.method == 'GET':
-        ltla_areas = [
-        'areaType=ltla',
-        'date=2021-03-15'
-        ]
-
-        cases_and_deaths = {
-            "Date": "date",
-            "AreaName": "areaName",
-            "AreaType": "areaType",
-            "NewCasesByPublishDate": "newCasesByPublishDate",
-            "NewDeathsByDeathDate": "newDeathsByDeathDate"
-            }
-        #the api call
-        api = Cov19API(filters=ltla_areas, structure=cases_and_deaths)
-        #jsonifying the call
-        response = api.get_json()
-        responseInfo = response['data']
-        print(f"Data last updated:{response['lastUpdate']}")
-        i = 0
-        while i < len(responseInfo):
-            print(responseInfo[i])
-            Date = responseInfo[i]['Date']
-            AreaName = responseInfo[i]['AreaName']
-            AreaType = responseInfo[i]['AreaType']
-            NewCasesByPublishDate = responseInfo[i]['NewCasesByPublishDate']
-            NewDeathsByDeathDate = responseInfo[i]['NewDeathsByDeathDate']
-            msg = "Uploading data (Pray for it to work)"
-            try:
-                conn = sqlite3.connect(DATABASE)
-                cur = conn.cursor()
-                print("Connected to database")
-                ##Error at this stage, data not being commited to SQL database
-                query = "INSERT INTO 'CovidCaseFigures' ('Date', 'AreaName', 'AreaType','NewCasesOnGivenDay', 'ReportedDeathsOnGivenDay')\
-                        VALUES (%s,%s,%s,%d,%d)"
-                val = [Date, AreaName, AreaType, NewCasesByPublishDate, NewDeathsByDeathDate,]
-                cur.execute(query, val)
-                print('Succesful insert')
-                conn.commit()
-                msg =  "Data Set " + i + " has been uploaded as a post"
-            except:
-                conn.rollback()
-                msg = "Data Set " + i + " has expierenced an error, please try again."
-            finally:
-                conn.close()
-                print("End of insertion")
-                return msg
-                i = i + 1
-##End of unfinished
-
-
-    return render_template('generalLayout.html', title='Hafod')
 
 if __name__ == "__main__":
     app.run(debug=True)
