@@ -1,0 +1,14 @@
+.login-form-block {
+  background-color: #ffee99;
+  width: 50%;
+}
+
+.error-message-block {
+  height: 100px;
+  background-color: #ff6666;
+  width: 60%;
+}
+
+.error-text {
+  padding-top: 5%;
+}

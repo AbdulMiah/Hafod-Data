@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session
+=======
+from flask import Flask, redirect, request, render_template, url_for, jsonify, flash
+>>>>>>> c982ebf36e0f28b8314954046bc117942887b796
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
@@ -7,8 +11,12 @@ import mysql.connector
 import yaml
 import datetime
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
+<<<<<<< HEAD
 #Secret key for the sessions
 app.secret_key = "thi3is3cret!shhh444"
+=======
+app.secret_key = 'superSecretKey'
+>>>>>>> c982ebf36e0f28b8314954046bc117942887b796
 
 #===========================
 # Connecting to database
@@ -28,10 +36,10 @@ config = {
 def loadMainPage():
     return render_template('heatmaps.html', title='Hafod')
 
-# Temp redirect route to the login page
+# Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
 def loadLoginPage():
-    return redirect("static/loginPage.html")
+    return render_template("loginPage.html")
 
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
@@ -81,7 +89,9 @@ def checkLoginDetails():
 
             # Otherwise, print an error message
             else:
-                msg = "Sorry, could not find your details"
+                msg = "Sorry, could not find your Administration details"
+                flash(msg)
+                return redirect("/Login")
 
             # Close the connection and return the messages
             conn.close()
