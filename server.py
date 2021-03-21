@@ -26,10 +26,10 @@ config = {
 def loadMainPage():
     return render_template('heatmaps.html', title='Hafod')
 
-# Temp redirect route to the login page
+# Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
 def loadLoginPage():
-    return redirect("static/loginPage.html")
+    return render_template("loginPageUpdate.html")
 
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
