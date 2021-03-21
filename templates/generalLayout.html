@@ -55,7 +55,7 @@
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item custom-link">
-            <a class="nav-link" href="#">Heat Maps</a>
+            <a class="nav-link" href="/">Heat Maps</a>
           </li>
           <li class="nav-item custom-link">
             <a class="nav-link" href="#">Edit</a>
@@ -69,12 +69,7 @@
   </nav>
 
   <!-- Begin page content -->
-  <main class="flex-shrink-0">
-    <div class="container">
-      <h1 class="mt-5">{{ title }}</h1>
-      <p> blah blah blah</p>
-    </div>
-  </main>
+  {% block heatmaps %} {% endblock %}
 
 
 {% include 'footer.html' %}
