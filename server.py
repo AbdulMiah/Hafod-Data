@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, render_template, url_for, jsonify
+from flask import Flask, redirect, request, render_template, url_for, jsonify, flash
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
@@ -6,7 +6,7 @@ from uk_covid19 import Cov19API #Used to call for covid case stats
 import mysql.connector
 import yaml
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
-
+app.secret_key = 'superSecretKey'
 
 #===========================
 # Connecting to database
@@ -29,7 +29,7 @@ def loadMainPage():
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
 def loadLoginPage():
-    return render_template("loginPageUpdate.html")
+    return render_template("loginPage.html")
 
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
@@ -71,7 +71,9 @@ def checkLoginDetails():
 
             # Otherwise, print an error message
             else:
-                msg = "Sorry, could not find your details"
+                msg = "Sorry, could not find your Administration details"
+                flash(msg)
+                return redirect("/Login")
 
             # Close the connection and return the messages
             conn.close()
