@@ -21,14 +21,25 @@ select * from AdminCredentials;
 DROP TABLE `AdminLog`;
 
 CREATE TABLE IF NOT EXISTS `AdminLog` (
+`SessionID`         INTEGER NOT NULL AUTO_INCREMENT,
 `AdminID`			INTEGER,
 `TimeLoggedOn`      TIMESTAMP NOT NULL, 
 `TimeLoggedOff`     TIMESTAMP NOT NULL, 
-CONSTRAINT `FK_AdminID` FOREIGN KEY (`AdminID`) REFERENCES admincredentials(AdminID)
+CONSTRAINT `FK_AdminID` FOREIGN KEY (`AdminID`) REFERENCES admincredentials(AdminID), 
+CONSTRAINT `PK_SessionID` PRIMARY KEY (`SessionID`)
 );
 
-INSERT INTO `AdminLog` VALUES (1, NOW(), NOW()+1000);
+##Mile Stone 2 turn this into a function where admin ID is a parameter
+INSERT INTO `AdminLog` VALUES (null, 1, NOW(), NOW()+1000);
+UPDATE `AdminLog`
+SET TimeLoggedOff = '2021-03-22 19:26:36'  
+WHERE SessionID > ANY 
+(SELECT SessionID 
+FROM AdminLog
+WHERE AdminID = 1);
+
 SELECT * FROM AdminLog;
+
 
 DROP TABLE `CovidCaseFigures`;
 CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
