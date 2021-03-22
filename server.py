@@ -1,12 +1,16 @@
-from flask import Flask, redirect, request, render_template, url_for, jsonify, flash
+from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
 # import sqlite3
 import mysql.connector
 import yaml
+import datetime
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
-app.secret_key = 'superSecretKey'
+
+#Secret key for the sessions
+app.secret_key = "thi3is3cret!shhh444"
+
 
 #===========================
 # Connecting to database
@@ -43,6 +47,7 @@ def checkLoginDetails():
         email = request.form.get("username", default="Error")       # Taking both email and username
         password = request.form.get("password", default="Error")
         print(f"Checking details for '{username}'")
+        ######NEED TO FIGURE OUT HOW TO RECORD USER LEAVING SITE
 
         # Connect to database
         try:
@@ -67,6 +72,13 @@ def checkLoginDetails():
             # If there is a result (If details are found), then let the admin log in
             if res:
                 print(f"Successfully logged in as: '{username}'")
+                #Sets session user to username, used to track admin login
+                #
+                print("Session started")
+                session["user"] = username
+                session["loginTime"] = datetime.datetime.now() #Must remove seconds from value
+                print("User name = " , session["user"])
+                print("Login time is " , session["loginTime"])
                 return redirect("/")
 
             # Otherwise, print an error message
