@@ -33,5 +33,5 @@ print(f"Data last updated:{response['lastUpdate']}")
 #used to display all infomation
 i = 0
 while i < len(responseInfo):
-    print(responseInfo[i])
+    print(responseInfo[i]['Date'])
     i = i + 1

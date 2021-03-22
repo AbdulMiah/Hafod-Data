@@ -1,0 +1,35 @@
+{% extends 'generalLayout.html' %}
+
+{% block demoMap %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<style>
+  #map {
+    height: 350px;
+    margin: 5%;
+    /* position: absolute;
+    top: 40%;
+    bottom: 40%;
+    left: 0;
+    right: 0;
+    height: 500px; */
+  }
+</style>
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([52.1307, -3.7837], 6);
+
+  L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=kf18TBKn7WwhY9jnWCm8', {
+    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+  }).addTo(map);
+
+  var cardiffMarker = L.marker([51.4816, -3.1791]).addTo(map);
+  var londonMarker = L.marker([51.5074, -0.1278]).addTo(map);
+  cardiffMarker.bindPopup("<b> Hi! I'm Cardiff! </b> I am the Captial of Wales!").openPopup();
+  londonMarker.bindPopup("<b> Hi! I'm London! </b> And I am the Captial of England!")
+</script>
+
+{% endblock %}
