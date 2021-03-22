@@ -1,0 +1,58 @@
+{% extends 'generalLayout.html' %}
+
+{% block heatmaps %}
+<link rel="stylesheet" href="static/css/heatmaps.css">
+
+<br>
+<!-- carousel -->
+<div class="container">
+<div id="mapCarousel" class="carousel slide" data-ride="Carousel">
+  <ol class = "carousel-indicators">
+    <li data-target="#mapCarousel"
+    data-slide-to="0" class="active"></li>
+    <li data-target="#mapCarousel"
+    data-slide-to="1"></li>
+  </ol>
+<div class="carousel-inner">
+
+    <div class = "carousel-item active">
+      <h1>k</h1>
+    </div>
+    <div class = "carousel-item">
+      <p> stop </p>
+    </div>
+
+    <!-- previous button for slider -->
+</div>
+<a href="#mapCarousel"
+class="carousel-control-prev" role="button"
+data-slide="prev">
+<span class="sr-only">previous</span>
+<span class="carousel-control-prev-icon"
+aria-hidden="true"></span></a>
+
+<!-- next button for slider -->
+
+<a href="#mapCarousel"
+class="carousel-control-next" role="button"
+data-slide="next">
+<span class="sr-only">next</span>
+<span class="carousel-control-next-icon"
+aria-hidden="true"></span></a>
+</div>
+</div>
+
+  <!-- heatmaps -->
+
+<div class="container">
+  <div class="row">
+    <div class="col jumbotron" id = "vaccination">Vaccinated</div>
+    <div class="col jumbotron" id = "affected">Affected</div>
+  </div>
+  <div class="row">
+    <div class="col jumbotron" id = "vaccinationDesc">Vaccinated desc.</div>
+    <div class="col jumbotron" id = "affectedDesc">Affected desc.</div>
+  </div>
+</div>
+<br>
+{% endblock %}
