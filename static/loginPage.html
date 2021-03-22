@@ -44,7 +44,7 @@
 <body>
     <button type="submit" class="btn btn-outline-success">Submit</button>
 
-    
+
   </form>
 </div>
 
@@ -56,6 +56,31 @@
   <img src="img/Welsh_Government_logo.png" class="rounded" alt="Welsh Government Logo" width="70" height="50">
 
 </div>
+<html>
+head>
+<script>
+function validateForm() {
+  var x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+</script>
+</head>
+<html>
+<body>
+
+<form action="/loginPage.html" method="post">
+  <input type="text" name="password" required>
+  <input type="submit" value="Submit">
+</form>
+
+<p>If you click submit, without filling out the text field,
+your browser will display an error message.</p>
+
+</body>
+
 
 
 </html>
