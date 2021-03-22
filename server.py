@@ -7,8 +7,8 @@ import mysql.connector
 import yaml
 import datetime
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
-app.secret_key = 'superSecretKey'
 
+app.secret_key = 'superSecretKey'
 #===========================
 # Connecting to database
 # Adapted from https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
@@ -44,6 +44,7 @@ def checkLoginDetails():
         email = request.form.get("username", default="Error")       # Taking both email and username
         password = request.form.get("password", default="Error")
         print(f"Checking details for '{username}'")
+
         # Connect to database
         try:
             conn = mysql.connector.connect(**config)
@@ -144,6 +145,7 @@ def loadCovidFigures():
                 print("End of insertion")
         return msg
 
+
 ###=======UNFINISHED=====================
 #def userLoginTracker():
 #    while user in session:
@@ -154,7 +156,9 @@ def loadCovidFigures():
 #         print("Logout time updated")
 
 
-
+@app.route("/demoMap", methods = ['GET', 'POST'])
+def loadMap():
+    return render_template("demoMap.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
