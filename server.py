@@ -136,7 +136,9 @@ def loadCovidFigures():
                 print("End of insertion")
         return msg
 
-
+@app.route("/demoMap", methods = ['GET', 'POST'])
+def loadMap():
+    return render_template("demoMap.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
