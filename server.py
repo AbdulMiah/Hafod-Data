@@ -76,7 +76,7 @@ def checkLoginDetails():
                 session["AdminID"] = res[0]
                 session["loginTime"] = datetime.datetime.now() #Must remove seconds from value
                 #userLoginTracker() #Updates the time for when user leaves every minute
-                print("User name = " , session["user"])
+                print("User name = " , username)
                 print("Login time is " , session["loginTime"])
 
                 ##PAIR PROGRAMMED WITH ABDUL AND ARCHIE
@@ -84,7 +84,7 @@ def checkLoginDetails():
                    print("Connected to database 2 successfully")
 
                    # SELECT query for appropriate fields and used WHERE clause to compare the values
-                   query = ("INSERT INTO `AdminLog` VALUES (%s, %s, %s, %s )")
+                   query = ("INSERT INTO `AdminLog` VALUES (%s, %s, %s, %s)")
                    VALUES = (None, session["AdminID"], session["loginTime"], None)
                    # Execute query
                    cur.execute(query, VALUES)

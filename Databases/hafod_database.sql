@@ -31,10 +31,11 @@ CONSTRAINT `PK_SessionID` PRIMARY KEY (`SessionID`)
 
 ##Mile Stone 2 turn this into a function where admin ID is a parameter
 INSERT INTO `AdminLog` VALUES (null, 1, NOW(), NOW()+1000);
+
 UPDATE `AdminLog`
 SET TimeLoggedOff = '2021-03-22 19:26:36'  
-WHERE SessionID > ANY 
-(SELECT SessionID 
+WHERE SessionID IN
+(SELECT MAX(SessionID)
 FROM AdminLog
 WHERE AdminID = 1);
 
