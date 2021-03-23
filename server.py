@@ -168,7 +168,7 @@ def loadCovidFigures():
                 cur.close()
                 print(msg)
                 print("End of insertion")
-        return msgIN
+        return msg
 
 
 ###=======UNFINISHED=====================
