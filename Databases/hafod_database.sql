@@ -55,3 +55,14 @@ CONSTRAINT `PK_CasesReportID` PRIMARY KEY (`CasesReportID`)
 INSERT INTO `covidcasefigures` VALUES (null, '2021-04-03', 'Cardiff', 'ltlt', 1, Null);
 SELECT * FROM CovidCaseFigures;
 
+DROP TABLE `VaccinationFigures`;
+CREATE TABLE IF NOT EXISTS `VaccinationFigures` (
+`VaccinatedID` 			INTEGER NOT NULL AUTO_INCREMENT,
+`Date` 						VARCHAR(10) NOT NULL,
+`AreaName`					VARCHAR(40) NOT NULL,
+`AreaType` 					VARCHAR(20) NOT NULL,
+CONSTRAINT `PK_VaccinatedID` PRIMARY KEY (`VaccinatedID`)
+);
+
+INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
+SELECT * FROM VaccinationFigures;
