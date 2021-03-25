@@ -3,8 +3,8 @@ DROP TABLE `locations`;
 CREATE TABLE IF NOT EXISTS `locations` (
 `locationID`	 INTEGER NOT NULL AUTO_INCREMENT,
 `postcode`       VARCHAR(20) NOT NULL, 
-`latitude`       INTEGER,
-`longitude`      INTEGER,
+`latitude`       DECIMAL(8,6),
+`longitude`      DECIMAL(9,6),
 `localAuthority` VARCHAR(30) NOT NULL,
 `businessArea`   VARCHAR(30) NOT NULL, 
 `streetName`     VARCHAR(30),
