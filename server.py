@@ -281,23 +281,6 @@ def uploadCSVFile():
         return f"Successfully inserted {line_count} rows of data"
         print(f'Processed {line_count} lines.')
 
-# ## Peer-Programming with Abdul and Archie
-# @app.route("/updateLocationsCoord", methods = ['GET', 'POST'])
-# def uploadCSVFile():
-#     if request.method == 'GET':
-#         try:
-#             conn = mysql.connector.connect(**config)
-#             cur = conn.cursor()
-#             print("Connected to database successfully")
-#
-#
-#             postcode = 'cf117jd'
-#             def loadJsonRes(url):
-#                 return json.loads(req.urlopen(url).read())
-#
-#             res = loadJsonRes(f'https://api.postcodes.io/postcodes/{postcode}')
-#             print(res['result']['longitude'])
-#             print(res['result']['latitude'])
 
 if __name__ == "__main__":
     app.run(debug=True)
