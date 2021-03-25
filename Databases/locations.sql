@@ -3,11 +3,11 @@ DROP TABLE `locations`;
 CREATE TABLE IF NOT EXISTS `locations` (
 `locationID`	 INTEGER NOT NULL AUTO_INCREMENT,
 `postcode`       VARCHAR(20) NOT NULL, 
-`latitude`       DECIMAL(4,1)  NOT NULL,
-`longitude`      DECIMAL(4,1) NOT NULL,
+`latitude`       DECIMAL(4,1),
+`longitude`      DECIMAL(4,1),
 `localAuthority` VARCHAR(30) NOT NULL,
 `businessArea`   VARCHAR(30) NOT NULL, 
-`streetName`     VARCHAR(30) NOT NULL,
+`streetName`     VARCHAR(30),
 CONSTRAINT `PK_locationID` PRIMARY KEY (`locationID`)
 );
 
