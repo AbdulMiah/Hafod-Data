@@ -7,6 +7,8 @@ import mysql.connector
 import yaml
 import datetime
 import time
+# import pandas as pd
+import csv
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
 
 app.secret_key = 'superSecretKey'
@@ -210,12 +212,51 @@ def userLoginTracker():
             cur.close()
    return None
 
-
-
-
 @app.route("/demoMap", methods = ['GET', 'POST'])
 def loadMap():
     return render_template("demoMap.html")
+
+@app.route("/readCSV", methods = ['GET', 'POST'])
+def uploadCSVFile():
+    if request.method == 'GET':
+        AssetList_file = "asset-files/AssetList.csv"
+
+        with open(AssetList_file) as csv_file:
+            csv_reader = csv.reader(csv_file)
+            line_count = 0
+
+            for row in csv_reader:
+                if line_count == 0:
+                    print(f"Column names are {row}")
+                    line_count += 1
+                elif line_count == 1264:
+                    break
+                else:
+                    print(f'\npostcode: {row[0].strip()}, localAuthority: {row[1].strip()}, businessArea: {row[2].strip()}.')
+                    try:
+                        conn = mysql.connector.connect(**config)
+                        cur = conn.cursor()
+                        print("Connected to database successfully")
+
+                        query = ("INSERT INTO locations "
+                                "(locationID, postcode, latitude, longitude, localAuthority, businessArea, streetName) "
+                                "VALUES(%s,%s,%s,%s,%s,%s,%s)")
+
+                        values = (None, row[0].strip(), None, None, row[1].strip(), row[2].strip(), None)
+                        cur.execute(query, values)
+                        print(f"Successfully inserted data")
+                        conn.commit()
+                    except mysql.connector.Error as e:
+                        conn.rollback()
+                        print("Ran into an error: ", e)
+                    finally:
+                        conn.close()
+                        cur.close()
+                        print("End of insertion")
+                line_count += 1
+
+        return f"Successfully inserted {line_count} rows of data"
+        print(f'Processed {line_count} lines.')
 
 if __name__ == "__main__":
     app.run(debug=True)
