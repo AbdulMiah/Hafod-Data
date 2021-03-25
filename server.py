@@ -252,10 +252,12 @@ def uploadCSVFile():
                         print(postcode)
 
                         # Get the Lat and Long from postcode using API
-                        res = loadJsonRes(f'https://api.postcodes.io/postcodes/{postcode}')
-                        time.sleep(1)
-                        long = res['result']['longitude']
-                        lat = res['result']['latitude']
+                        try:
+                            res = loadJsonRes(f'https://api.postcodes.io/postcodes/{postcode}')
+                            long = res['result']['longitude']
+                            lat = res['result']['latitude']
+                        except:
+                            print("Invalid postcode")
 
                         # INSERT query to insert all the values
                         query = ("INSERT INTO locations "
