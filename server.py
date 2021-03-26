@@ -281,6 +281,28 @@ def uploadCSVFile():
         return f"Successfully inserted {line_count} rows of data"
         print(f'Processed {line_count} lines.')
 
+## Peer-Programming with Abdul and Archie
+# Route to display all properties in map
+@app.route("/mapOfProperties", methods = ['GET', 'POST'])
+def displayProperties():
+    if request.method == 'GET':
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM locations")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("mapOfProperties.html", data=allData)
 
 if __name__ == "__main__":
     app.run(debug=True)

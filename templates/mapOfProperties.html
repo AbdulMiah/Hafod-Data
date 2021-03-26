@@ -1,0 +1,76 @@
+{% extends 'generalLayout.html' %}
+
+{% block mapOfProperties %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="static/js/leaflet-heat.js"></script>
+<style>
+  #map {
+    /* height: 100% */
+
+    height: 350px;
+    margin: 5%;
+
+
+    /* position: absolute;
+    top: 40%;
+    bottom: 40%;
+    left: 0;
+    right: 0;
+    height: 500px; */
+  }
+</style>
+
+<div id="map"></div>
+
+<script>
+  // Create map and set the view with Lat and Long of Wales, 7 is zoom of map
+  var map = L.map('map').setView([52.1307, -3.7837], 7);
+
+  // Add the tile/style of the map from maptiler.com
+  L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=kf18TBKn7WwhY9jnWCm8', {
+    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+  }).addTo(map);
+
+  // Added sample markers to the map
+  {% for d in data %}
+    var marker = L.marker([{{ d[2] }}, {{ d[3] }}]).addTo(map);
+    marker.bindPopup("Postcode: {{ d[1] }}, Business Area: {{ d[5] }}")
+  {% endfor %}
+
+  // Creating the heatmap
+  // var heat = L.heatLayer([
+  //   // lat,    lng,    intensity
+  // 	[51.4816, -3.1791, 0.8], // Cardiff
+  // 	[51.6816, -3.3731, 0.9], // Mountain Ash
+  //   [51.6740, -4.9086, 0.4], // Pembroke
+  //   [51.6727, -4.7036, 0.6], // Tenby
+  //   [51.6214, -3.9436, 0.7], // Swansea
+  //   [52.3015, -3.5106, 0.8], // Rhayader
+  //   [51.5842, -2.9977, 0.9], // Newport
+  //   [52.1129, -4.0785, 0.6], // Lampeter
+  //   [52.4153, -4.0829, 0.5], // Aberystwyth
+  //   [51.9489, -3.3915, 0.9] // Brecon
+  // ], {
+  //   radius: 25,   // Radius of the heat
+  //   minOpacity: 0.4,    // Minimum opacity of the intensity/heat
+  //   max: 1, // This is default intensity
+  //
+  //   // The colour gradient to visualise the intensity
+  //   gradient: {
+  //     '0': 'Navy',
+  //     '0.25': 'Navy',
+  //     '0.26': 'Green',
+  //     '0.5': 'Green',
+  //     '0.51': 'Yellow',
+  //     '0.75': 'Yellow',
+  //     '0.76': 'Red',
+  //     '1': 'Red'
+  //   }
+  // }).addTo(map);
+
+  // console.log(heat);    // Printing to console to see my result
+
+</script>
+
+{% endblock %}
