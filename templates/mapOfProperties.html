@@ -6,10 +6,12 @@
 <script src="static/js/leaflet-heat.js"></script>
 <style>
   #map {
-    /* height: 100% */
+    position: absolute;
+    height: 100%;
+    width: 100%;
 
-    height: 350px;
-    margin: 5%;
+    /* height: 350px;
+    margin: 5%; */
 
 
     /* position: absolute;
@@ -22,7 +24,7 @@
 </style>
 
 <div id="map"></div>
-
+<!-- <div style="height:1000px;"></div> -->
 <script>
   // Create map and set the view with Lat and Long of Wales, 7 is zoom of map
   var map = L.map('map').setView([52.1307, -3.7837], 7);

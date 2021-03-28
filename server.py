@@ -301,8 +301,30 @@ def displayProperties():
             conn.close()
             cur.close()
             print("End of fetch")
-            print(allData)
+            # print(allData)
             return render_template("mapOfProperties.html", data=allData)
+
+# @app.route("/properties", methods = ['GET', 'POST'])
+# def properties():
+#     if request.method == 'GET':
+#         try:
+#             conn = mysql.connector.connect(**config)
+#             cur = conn.cursor()
+#             print("Connected to database successfully")
+#             query = ("SELECT * FROM locations")
+#             cur.execute(query)
+#             allData = cur.fetchall()
+#             print("Received all data")
+#         except mysql.connector.Error as e:
+#             conn.rollback()
+#             print("Ran into an error: ", e)
+#         finally:
+#             conn.close()
+#             cur.close()
+#             print("End of fetch")
+#             # print(allData)
+#             return render_template("propertiesMap.html", data=allData)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
