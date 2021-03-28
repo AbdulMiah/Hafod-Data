@@ -29,7 +29,7 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    return render_template('heatmaps.html', title='Hafod')
+    return render_template('mainPage.html', title='Hafod')
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -102,8 +102,7 @@ def checkLoginDetails():
                    # conn.close()
                    # cur.close()
                    print(msg)
-
-
+                   
                 return redirect("/")
 
             # Otherwise, print an error message
@@ -303,27 +302,6 @@ def displayProperties():
             print("End of fetch")
             # print(allData)
             return render_template("mapOfProperties.html", data=allData)
-
-# @app.route("/properties", methods = ['GET', 'POST'])
-# def properties():
-#     if request.method == 'GET':
-#         try:
-#             conn = mysql.connector.connect(**config)
-#             cur = conn.cursor()
-#             print("Connected to database successfully")
-#             query = ("SELECT * FROM locations")
-#             cur.execute(query)
-#             allData = cur.fetchall()
-#             print("Received all data")
-#         except mysql.connector.Error as e:
-#             conn.rollback()
-#             print("Ran into an error: ", e)
-#         finally:
-#             conn.close()
-#             cur.close()
-#             print("End of fetch")
-#             # print(allData)
-#             return render_template("propertiesMap.html", data=allData)
 
 
 if __name__ == "__main__":
