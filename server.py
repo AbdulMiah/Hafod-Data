@@ -29,7 +29,7 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    return render_template('heatmaps.html', title='Hafod')
+    return render_template('mainPage.html', title='Hafod')
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -102,8 +102,7 @@ def checkLoginDetails():
                    # conn.close()
                    # cur.close()
                    print(msg)
-
-
+                   
                 return redirect("/")
 
             # Otherwise, print an error message
@@ -301,8 +300,9 @@ def displayProperties():
             conn.close()
             cur.close()
             print("End of fetch")
-            print(allData)
+            # print(allData)
             return render_template("mapOfProperties.html", data=allData)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

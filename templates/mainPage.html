@@ -1,6 +1,6 @@
 {% extends 'generalLayout.html' %}
 
-{% block heatmaps %}
+{% block mainPage %}
 <link rel="stylesheet" href="static/css/heatmaps.css">
 
 <br>
@@ -46,11 +46,22 @@ aria-hidden="true"></span></a>
 
 <div class="container">
   <div class="row">
-    <div class="col jumbotron" id = "vaccination">Vaccinated</div>
+    <!-- Adapted from https://stackoverflow.com/questions/36137161/using-flask-to-embed-a-local-html-page -->
+    <div id="property">
+      <iframe src="{{ url_for('displayProperties') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
+      </iframe>
+    </div>
+
+    <!-- Description -->
     <div class="col jumbotron" id = "affected">Affected</div>
   </div>
+
   <div class="row">
-    <div class="col jumbotron" id = "vaccinationDesc">Vaccinated desc.</div>
+    <div class="col jumbotron" id = "vaccinationDesc">
+      <p>Find full map of properties here:
+        <a href="/mapOfProperties">Map of Properties</a>
+      </p>
+    </div>
     <div class="col jumbotron" id = "affectedDesc">Affected desc.</div>
   </div>
 </div>
