@@ -5,7 +5,7 @@
 
 <br>
 <!-- carousel -->
-<div class="container">
+<!-- <div class="container">
 <div id="mapCarousel" class="carousel slide" data-ride="Carousel">
   <ol class = "carousel-indicators">
     <li data-target="#mapCarousel"
@@ -22,7 +22,6 @@
       <p> stop </p>
     </div>
 
-    <!-- previous button for slider -->
 </div>
 <a href="#mapCarousel"
 class="carousel-control-prev" role="button"
@@ -31,7 +30,6 @@ data-slide="prev">
 <span class="carousel-control-prev-icon"
 aria-hidden="true"></span></a>
 
-<!-- next button for slider -->
 
 <a href="#mapCarousel"
 class="carousel-control-next" role="button"
@@ -40,20 +38,20 @@ data-slide="next">
 <span class="carousel-control-next-icon"
 aria-hidden="true"></span></a>
 </div>
-</div>
+</div> -->
 
   <!-- Maps and Graphs -->
 
 <div class="container">
   <div class="row">
     <!-- Adapted from https://stackoverflow.com/questions/36137161/using-flask-to-embed-a-local-html-page -->
-    <div id="property">
+    <div id="maps">
       <iframe src="{{ url_for('displayProperties') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
       </iframe>
     </div>
 
     <!-- Description -->
-    <div class="col jumbotron" id = "vaccinationDesc">
+    <div class="col jumbotron" id = "descriptions">
       <p>Find full map of properties here:
         <a href="/mapOfProperties">Map of Properties</a>
       </p>
@@ -61,9 +59,23 @@ aria-hidden="true"></span></a>
   </div>
 
   <div class="row">
+    <div id="maps">
+      <iframe src="{{ url_for('infectedMap') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
+      </iframe>
+    </div>
+
+    <!-- Description -->
+    <div class="col jumbotron" id = "descriptions">
+      <p>Find full Infected heatmap here:
+        <a href="/infectedHeatmap">Infected Heatmap</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- <div class="row">
     <div class="col jumbotron" id = "affected">Affected</div>
     <div class="col jumbotron" id = "affectedDesc">Affected desc.</div>
-  </div>
+  </div> -->
 </div>
 <br>
 {% endblock %}
