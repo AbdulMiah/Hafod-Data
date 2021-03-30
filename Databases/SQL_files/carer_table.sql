@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS `carers`;
-
 CREATE TABLE IF NOT EXISTS `carers` (
 	`staffNo`			INTEGER,
     `healthID`			INTEGER,
@@ -15,5 +14,4 @@ INSERT INTO carer VALUES(741, NULL , 'Tom', 'Cooper', 'Support Assistant', 1968-
 INSERT INTO carer VALUES(8878, NULL , 'Charles', 'Osorio', 'Registered Nurse', 2000-02-05, NULL);
 INSERT INTO carer VALUES(740, NULL, 'Ffion', 'Adams', 'Registered Nurse', 1995-08-05, NULL);
 INSERT INTO carer VALUES(2345, NULL, 'Karen', 'Jenkins', 'Support Assistant', 1967-09-05, NULL);
-
 SELECT * FROM carer;
