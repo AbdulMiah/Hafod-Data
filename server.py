@@ -7,6 +7,9 @@ import mysql.connector
 import yaml
 import datetime
 import time
+import csv
+import urllib.request as req
+import json
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
 
 app.secret_key = 'superSecretKey'
@@ -26,7 +29,7 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    return render_template('heatmaps.html', title='Hafod')
+    return render_template('mainPage.html', title='Hafod')
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -99,8 +102,7 @@ def checkLoginDetails():
                    # conn.close()
                    # cur.close()
                    print(msg)
-
-
+                   
                 return redirect("/")
 
             # Otherwise, print an error message
@@ -210,12 +212,97 @@ def userLoginTracker():
             cur.close()
    return None
 
-
-
-
 @app.route("/demoMap", methods = ['GET', 'POST'])
 def loadMap():
     return render_template("demoMap.html")
+
+## Peer-Programming with Abdul and Archie
+# Function that reads the API URL
+def loadJsonRes(url):
+    return json.loads(req.urlopen(url).read())
+
+@app.route("/readCSV", methods = ['GET', 'POST'])
+def uploadCSVFile():
+    if request.method == 'GET':
+        AssetList_file = "asset-files/AssetList.csv"        # Route to CSV file
+
+        with open(AssetList_file) as csv_file:          # Open CSV flle
+            csv_reader = csv.reader(csv_file)
+            line_count = 0          # Create a counter
+
+            for row in csv_reader:          # Loop through the rows in CSV file
+                if line_count == 0:     # Prints column names
+                    print(f"Column names are {row}")
+                    line_count += 1         # Increment counter
+                elif line_count == 1264:            # Break out of loop when reaches end of CSV file
+                    break
+                else:
+                    # Output the values that are going to be inserted
+                    print(f'\npostcode: {row[0].strip()}, localAuthority: {row[1].strip()}, businessArea: {row[2].strip()}.')
+                    # Connect to database
+                    try:
+                        conn = mysql.connector.connect(**config)
+                        cur = conn.cursor()
+                        print("Connected to database successfully")
+
+                        # Retreive postcode and make sure there are no spaces
+                        postcode = row[0].strip()
+                        postcode = postcode.replace(" ","")
+                        print(postcode)
+
+                        # Get the Lat and Long from postcode using API
+                        try:
+                            res = loadJsonRes(f'https://api.postcodes.io/postcodes/{postcode}')
+                            long = res['result']['longitude']
+                            lat = res['result']['latitude']
+                        except:
+                            print("Invalid postcode")
+
+                        # INSERT query to insert all the values
+                        query = ("INSERT INTO locations "
+                                "(locationID, postcode, latitude, longitude, localAuthority, businessArea, streetName) "
+                                "VALUES(%s,%s,%s,%s,%s,%s,%s)")
+
+                        # All the values
+                        values = (None, postcode, lat, long, row[1].strip(), row[2].strip(), None)
+                        cur.execute(query, values)
+                        print(f"Successfully inserted data")
+                        conn.commit()
+                    except mysql.connector.Error as e:
+                        conn.rollback()
+                        print("Ran into an error: ", e)
+                    finally:
+                        conn.close()
+                        cur.close()
+                        print("End of insertion")
+                line_count += 1         # Increment counter
+
+        return f"Successfully inserted {line_count} rows of data"
+        print(f'Processed {line_count} lines.')
+
+## Peer-Programming with Abdul and Archie
+# Route to display all properties in map
+@app.route("/mapOfProperties", methods = ['GET', 'POST'])
+def displayProperties():
+    if request.method == 'GET':
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM locations")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return render_template("mapOfProperties.html", data=allData)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

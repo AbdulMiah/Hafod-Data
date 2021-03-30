@@ -1,7 +1,9 @@
-#vaccination{
-  height: 250px;
-  top: 2rem;
+#property{
+  border: 3px solid green;
+  overflow: hidden;
   margin-right: 20px;
+  margin-top: 20px;
+  width: 500px;
 }
 #affected{
   height: 250px;
