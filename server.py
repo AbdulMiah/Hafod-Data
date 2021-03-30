@@ -102,7 +102,7 @@ def checkLoginDetails():
                    # conn.close()
                    # cur.close()
                    print(msg)
-
+                   
                 return redirect("/")
 
             # Otherwise, print an error message
@@ -303,9 +303,6 @@ def displayProperties():
             # print(allData)
             return render_template("mapOfProperties.html", data=allData)
 
-@app.route("/infectedHeatmap", methods = ['GET', 'POST'])
-def infectedMap():
-    return render_template("infected_heatmap.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
