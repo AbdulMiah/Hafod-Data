@@ -307,6 +307,10 @@ def displayProperties():
 def infectedMap():
     return render_template("infected_heatmap.html")
 
+@app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
+def vaccinesMap():
+    return render_template("vaccinationsHeatmap.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
     app.run(host='0.0.0.0', port = 5000)
