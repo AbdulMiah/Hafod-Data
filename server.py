@@ -13,6 +13,7 @@ import json
 from datetime import date
 
 date_today = date.today().strftime("%Y-%m-%d")
+API_KEY = 'pk.eyJ1IjoiYWJkdWxtaWFoIiwiYSI6ImNrbXdpN2hwZDBmM3cydXJubXM2eHoyaGQifQ.RI7Qv5cRdy1h-BRgK1NKpA'
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
 
 app.secret_key = 'superSecretKey'
@@ -124,9 +125,12 @@ def checkLoginDetails():
 @app.route("/SendData", methods = ['GET', 'POST'])
 def loadCovidFigures():
     if request.method == 'GET':
+        areaNames = []          # Store the area names collected from covid API
+        l = []          # To store all the coordinates
         ltla_areas = [
         'areaType=ltla',
         f'date={date_today}'
+        # 'date=2021-03-30'
         ]
 
         cases_and_deaths = {
@@ -136,12 +140,13 @@ def loadCovidFigures():
             "NewCasesByPublishDate": "newCasesByPublishDate",
             "NewDeathsByDeathDate": "newDeathsByDeathDate"
             }
-        #the api call
+        # The api call
         api = Cov19API(filters=ltla_areas, structure=cases_and_deaths)
-        #jsonifying the call
+        # jsonifying the call
         response = api.get_json()
         responseInfo = response['data']
         print(f"Data last updated:{response['lastUpdate']}")
+
         i = 0
         while i < len(responseInfo):
             print(responseInfo[i])
@@ -150,29 +155,56 @@ def loadCovidFigures():
             apiAreaType = responseInfo[i]['AreaType']
             NewCasesByPublishDate = responseInfo[i]['NewCasesByPublishDate']
             NewDeathsByDeathDate = responseInfo[i]['NewDeathsByDeathDate']
-            i += 1
-            try:
-                conn = mysql.connector.connect(**config)
-                cur = conn.cursor()
-                print("Connected to database")
+            # Replace spaces with underscores. This is so second API call understands the areas
+            apiAreaName = apiAreaName.replace(" ","_")
 
-                query = ("INSERT INTO CovidCaseFigures "
-                        " (Date, AreaName, AreaType, NewCasesOnGivenDay, ReportedDeathsOnGivenDay) "
-                        " VALUES (%s,%s,%s,%s,%s)")
-                val = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate)
-                # print(val)
-                cur.execute(query, val)
-                msg =  "Data Set has been uploaded as a post"
-                conn.commit()
-                cur.close()
-            except mysql.connector.Error as e:
-                conn.rollback()
-                print("Ran into an error: ", e)
-            finally:
-                conn.close()
-                cur.close()
-                print(msg)
-                print("End of insertion")
+            # Second API call to get Lat and Long from area names
+            try:
+                res = loadJsonRes(f'https://api.mapbox.com/geocoding/v5/mapbox.places/{apiAreaName}.json?access_token={API_KEY}')
+                temp = []           # Create temp list
+                for j in res['features']:
+                    x = j['geometry']['coordinates']            # Get the coordinates from JSON file
+                    temp.append(x)
+                coord = temp.pop(0)         # Get the correct coordinates
+                if ((coord[0]>=-5 and coord[0]<=-2.5) and (coord[-1]>=51 and coord[-1]<=55)):           # Condition: Only get the coordinates for cities in Wales
+                    l.append(coord[-1])
+                    l.append(coord[0])
+                else:
+                    this = responseInfo[i]['AreaName']
+                    print(this,"is not in a valid range")
+                    responseInfo.remove(this)
+            except:
+                print("Cannot get response for that address")
+            i += 1
+            if len(l)>0:
+                l1 = l.pop(0)
+                l2 = l.pop(0)
+                lat = "%.6f" % l1       # Only taking 6 decimal points
+                long = "%.6f" % l2
+
+                try:
+                    conn = mysql.connector.connect(**config)
+                    cur = conn.cursor()
+                    print("Connected to database")
+
+                    query = ("INSERT INTO CovidCaseFigures "
+                            " (Date, AreaName, AreaType, NewCasesOnGivenDay, ReportedDeathsOnGivenDay, latitude, longitude) "
+                            " VALUES (%s,%s,%s,%s,%s,%s,%s)")
+                    val = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long)
+                    # print(val)
+                    cur.execute(query, val)
+                    msg = "Data Set has been uploaded as a post"
+                    conn.commit()
+                    cur.close()
+                except mysql.connector.Error as e:
+                    conn.rollback()
+                    msg = "Error in INSERT operation"
+                    print("Ran into an error: ", e)
+                finally:
+                    conn.close()
+                    cur.close()
+                    print(msg)
+                    print("End of insertion")
         return msg
 
 
