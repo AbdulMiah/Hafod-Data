@@ -10,6 +10,9 @@ import time
 import csv
 import urllib.request as req
 import json
+from datetime import date
+
+date_today = date.today().strftime("%Y-%m-%d")
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
 
 app.secret_key = 'superSecretKey'
@@ -123,7 +126,7 @@ def loadCovidFigures():
     if request.method == 'GET':
         ltla_areas = [
         'areaType=ltla',
-        'date=2021-03-15'
+        f'date={date_today}'
         ]
 
         cases_and_deaths = {
