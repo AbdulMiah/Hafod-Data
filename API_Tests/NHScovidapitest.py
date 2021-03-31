@@ -27,11 +27,11 @@ response = api.get_json()
 #response is a dictionary
 #responseInfo is a list of covid cases
 responseInfo = response['data']
-
+print(responseInfo)
 print(f"Data last updated:{response['lastUpdate']}")
 
 #used to display all infomation
-i = 0
-while i < len(responseInfo):
-    print(responseInfo[i]['Date'])
-    i = i + 1
+# i = 0
+# while i < len(responseInfo):
+#     print(responseInfo[i]['Date'])
+#     i = i + 1
