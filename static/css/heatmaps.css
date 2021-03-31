@@ -1,24 +1,13 @@
-#property{
+#maps{
   border: 3px solid green;
   overflow: hidden;
   margin-right: 20px;
   margin-top: 20px;
   width: 500px;
 }
-#affected{
-  height: 250px;
-    top: 2rem;
-}
-#vaccinationDesc{
-  height: 20px;
-      top: 2rem;
-        margin-right: 20px;
-}
-#affectedDesc{
-  height: 20px;
-      top: 2rem;
-}
-.carousel-item{
-  height: 15rem;
-  background: #77BC1F;
+
+#descriptions{
+  height: 50px;
+  margin-top: 20px;
+  width: 600px;
 }

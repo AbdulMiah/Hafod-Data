@@ -177,6 +177,8 @@ CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
 `AreaType` 					VARCHAR(20) NOT NULL,
 `NewCasesOnGivenDay` 		INTEGER,
 `ReportedDeathsOnGivenDay`  INTEGER,
+`latitude`       			DECIMAL(8,6),
+`longitude`      			DECIMAL(9,6),
 CONSTRAINT `PK_CovidCaseFigures` PRIMARY KEY (`CasesReportID`)
 );
 -- INSERT data into covidcasefigures

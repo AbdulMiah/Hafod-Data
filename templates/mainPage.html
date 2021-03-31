@@ -2,68 +2,58 @@
 
 {% block mainPage %}
 <link rel="stylesheet" href="static/css/heatmaps.css">
-
 <br>
-<!-- carousel -->
-<div class="container">
-<div id="mapCarousel" class="carousel slide" data-ride="Carousel">
-  <ol class = "carousel-indicators">
-    <li data-target="#mapCarousel"
-    data-slide-to="0" class="active"></li>
-    <li data-target="#mapCarousel"
-    data-slide-to="1"></li>
-  </ol>
-<div class="carousel-inner">
-
-    <div class = "carousel-item active">
-      <h1>k</h1>
-    </div>
-    <div class = "carousel-item">
-      <p> stop </p>
-    </div>
-
-    <!-- previous button for slider -->
-</div>
-<a href="#mapCarousel"
-class="carousel-control-prev" role="button"
-data-slide="prev">
-<span class="sr-only">previous</span>
-<span class="carousel-control-prev-icon"
-aria-hidden="true"></span></a>
-
-<!-- next button for slider -->
-
-<a href="#mapCarousel"
-class="carousel-control-next" role="button"
-data-slide="next">
-<span class="sr-only">next</span>
-<span class="carousel-control-next-icon"
-aria-hidden="true"></span></a>
-</div>
-</div>
 
   <!-- Maps and Graphs -->
-
 <div class="container">
   <div class="row">
     <!-- Adapted from https://stackoverflow.com/questions/36137161/using-flask-to-embed-a-local-html-page -->
-    <div id="property">
+    <div id="maps">
       <iframe src="{{ url_for('displayProperties') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
       </iframe>
     </div>
 
     <!-- Description -->
-    <div class="col jumbotron" id = "vaccinationDesc">
-      <p>Find full map of properties here:
-        <a href="/mapOfProperties">Map of Properties</a>
-      </p>
+    <div class="jumbotron" id="descriptions">
+      <center>
+        <p>This map displays all the properties owned by Hafod across Wales.
+           <a href="/mapOfProperties">Click here</a> to find full map view of properties.
+        </p>
+      </center>
     </div>
   </div>
 
   <div class="row">
-    <div class="col jumbotron" id = "affected">Affected</div>
-    <div class="col jumbotron" id = "affectedDesc">Affected desc.</div>
+    <div id="maps">
+      <iframe src="{{ url_for('infectedMap') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
+      </iframe>
+    </div>
+
+    <!-- Description -->
+    <div class="jumbotron" id="descriptions">
+      <center>
+        <p>This heatmap highlights up-to-date information about the areas around
+          Wales that are most affected by COVID-19.
+           <a href="/infectedHeatmap">Click here</a> for full heatmap view.
+        </p>
+      </center>
+    </div>
   </div>
+  <!-- Part of postponed user story issue #31 -->
+ <!-- <div class="row">
+   <div id="maps">
+     <iframe src=" url_for('vaccinationsHeatmap') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
+     </iframe>
+   </div> -->
+
+   <!-- Description -->
+   <!-- <div class="col jumbotron" id = "descriptions">
+     <p>Find full vaccinations heatmap here:
+       <a href="/vaccinationsHeatmap">Vaccinations Heatmap</a>
+     </p>
+   </div>
+ </div> -->
+
 </div>
 <br>
 {% endblock %}
