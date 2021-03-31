@@ -75,20 +75,23 @@
 
       map.setView([52.1307, -3.7837], 7);
 
+      {% for d in data %}
+        var marker = L.marker([{{ d[6] }}, {{ d[7] }}]).addTo(map);
+        marker.bindPopup("NewCasesOnGivenDay: {{ d[4] }}, ReportedDeathsOnGivenDay: {{ d[5] }}")
+      {% endfor %}
 
+      let myArray = [];
       // Creating the heatmap
+
       var heat = L.heatLayer([
-        // lat,    lng,    intensity
-      	[51.4816, -3.1791, 0.8], // Cardiff
-      	[51.6816, -3.3731, 0.9], // Mountain Ash
-        [51.6740, -4.9086, 0.4], // Pembroke
-        [51.6727, -4.7036, 0.6], // Tenby
-        [51.6214, -3.9436, 0.7], // Swansea
-        [52.3015, -3.5106, 0.8], // Rhayader
-        [51.5842, -2.9977, 0.9], // Newport
-        [52.1129, -4.0785, 0.6], // Lampeter
-        [52.4153, -4.0829, 0.5], // Aberystwyth
-        [51.9489, -3.3915, 0.9] // Brecon
+      {% for d in data %}
+          // lat,    lng,    intensity
+          // heatmapPnts = {{ d[4] }} / 10,
+        	[{{ d[6] }}, {{ d[7] }}, {{ d[4] }}],
+          // myArray.push(heatmapPnts),
+          // console.log({{ d[6] }}, {{ d[7] }}, {{ d[4] }}),
+        {% endfor %}
+        // console.log(myArray),
       ], {
         radius: 25,   // Radius of the heat
         minOpacity: 0.4,    // Minimum opacity of the intensity/heat
@@ -106,6 +109,34 @@
           '1': 'Red'
         }
       }).addTo(map);
+
+        // radius: 25,   // Radius of the heat
+        // minOpacity: 10,    // Minimum opacity of the intensity/heat
+        // // max: 40, // This is default intensity
+        //
+        // // The colour gradient to visualise the intensity
+        // gradient: {
+        //   '1': 'Navy',
+        //   '10': 'Navy',
+        //   '11': 'Green',
+        //   '25': 'Green',
+        //   '26': 'Yellow',
+        //   '34': 'Yellow',
+        //   '35': 'Red',
+        //   '40': 'Red'
+        // }
+
+        // gradient: {
+        //   '0.1': 'Navy',
+        //   '1.0': 'Navy',
+        //   '1.1': 'Green',
+        //   '2.5': 'Green',
+        //   '2.6': 'Yellow',
+        //   '3.4': 'Yellow',
+        //   '3.5': 'Red',
+        //   '4': 'Red'
+        // }
+      // }).addTo(map);
 
       console.log(heat);    // Printing to console to see my result
 
