@@ -68,13 +68,40 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
     `dateVaccinated`			DATE,
     `dataVacEffective`			DATE,
     `vaccinationType`			VARCHAR(25),
-	`reasonForNoVaccination`	ENUM('N/A', 'Pregnant', 'Refused', 'Not Effective') NOT NULL,
+	`reasonForNoVaccination`	ENUM('N/A', 'Pregnant', 'Refused', 'Not Effective', 'Allergic') NOT NULL,
     CONSTRAINT `PK_vaccinations` PRIMARY KEY (`vaccinationID`)
 );
 -- INSERT data into vaccinations
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-24', '2021-04-07', 'Pfizer', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-1', '2021-04-14', 'Moderna', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Not Effective');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-3, 2021-03-17, 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-3, 2021-03-17, 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-4, 2021-03-18, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-6, 2021-03-20, 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-14, 2021-03-28, 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-17, 2021-03-31, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-8, 2021-03-22, 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-8, 2021-03-22, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-10, 2021-03-24, 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-03-10, 2021-03-24, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-10, 2021-02-24, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-11, 2021-02-25, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-12, 2021-02-26, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-16, 2021-03-2, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-16, 2021-03-2, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-17, 2021-03-3, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-17, 2021-03-3, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', 2021-02-20, 2021-03-6, 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
 SELECT * FROM vaccinations;
 
