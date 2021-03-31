@@ -340,7 +340,23 @@ def displayProperties():
 
 @app.route("/infectedHeatmap", methods = ['GET', 'POST'])
 def infectedMap():
-    return render_template("infected_heatmap.html")
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        print("Connected to database successfully")
+        query = ("SELECT * FROM CovidCaseFigures")
+        cur.execute(query)
+        allData = cur.fetchall()
+        print("Received all data")
+    except mysql.connector.Error as e:
+        conn.rollback()
+        print("Ran into an error: ", e)
+    finally:
+        conn.close()
+        cur.close()
+        print("End of fetch")
+        # print(allData)
+        return render_template("infected_heatmap.html", data=allData)
 
 # Postponed User Story #31
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
