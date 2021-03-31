@@ -179,7 +179,7 @@ def loadCovidFigures():
             if len(l)>0:
                 l1 = l.pop(0)
                 l2 = l.pop(0)
-                lat = "%.6f" % l1       # Only taking 6 decimal points
+                lat = "%.6f" % l1       # Truncates to 6 decimal points
                 long = "%.6f" % l2
 
                 try:

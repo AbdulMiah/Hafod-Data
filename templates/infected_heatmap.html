@@ -42,9 +42,6 @@
 
         <div class="my-navbar-coll collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav ml-auto mb-2 mb-md-0">
-            <!-- <li class="nav-item custom-link">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li> -->
             <li class="nav-item custom-link">
               <a class="nav-link" href="/">All Maps</a>
             </li>
@@ -76,22 +73,27 @@
       map.setView([52.1307, -3.7837], 7);
 
       {% for d in data %}
-        var marker = L.marker([{{ d[6] }}, {{ d[7] }}]).addTo(map);
-        marker.bindPopup("NewCasesOnGivenDay: {{ d[4] }}, ReportedDeathsOnGivenDay: {{ d[5] }}")
+      // Display the markers on zoom level 12
+      // Adapted from https://stackoverflow.com/questions/42163558/leaflet-hide-markers-in-zoom-levels
+        map.on('zoomend', function (e) {
+          // console.log(map.getZoom());
+          if (map.getZoom()>=12) {
+            var marker = L.marker([{{ d[6] }}, {{ d[7] }}]).addTo(map);
+            marker.bindPopup("City: {{ d[2] }}, New Cases: {{ d[4] }}, Reported Deaths: {{ d[5] }}")
+          } else {
+            if (marker !== undefined) {
+              marker.remove();
+            }
+          }
+        });
       {% endfor %}
 
-      let myArray = [];
       // Creating the heatmap
-
       var heat = L.heatLayer([
       {% for d in data %}
-          // lat,    lng,    intensity
-          // heatmapPnts = {{ d[4] }} / 10,
+          //  lat,         lng,    intensity
         	[{{ d[6] }}, {{ d[7] }}, {{ d[4] }}],
-          // myArray.push(heatmapPnts),
-          // console.log({{ d[6] }}, {{ d[7] }}, {{ d[4] }}),
         {% endfor %}
-        // console.log(myArray),
       ], {
         radius: 25,   // Radius of the heat
         minOpacity: 0.4,    // Minimum opacity of the intensity/heat
@@ -100,45 +102,30 @@
         // The colour gradient to visualise the intensity
         gradient: {
           '0': 'Navy',
-          '0.25': 'Navy',
-          '0.26': 'Green',
+          '0.25': 'Blue',
           '0.5': 'Green',
-          '0.51': 'Yellow',
           '0.75': 'Yellow',
-          '0.76': 'Red',
           '1': 'Red'
         }
       }).addTo(map);
-
-        // radius: 25,   // Radius of the heat
-        // minOpacity: 10,    // Minimum opacity of the intensity/heat
-        // // max: 40, // This is default intensity
-        //
-        // // The colour gradient to visualise the intensity
-        // gradient: {
-        //   '1': 'Navy',
-        //   '10': 'Navy',
-        //   '11': 'Green',
-        //   '25': 'Green',
-        //   '26': 'Yellow',
-        //   '34': 'Yellow',
-        //   '35': 'Red',
-        //   '40': 'Red'
-        // }
-
-        // gradient: {
-        //   '0.1': 'Navy',
-        //   '1.0': 'Navy',
-        //   '1.1': 'Green',
-        //   '2.5': 'Green',
-        //   '2.6': 'Yellow',
-        //   '3.4': 'Yellow',
-        //   '3.5': 'Red',
-        //   '4': 'Red'
-        // }
-      // }).addTo(map);
-
       console.log(heat);    // Printing to console to see my result
+
+      // Adding a watermark on the map, to represent the brand
+      L.Control.Watermark=L.Control.extend({
+        onAdd:function(map){
+          var img = L.DomUtil.create('img');
+          img.src = 'static/img/Hafod_Logo.jpg';
+          img.style.width = '150px';
+          return img;
+        },
+        onRemove:function(map){},
+      });
+
+      L.control.watermark = function(opts){
+        return new L.Control.Watermark(opts);
+      }
+
+      L.control.watermark().addTo(map);
 
     </script>
   </body>
