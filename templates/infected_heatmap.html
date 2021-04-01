@@ -55,7 +55,14 @@
         </div>
       </div>
     </nav>
-
+    <div class="date">
+      <center>
+        {% if data %}
+          <p>Displaying COVID-19 Data from {{ data[0][1] }}</p>
+          Not today's date? <a href="/CovidData"> Click Here</a> to refresh!
+        {% endif %}
+      </center>
+    </div>
     <!-- map container -->
     <div id="map"></div>
 

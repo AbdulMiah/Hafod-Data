@@ -122,7 +122,7 @@ def checkLoginDetails():
             return msg
 
 # Abdul and Archie Peer Programming
-@app.route("/SendData", methods = ['GET', 'POST'])
+@app.route("/CovidData", methods = ['GET', 'POST'])
 def loadCovidFigures():
     if request.method == 'GET':
         areaNames = []          # Store the area names collected from covid API
@@ -186,25 +186,42 @@ def loadCovidFigures():
                     conn = mysql.connector.connect(**config)
                     cur = conn.cursor()
                     print("Connected to database")
+                    cur.execute("SELECT * FROM CovidCaseFigures")
+                    anyData = cur.fetchall()
 
-                    query = ("INSERT INTO CovidCaseFigures "
-                            " (Date, AreaName, AreaType, NewCasesOnGivenDay, ReportedDeathsOnGivenDay, latitude, longitude) "
-                            " VALUES (%s,%s,%s,%s,%s,%s,%s)")
-                    val = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long)
-                    # print(val)
-                    cur.execute(query, val)
-                    msg = "Data Set has been uploaded as a post"
-                    conn.commit()
-                    cur.close()
+                    # Created if statement that checks if there are any existing data in database table.
+                    if (len(anyData)>=46):
+                        print("Updating Existing dataset...")           # If there is data in database then update instead of insert
+                        updateQuery = ("UPDATE CovidCaseFigures "
+                                " SET Date=%s, AreaName=%s, AreaType=%s, NewCasesOnGivenDay=%s, ReportedDeathsOnGivenDay=%s, latitude=%s, longitude=%s"
+                                " WHERE AreaName = %s")
+
+                        updateVal = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long, apiAreaName)
+                        cur.execute(updateQuery, updateVal)
+                        msg = "Updated Data Set has been uploaded as a post"
+                        conn.commit()
+                        cur.close()
+                    # Otherwise insert new data
+                    else:
+                        print("Inserting new data...")
+                        insertQuery = ("INSERT INTO CovidCaseFigures "
+                                " (Date, AreaName, AreaType, NewCasesOnGivenDay, ReportedDeathsOnGivenDay, latitude, longitude) "
+                                " VALUES (%s,%s,%s,%s,%s,%s,%s)")
+                        insertVal = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long)
+                        # print(val)
+                        cur.execute(insertQuery, insertVal)
+                        msg = "New Data Set has been uploaded as a post"
+                        conn.commit()
+                        cur.close()
                 except mysql.connector.Error as e:
                     conn.rollback()
-                    msg = "Error in INSERT operation"
+                    msg = "Error in UPDATE/INSERT operation"
                     print("Ran into an error: ", e)
                 finally:
                     conn.close()
                     cur.close()
                     print(msg)
-                    print("End of insertion")
+                    print("End of update/insertion")
         return msg
 
 
