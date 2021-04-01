@@ -198,7 +198,7 @@ def loadCovidFigures():
 
                         updateVal = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long, apiAreaName)
                         cur.execute(updateQuery, updateVal)
-                        msg = "Updated Data Set has been uploaded as a post"
+                        msg = "Successfully Updated Data Set!"
                         conn.commit()
                         cur.close()
                     # Otherwise insert new data
@@ -208,9 +208,8 @@ def loadCovidFigures():
                                 " (Date, AreaName, AreaType, NewCasesOnGivenDay, ReportedDeathsOnGivenDay, latitude, longitude) "
                                 " VALUES (%s,%s,%s,%s,%s,%s,%s)")
                         insertVal = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long)
-                        # print(val)
                         cur.execute(insertQuery, insertVal)
-                        msg = "New Data Set has been uploaded as a post"
+                        msg = "Successfully Inserted New Data Set!"
                         conn.commit()
                         cur.close()
                 except mysql.connector.Error as e:
@@ -222,7 +221,9 @@ def loadCovidFigures():
                     cur.close()
                     print(msg)
                     print("End of update/insertion")
-        return msg
+        # Display success message on main page, once update/insert operation is complete
+        flash(msg)
+        return redirect("/")
 
 
 ###=======UNFINISHED=====================

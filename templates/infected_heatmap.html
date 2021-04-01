@@ -57,9 +57,16 @@
     </nav>
     <div class="date">
       <center>
+        <!-- Show when update was last updated -->
+        <!-- Give user option to update data with most recent from API -->
         {% if data %}
-          <p>Displaying COVID-19 Data from {{ data[0][1] }}</p>
-          Not today's date? <a href="/CovidData"> Click Here</a> to refresh!
+          <p>Data last updated on {{ data[0][1] }}</p>
+          Not today's date? <a href="/CovidData"> Click Here</a> to update! (This might take a while)
+        {% endif %}
+
+        <!-- If there is not data being displayed, then give option to add data from API -->
+        {% if not data %}
+          <p>No data being displayed? <a href="/CovidData"> Click Here</a> to add data! (This might take a while)</p>
         {% endif %}
       </center>
     </div>
