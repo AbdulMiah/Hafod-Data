@@ -55,7 +55,21 @@
         </div>
       </div>
     </nav>
+    <div class="date">
+      <center>
+        <!-- Show when update was last updated -->
+        <!-- Give user option to update data with most recent from API -->
+        {% if data %}
+          <p>Data last updated on {{ data[0][1] }}</p>
+          Not today's date? <a href="/CovidData"> Click Here</a> to update! (This might take a while)
+        {% endif %}
 
+        <!-- If there is not data being displayed, then give option to add data from API -->
+        {% if not data %}
+          <p>No data being displayed? <a href="/CovidData"> Click Here</a> to add data! (This might take a while)</p>
+        {% endif %}
+      </center>
+    </div>
     <!-- map container -->
     <div id="map"></div>
 
@@ -72,6 +86,7 @@
 
       map.setView([52.1307, -3.7837], 7);
 
+      let allPoints = [];
       {% for d in data %}
       // Display the markers on zoom level 12
       // Adapted from https://stackoverflow.com/questions/42163558/leaflet-hide-markers-in-zoom-levels
@@ -86,16 +101,23 @@
             }
           }
         });
+        allPoints.push({{ d[4] }});
       {% endfor %}
+
+      maxIntensity = Math.max(...allPoints);
+      minIntensity = Math.min(...allPoints);
+      console.log("max point: "+maxIntensity);
+      console.log("min point: "+minIntensity);
 
       // Creating the heatmap
       var heat = L.heatLayer([
       {% for d in data %}
           //  lat,         lng,    intensity
-        	[{{ d[6] }}, {{ d[7] }}, {{ d[4] }}],
+        	[{{ d[6] }}, {{ d[7] }}, {{ d[4] }} / maxIntensity],
         {% endfor %}
       ], {
-        radius: 25,   // Radius of the heat
+        radius: 30,   // Radius of the heat
+        blur: 15,
         minOpacity: 0.4,    // Minimum opacity of the intensity/heat
         max: 1, // This is default intensity
 
