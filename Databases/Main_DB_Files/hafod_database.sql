@@ -186,14 +186,14 @@ CONSTRAINT `FK_AdminCredentials` FOREIGN KEY (`AdminID`) REFERENCES admincredent
 CONSTRAINT `PK_AdminLog` PRIMARY KEY (`SessionID`)
 );
 ##Mile Stone 2 turn this into a function where admin ID is a parameter
-INSERT INTO `AdminLog` VALUES (null, 1, NOW(), NOW()+1000);
-UPDATE `AdminLog`
-SET TimeLoggedOff = '2021-03-25 19:26:36'  
-WHERE SessionID IN
-(SELECT MAX(SessionID)
-FROM AdminLog
-WHERE AdminID = 1);
-SELECT * FROM AdminLog;
+-- INSERT INTO `AdminLog` VALUES (null, 1, NOW(), NOW()+1000);
+-- UPDATE `AdminLog`
+-- SET TimeLoggedOff = '2021-03-25 19:26:36'  
+-- WHERE SessionID IN
+-- (SELECT MAX(SessionID)
+-- FROM AdminLog
+-- WHERE AdminID = 1);
+-- SELECT * FROM AdminLog;
 
 -- Table for CovidCaseFigures
 DROP TABLE IF EXISTS `CovidCaseFigures`;
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
 CONSTRAINT `PK_CovidCaseFigures` PRIMARY KEY (`CasesReportID`)
 );
 -- INSERT data into covidcasefigures
-INSERT INTO `CovidCaseFigures` VALUES (null, '2021-04-03', 'Cardiff', 'ltlt', 1, Null);
+-- INSERT INTO `CovidCaseFigures` VALUES (null, '2021-04-03', 'Cardiff', 'ltlt', 1, Null);
 SELECT * FROM CovidCaseFigures;
 
 

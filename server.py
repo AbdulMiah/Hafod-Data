@@ -5,14 +5,14 @@ from uk_covid19 import Cov19API #Used to call for covid case stats
 # import sqlite3
 import mysql.connector
 import yaml
-import datetime
 import time
 import csv
 import urllib.request as req
 import json
-from datetime import date
+from datetime import date, datetime, timedelta
 
-date_today = date.today().strftime("%Y-%m-%d")
+# date_today = date.today().strftime("%Y-%m-%d")
+date_yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
 API_KEY = 'pk.eyJ1IjoiYWJkdWxtaWFoIiwiYSI6ImNrbXdpN2hwZDBmM3cydXJubXM2eHoyaGQifQ.RI7Qv5cRdy1h-BRgK1NKpA'
 app = Flask(__name__, template_folder='templates', static_url_path='/static', static_folder='static')
 
@@ -75,6 +75,7 @@ def checkLoginDetails():
         finally:
             # If there is a result (If details are found), then let the admin log in
             if res:
+                msg = ""
                 print(f"Successfully logged in as: '{username}'")
 
                 #Sets session user to username, used to track admin login
@@ -125,12 +126,13 @@ def checkLoginDetails():
 @app.route("/CovidData", methods = ['GET', 'POST'])
 def loadCovidFigures():
     if request.method == 'GET':
+        print(date_yesterday)
         areaNames = []          # Store the area names collected from covid API
         l = []          # To store all the coordinates
         ltla_areas = [
         'areaType=ltla',
-        f'date={date_today}'
-        # 'date=2021-03-30'
+        f'date={date_yesterday}' #Yesterday used to insure we're not calling for data that doesnt yet exist
+        # 'date=2021-04-03'
         ]
 
         cases_and_deaths = {
@@ -141,12 +143,16 @@ def loadCovidFigures():
             "NewDeathsByDeathDate": "newDeathsByDeathDate"
             }
         # The api call
+
         api = Cov19API(filters=ltla_areas, structure=cases_and_deaths)
         # jsonifying the call
         response = api.get_json()
         responseInfo = response['data']
+        print("Response" , response)
+        print("Response Info" , responseInfo)
         print(f"Data last updated:{response['lastUpdate']}")
 
+        msg = "" #Declaring message for later flash message
         i = 0
         while i < len(responseInfo):
             print(responseInfo[i])
@@ -330,14 +336,17 @@ def uploadCSVFile():
                         print("End of insertion")
                 line_count += 1         # Increment counter
 
-        return f"Successfully inserted {line_count} rows of data"
         print(f'Processed {line_count} lines.')
+        msg = f"Successfully inserted {line_count} rows of data"
+        flash(msg)
+        return redirect("/")
 
 ## Peer-Programming with Abdul and Archie
 # Route to display all properties in map
 @app.route("/mapOfProperties", methods = ['GET', 'POST'])
 def displayProperties():
     if request.method == 'GET':
+        allData = []
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
@@ -358,23 +367,25 @@ def displayProperties():
 
 @app.route("/infectedHeatmap", methods = ['GET', 'POST'])
 def infectedMap():
-    try:
-        conn = mysql.connector.connect(**config)
-        cur = conn.cursor()
-        print("Connected to database successfully")
-        query = ("SELECT * FROM CovidCaseFigures")
-        cur.execute(query)
-        allData = cur.fetchall()
-        print("Received all data")
-    except mysql.connector.Error as e:
-        conn.rollback()
-        print("Ran into an error: ", e)
-    finally:
-        conn.close()
-        cur.close()
-        print("End of fetch")
-        # print(allData)
-        return render_template("infected_heatmap.html", data=allData)
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM CovidCaseFigures")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return render_template("infected_heatmap.html", data=allData)
 
 # Postponed User Story #31
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
