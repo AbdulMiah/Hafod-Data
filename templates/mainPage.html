@@ -2,7 +2,21 @@
 
 {% block mainPage %}
 <link rel="stylesheet" href="static/css/heatmaps.css">
+<link rel="stylesheet" href="static/css/successMessage.css">
 <br>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for msg in messages %}
+      <center>
+        <div class="alert alert-dismissible success-message-block" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ msg }}
+        </div>
+      </center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
   <!-- Maps and Graphs -->
 <div class="container">
@@ -32,8 +46,8 @@
     <!-- Description -->
     <div class="jumbotron" id="descriptions">
       <center>
-        <p>This heatmap highlights up-to-date information about the areas around
-          Wales that are most affected by COVID-19.
+        <p>This heatmap highlights up-to-date information about new cases
+          of COVID-19 near Wales.
            <a href="/infectedHeatmap">Click here</a> for full heatmap view.
         </p>
       </center>
