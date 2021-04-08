@@ -129,6 +129,38 @@ INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-17', '2021-03-3', 'Pfizer'
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-20', '2021-03-6', 'Pfizer', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-04', '2021-02-15', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-12', '2021-01-22', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Not Effective');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-11-03', '2021-11-17', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-13', '2021-01-30', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-12-04', '2020-12-18', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-06', '2021-03-24', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-04-01', '2021-04-14', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-06', '2021-01-20', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-30', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-08', '2020-10-22', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-09-24', '2020-10-06', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-01', '2020-10-16', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-27', '2021-03-10', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-30', '2021-02-14', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-26', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-12-09', '2020-12-23', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-01', '2021-01-16', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-13', '2021-03-23', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-20', '2021-11-06', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
 SELECT * FROM vaccinations;
 
 
@@ -173,6 +205,37 @@ INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
 INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-03-11', '2021-04-05');
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-03-11', '2021-03-20');
+
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-05-01', '2021-05-22');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-05-02', '2021-05-18');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2020-05-03', '2021-05-16');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-08-13', '2021-08-30');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2020-08-14', '2021-08-29');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-08-15', '2021-09-12');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-09-21', '2020-10-24');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-02-22', '2021-03-12');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-02-06', '2021-02-12');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-04-16', '2021-04-30');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-11-11', '2021-12-25');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-01-03', '2021-02-12');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-05-12', '2020-06-18');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-02-11', '2021-03-02');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-10-17', '2020-10-31');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-07-15', '2021-08-01');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-03-07', '2021-03-21');
 SELECT * FROM covidTestResult;
 
 
