@@ -14,10 +14,36 @@ CREATE TABLE IF NOT EXISTS `tenants` (
     CONSTRAINT `PK_tenants` PRIMARY KEY (`tenancyNo`)
 );
 -- INSERT data into tenants
-INSERT INTO tenants VALUES(NULL, NULL, NULL, 'John', 'Doe', '2000-03-24');
-INSERT INTO tenants VALUES(NULL, NULL, NULL, 'Sarah', 'Smith', '1988-03-20');
-INSERT INTO tenants VALUES(NULL, NULL, NULL, 'Aria', 'Jones', '1990-06-20');
-INSERT INTO tenants VALUES(NULL, NULL, NULL, 'Jo', 'Lee', '1970-05-27');
+INSERT INTO tenants VALUES(NULL, NULL, 1, 'John', 'Doe', '2000-03-24');
+INSERT INTO tenants VALUES(NULL, NULL, 2, 'Sarah', 'Smith', '1988-03-20');
+INSERT INTO tenants VALUES(NULL, NULL, 3, 'Aria', 'Jones', '1990-06-20');
+INSERT INTO tenants VALUES(NULL, NULL, 4, 'Madog', 'Pitter', '1970-05-27');
+INSERT INTO tenants VALUES(NULL, NULL, 5, 'Jo', 'Lee', '1970-12-04');
+INSERT INTO tenants VALUES(NULL, NULL, 6, 'Hollis', 'Jurica', '1961-09-28');
+INSERT INTO tenants VALUES(NULL, NULL, 7, 'Axel', 'Anselm', '1972-11-05');
+INSERT INTO tenants VALUES(NULL, NULL, 8, 'Tena', 'Léane', '1979-12-29');
+INSERT INTO tenants VALUES(NULL, NULL, 9, 'Rahim', 'Soraya', '1966-05-13');
+INSERT INTO tenants VALUES(NULL, NULL, 10, 'Thando', 'Platon', '1989-11-14');
+INSERT INTO tenants VALUES(NULL, NULL, 11, 'Galen', 'Benjamín', '1965-10-19');
+INSERT INTO tenants VALUES(NULL, NULL, 12, 'Lennard', 'Emilia', '1950-03-14');
+INSERT INTO tenants VALUES(NULL, NULL, 13, 'Theresia', 'Pepito', '1998-01-05');
+INSERT INTO tenants VALUES(NULL, NULL, 14, 'Lizzie', 'Gilmore', '1988-04-26');
+INSERT INTO tenants VALUES(NULL, NULL, 15, 'Zachary', 'Duran', '1987-01-13');
+INSERT INTO tenants VALUES(NULL, NULL, 16, 'David', 'Mcknight', '1971-01-17');
+INSERT INTO tenants VALUES(NULL, NULL, 17, 'Merlin', 'Gibbons', '1994-06-23');
+INSERT INTO tenants VALUES(NULL, NULL, 18, 'Becky', 'Frazier', '1992-01-12');
+INSERT INTO tenants VALUES(NULL, NULL, 19, 'Mazie', 'Beil', '1999-12-12');
+INSERT INTO tenants VALUES(NULL, NULL, 20, 'Jimmy', 'Doherty', '1988-04-30');
+INSERT INTO tenants VALUES(NULL, NULL, 21, 'Aayan', 'Kent', '1995-09-16');
+INSERT INTO tenants VALUES(NULL, NULL, 22, 'Thea', 'Mack', '1985-06-14');
+INSERT INTO tenants VALUES(NULL, NULL, 23, 'Trent', 'Rush', '1990-12-07');
+INSERT INTO tenants VALUES(NULL, NULL, 24, 'Ashlyn', 'Weiss', '1987-04-23');
+INSERT INTO tenants VALUES(NULL, NULL, 25, 'Haidar', 'Perez', '1997-06-13');
+INSERT INTO tenants VALUES(NULL, NULL, 26, 'Tahmid', 'Rennie', '2000-06-23');
+INSERT INTO tenants VALUES(NULL, NULL, 27, 'Preston', 'Paine', '1989-04-16');
+INSERT INTO tenants VALUES(NULL, NULL, 28, 'Judah', 'Brook', '1981-11-26');
+INSERT INTO tenants VALUES(NULL, NULL, 29, 'Cristian', 'Amin', '1979-08-12');
+INSERT INTO tenants VALUES(NULL, NULL, 30, 'Solomon', 'Ventura', '1995-04-08');
 SELECT * FROM tenants;
 
 
