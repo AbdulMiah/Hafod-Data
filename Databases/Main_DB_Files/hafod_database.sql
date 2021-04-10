@@ -94,7 +94,7 @@ SELECT * FROM carers;
 
 
 -- Table for locations
-DROP TABLE IF EXISTS `locations`;
+-- DROP TABLE IF EXISTS `locations`;
 CREATE TABLE IF NOT EXISTS `locations` (
 `locationID`	 INTEGER NOT NULL AUTO_INCREMENT,
 `postcode`       VARCHAR(20) NOT NULL, 
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `locations` (
 CONSTRAINT `PK_locations` PRIMARY KEY (`locationID`)
 );
 -- INSERT data into locations
-INSERT INTO `locations` VALUES (null, "CF23 9LJ", 58.6, -2.6, "Cardiff", "Housing", "Ael Y Bryn");
+-- INSERT INTO `locations` VALUES (null, "CF23 9LJ", 58.6, -2.6, "Cardiff", "Housing", "Ael Y Bryn");
 -- INSERT INTO `locations` VALUES (null, "CF24 9LJ", 139.6, 119.6, "Cardiff", "Housing", "Ael Y Bryn");
 -- INSERT INTO `locations` VALUES (null, "CF24 9LK", 8.6, 9.6, "Cardiff", "Housing", "Ael Y Bryn");
 SELECT * FROM locations;
@@ -167,7 +167,7 @@ INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-06', '2021-03-24', 'Modern
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-04-01', '2021-04-14', 'Moderna', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-06', '2021-01-20', 'Pfizer', 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-30', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-23', 'Moderna', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-08', '2020-10-22', 'Pfizer', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
@@ -304,23 +304,54 @@ INSERT INTO health_linktable VALUES(NULL, 27, 27);
 INSERT INTO health_linktable VALUES(NULL, 28, 28);
 INSERT INTO health_linktable VALUES(NULL, 29, 29);
 INSERT INTO health_linktable VALUES(NULL, 30, 30);
+
+INSERT INTO health_linktable VALUES(NULL, 31, 31);
+INSERT INTO health_linktable VALUES(NULL, 32, 32);
+INSERT INTO health_linktable VALUES(NULL, 33, 33);
+INSERT INTO health_linktable VALUES(NULL, 34, 34);
+INSERT INTO health_linktable VALUES(NULL, 35, 35);
+INSERT INTO health_linktable VALUES(NULL, 36, 36);
+INSERT INTO health_linktable VALUES(NULL, 37, 37);
+INSERT INTO health_linktable VALUES(NULL, 38, 38);
+INSERT INTO health_linktable VALUES(NULL, 39, 39);
+INSERT INTO health_linktable VALUES(NULL, 40, 40);
+INSERT INTO health_linktable VALUES(NULL, 41, 41);
+INSERT INTO health_linktable VALUES(NULL, 42, 42);
+INSERT INTO health_linktable VALUES(NULL, 43, 43);
+INSERT INTO health_linktable VALUES(NULL, 44, 44);
+INSERT INTO health_linktable VALUES(NULL, 45, 45);
+INSERT INTO health_linktable VALUES(NULL, 46, 46);
+INSERT INTO health_linktable VALUES(NULL, 47, 47);
+INSERT INTO health_linktable VALUES(NULL, 48, 48);
+INSERT INTO health_linktable VALUES(NULL, 49, 49);
+INSERT INTO health_linktable VALUES(NULL, 50, 50);
+INSERT INTO health_linktable VALUES(NULL, 51, 51);
+INSERT INTO health_linktable VALUES(NULL, 52, 52);
+INSERT INTO health_linktable VALUES(NULL, 53, 53);
+INSERT INTO health_linktable VALUES(NULL, 54, 54);
+INSERT INTO health_linktable VALUES(NULL, 55, 55);
+INSERT INTO health_linktable VALUES(NULL, 56, 56);
+INSERT INTO health_linktable VALUES(NULL, 57, 57);
+INSERT INTO health_linktable VALUES(NULL, 58, 58);
+INSERT INTO health_linktable VALUES(NULL, 59, 59);
+INSERT INTO health_linktable VALUES(NULL, 60, 60);
 SELECT * FROM health_linktable;
 
 -- ADDING FOREIGN KEYS
-ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_locations`
-	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
-ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_health`
-	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
-    
-ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_locations`
-	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
-ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_health`
-	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
-    
-ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_vaccinations`
-	FOREIGN KEY (`vaccinationID`) REFERENCES `vaccinations` (`vaccinationID`);
-ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_covidTestResult`
-	FOREIGN KEY (`testID`) REFERENCES `covidTestResult` (`testID`);
+-- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_locations`
+-- 	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
+-- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_health`
+-- 	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
+--     
+-- ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_locations`
+-- 	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
+-- ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_health`
+-- 	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
+--     
+-- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_vaccinations`
+-- 	FOREIGN KEY (`vaccinationID`) REFERENCES `vaccinations` (`vaccinationID`);
+-- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_covidTestResult`
+-- 	FOREIGN KEY (`testID`) REFERENCES `covidTestResult` (`testID`);
 
 
 ------------------------------------------------
@@ -363,7 +394,7 @@ CONSTRAINT `PK_AdminLog` PRIMARY KEY (`SessionID`)
 -- SELECT * FROM AdminLog;
 
 -- Table for CovidCaseFigures
-DROP TABLE IF EXISTS `CovidCaseFigures`;
+-- DROP TABLE IF EXISTS `CovidCaseFigures`;
 CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
 `CasesReportID` 			INTEGER NOT NULL AUTO_INCREMENT,
 `Date` 						VARCHAR(10) NOT NULL,
