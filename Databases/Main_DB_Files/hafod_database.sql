@@ -18,32 +18,6 @@ INSERT INTO tenants VALUES(NULL, NULL, 4, 'John', 'Doe', '2000-03-24');
 INSERT INTO tenants VALUES(NULL, NULL, 35, 'Sarah', 'Smith', '1988-03-20');
 INSERT INTO tenants VALUES(NULL, NULL, 26, 'Aria', 'Jones', '1990-06-20');
 INSERT INTO tenants VALUES(NULL, NULL, 48, 'Jo', 'Lee', '1970-05-27');
-INSERT INTO carers VALUES(NULL, NULL, 7, 'John', 'Fallen', 'Registered Nurse', '1980-04-06');
-INSERT INTO carers VALUES(NULL, NULL, 3, 'Steve', 'Rogers', 'Support Assistant', '2001-09-04');
-INSERT INTO carers VALUES(NULL, NULL, 11, 'Cameron', 'Diaz', 'Registered Nurse', '1990-03-15');
-INSERT INTO carers VALUES(NULL, NULL, 15, 'Peter', 'Davids', 'Support Assistant', '1987-09-25');
-INSERT INTO carers VALUES(NULL, NULL, 78, 'Clair', 'Davies', 'Support Assistant', '1999-05-27');
-INSERT INTO carers VALUES(NULL, NULL, 42, 'Martin', 'Clunes', 'Support Assistant', '1994-03-07');
-INSERT INTO carers VALUES(NULL, NULL, 24, 'John', 'Wick', 'Registered Nurse', '2000-01-01');
-INSERT INTO carers VALUES(NULL, NULL, 1, 'Dwayne', 'Johnson', 'Support Assistant', '1989-07-24');
-INSERT INTO carers VALUES(NULL, NULL, 15, 'Henry', 'Cavil', 'Support Assistant', '1986-09-25');
-INSERT INTO carers VALUES(NULL, NULL, 13, 'Jordan', 'Peterson', 'Registered Nurse', '1985-04-03');
-INSERT INTO carers VALUES(NULL, NULL, 15, 'John', 'Shoe', 'Registered Nurse', '1994-06-19');
-INSERT INTO carers VALUES(NULL, NULL, 12, 'Mark', 'Henry', 'Registered Nurse', '2001-10-04');
-INSERT INTO carers VALUES(NULL, NULL, 15, 'Ed', 'Sheeran', 'Support Assistant', '2002-01-07');
-INSERT INTO carers VALUES(NULL, NULL, 50, 'Pippa', 'Poppa', 'Registered Nurse', '1963-12-25');
-INSERT INTO carers VALUES(NULL, NULL, 83, 'Winnie', 'Pooh', 'Support Assistant', '1995-02-02');
-INSERT INTO carers VALUES(NULL, NULL, 25, 'Shawn', 'Paul', 'Registered Nurse', '2003-03-18');
-INSERT INTO carers VALUES(NULL, NULL, 24, 'Luke', 'Luwelan', 'Support Assistant', '1969-06-09');
-INSERT INTO carers VALUES(NULL, NULL, 23, 'David', 'Tenent', 'Support Assistant', '1997-07-11');
-INSERT INTO carers VALUES(NULL, NULL, 35, 'Sheila', 'Ronda', 'Support Assistant', '1988-04-14');
-INSERT INTO carers VALUES(NULL, NULL, 49, 'Kevin', 'Lightning', 'Registered Nurse', '1972-03-22');
-INSERT INTO carers VALUES(NULL, NULL, 33, 'Theo', 'Owens', 'Registered Nurse', '1984-12-10');
-INSERT INTO carers VALUES(NULL, NULL, 22, 'Riley', 'Ohmad', 'Registered Nurse', '1966-04-20');
-INSERT INTO carers VALUES(NULL, NULL, 11, 'Isobel', 'Robbins', 'Registered Nurse', '2002-09-03');
-INSERT INTO carers VALUES(NULL, NULL, 14, 'Laura', 'Baitman', 'Registered Nurse', '2000-01-05');
-INSERT INTO carers VALUES(NULL, NULL, 6, 'Maddie', 'Clark', 'Registered Nurse', '1990-07-28');
-INSERT INTO carers VALUES(NULL, NULL, 8, 'Samuel', 'Mossaheb', 'Registered Nurse', '1991-02-23');
 SELECT * FROM tenants;
 
 
@@ -60,10 +34,36 @@ CREATE TABLE IF NOT EXISTS `carers` (
     CONSTRAINT `PK_carers` PRIMARY KEY (`staffNo`)
 );
 -- INSERT data into carers
-INSERT INTO carers VALUES(741, NULL, NULL, 'Tom', 'Cooper', 'Support Assistant', '1968-03-20');
-INSERT INTO carers VALUES(8878, NULL, NULL, 'Charles', 'Osorio', 'Registered Nurse', '2000-02-05');
-INSERT INTO carers VALUES(740, NULL, NULL, 'Ffion', 'Adams', 'Registered Nurse', '1995-08-05');
-INSERT INTO carers VALUES(2345, NULL, NULL, 'Karen', 'Jenkins', 'Support Assistant', '1967-09-05');
+INSERT INTO carers VALUES(741, NULL, 564, 'Tom', 'Cooper', 'Support Assistant', '1968-03-20');
+INSERT INTO carers VALUES(8878, NULL, 812, 'Charles', 'Osorio', 'Registered Nurse', '2000-02-05');
+INSERT INTO carers VALUES(740, NULL, 200, 'Ffion', 'Adams', 'Registered Nurse', '1995-08-05');
+INSERT INTO carers VALUES(2345, NULL, 100, 'Karen', 'Jenkins', 'Support Assistant', '1967-09-05');
+INSERT INTO carers VALUES(12, NULL, 97, 'John', 'Fallen', 'Registered Nurse', '1980-04-06');
+INSERT INTO carers VALUES(32, NULL, 35, 'Steve', 'Rogers', 'Support Assistant', '2001-09-04');
+INSERT INTO carers VALUES(123, NULL, 51, 'Cameron', 'Diaz', 'Registered Nurse', '1990-03-15');
+INSERT INTO carers VALUES(111, NULL, 65, 'Peter', 'Davids', 'Support Assistant', '1987-09-25');
+INSERT INTO carers VALUES(222, NULL, 78, 'Clair', 'Davies', 'Support Assistant', '1999-05-27');
+INSERT INTO carers VALUES(333, NULL, 42, 'Martin', 'Clunes', 'Support Assistant', '1994-03-07');
+INSERT INTO carers VALUES(444, NULL, 84, 'John', 'Wick', 'Registered Nurse', '2000-01-01');
+INSERT INTO carers VALUES(888, NULL, 31, 'Dwayne', 'Johnson', 'Support Assistant', '1989-07-24');
+INSERT INTO carers VALUES(543, NULL, 45, 'Henry', 'Cavil', 'Support Assistant', '1986-09-25');
+INSERT INTO carers VALUES(985, NULL, 73, 'Jordan', 'Peterson', 'Registered Nurse', '1985-04-03');
+INSERT INTO carers VALUES(1231, NULL, 95, 'John', 'Shoe', 'Registered Nurse', '1994-06-19');
+INSERT INTO carers VALUES(4547, NULL, 92, 'Mark', 'Henry', 'Registered Nurse', '2001-10-04');
+INSERT INTO carers VALUES(975, NULL, 115, 'Ed', 'Sheeran', 'Support Assistant', '2002-01-07');
+INSERT INTO carers VALUES(159, NULL, 150, 'Pippa', 'Poppa', 'Registered Nurse', '1963-12-25');
+INSERT INTO carers VALUES(951, NULL, 183, 'Winnie', 'Pooh', 'Support Assistant', '1995-02-02');
+INSERT INTO carers VALUES(357, NULL, 75, 'Shawn', 'Paul', 'Registered Nurse', '2003-03-18');
+INSERT INTO carers VALUES(753, NULL, 94, 'Luke', 'Luwelan', 'Support Assistant', '1969-06-09');
+INSERT INTO carers VALUES(468, NULL, 123, 'David', 'Tenent', 'Support Assistant', '1997-07-11');
+INSERT INTO carers VALUES(852, NULL, 235, 'Sheila', 'Ronda', 'Support Assistant', '1988-04-14');
+INSERT INTO carers VALUES(1201, NULL, 349, 'Kevin', 'Lightning', 'Registered Nurse', '1972-03-22');
+INSERT INTO carers VALUES(350, NULL, 433, 'Theo', 'Owens', 'Registered Nurse', '1984-12-10');
+INSERT INTO carers VALUES(7890, NULL, 322, 'Riley', 'Ohmad', 'Registered Nurse', '1966-04-20');
+INSERT INTO carers VALUES(567, NULL, 111, 'Isobel', 'Robbins', 'Registered Nurse', '2002-09-03');
+INSERT INTO carers VALUES(751, NULL, 44, 'Laura', 'Baitman', 'Registered Nurse', '2000-01-05');
+INSERT INTO carers VALUES(100, NULL, 86, 'Maddie', 'Clark', 'Registered Nurse', '1990-07-28');
+INSERT INTO carers VALUES(101, NULL, 118, 'Samuel', 'Mossaheb', 'Registered Nurse', '1991-02-23');
 SELECT * FROM carers;
 
 
