@@ -14,36 +14,36 @@ CREATE TABLE IF NOT EXISTS `tenants` (
     CONSTRAINT `PK_tenants` PRIMARY KEY (`tenancyNo`)
 );
 -- INSERT data into tenants
-INSERT INTO tenants VALUES(NULL, NULL, 1, 'John', 'Doe', '2000-03-24');
-INSERT INTO tenants VALUES(NULL, NULL, 2, 'Sarah', 'Smith', '1988-03-20');
-INSERT INTO tenants VALUES(NULL, NULL, 3, 'Aria', 'Jones', '1990-06-20');
-INSERT INTO tenants VALUES(NULL, NULL, 4, 'Madog', 'Pitter', '1970-05-27');
-INSERT INTO tenants VALUES(NULL, NULL, 5, 'Jo', 'Lee', '1970-12-04');
-INSERT INTO tenants VALUES(NULL, NULL, 6, 'Hollis', 'Jurica', '1961-09-28');
-INSERT INTO tenants VALUES(NULL, NULL, 7, 'Axel', 'Anselm', '1972-11-05');
-INSERT INTO tenants VALUES(NULL, NULL, 8, 'Tena', 'Léane', '1979-12-29');
-INSERT INTO tenants VALUES(NULL, NULL, 9, 'Rahim', 'Soraya', '1966-05-13');
-INSERT INTO tenants VALUES(NULL, NULL, 10, 'Thando', 'Platon', '1989-11-14');
-INSERT INTO tenants VALUES(NULL, NULL, 11, 'Galen', 'Benjamín', '1965-10-19');
-INSERT INTO tenants VALUES(NULL, NULL, 12, 'Lennard', 'Emilia', '1950-03-14');
-INSERT INTO tenants VALUES(NULL, NULL, 13, 'Theresia', 'Pepito', '1998-01-05');
-INSERT INTO tenants VALUES(NULL, NULL, 14, 'Lizzie', 'Gilmore', '1988-04-26');
-INSERT INTO tenants VALUES(NULL, NULL, 15, 'Zachary', 'Duran', '1987-01-13');
-INSERT INTO tenants VALUES(NULL, NULL, 16, 'David', 'Mcknight', '1971-01-17');
-INSERT INTO tenants VALUES(NULL, NULL, 17, 'Merlin', 'Gibbons', '1994-06-23');
-INSERT INTO tenants VALUES(NULL, NULL, 18, 'Becky', 'Frazier', '1992-01-12');
-INSERT INTO tenants VALUES(NULL, NULL, 19, 'Mazie', 'Beil', '1999-12-12');
-INSERT INTO tenants VALUES(NULL, NULL, 20, 'Jimmy', 'Doherty', '1988-04-30');
-INSERT INTO tenants VALUES(NULL, NULL, 21, 'Aayan', 'Kent', '1995-09-16');
-INSERT INTO tenants VALUES(NULL, NULL, 22, 'Thea', 'Mack', '1985-06-14');
-INSERT INTO tenants VALUES(NULL, NULL, 23, 'Trent', 'Rush', '1990-12-07');
-INSERT INTO tenants VALUES(NULL, NULL, 24, 'Ashlyn', 'Weiss', '1987-04-23');
-INSERT INTO tenants VALUES(NULL, NULL, 25, 'Haidar', 'Perez', '1997-06-13');
-INSERT INTO tenants VALUES(NULL, NULL, 26, 'Tahmid', 'Rennie', '2000-06-23');
-INSERT INTO tenants VALUES(NULL, NULL, 27, 'Preston', 'Paine', '1989-04-16');
-INSERT INTO tenants VALUES(NULL, NULL, 28, 'Judah', 'Brook', '1981-11-26');
-INSERT INTO tenants VALUES(NULL, NULL, 29, 'Cristian', 'Amin', '1979-08-12');
-INSERT INTO tenants VALUES(NULL, NULL, 30, 'Solomon', 'Ventura', '1995-04-08');
+INSERT INTO tenants VALUES(NULL, 1, 1, 'John', 'Doe', '2000-03-24');
+INSERT INTO tenants VALUES(NULL, 2, 2, 'Sarah', 'Smith', '1988-03-20');
+INSERT INTO tenants VALUES(NULL, 3, 3, 'Aria', 'Jones', '1990-06-20');
+INSERT INTO tenants VALUES(NULL, 4, 4, 'Madog', 'Pitter', '1970-05-27');
+INSERT INTO tenants VALUES(NULL, 5, 5, 'Jo', 'Lee', '1970-12-04');
+INSERT INTO tenants VALUES(NULL, 6, 6, 'Hollis', 'Jurica', '1961-09-28');
+INSERT INTO tenants VALUES(NULL, 7, 7, 'Axel', 'Anselm', '1972-11-05');
+INSERT INTO tenants VALUES(NULL, 8, 8, 'Tena', 'Léane', '1979-12-29');
+INSERT INTO tenants VALUES(NULL, 9, 9, 'Rahim', 'Soraya', '1966-05-13');
+INSERT INTO tenants VALUES(NULL, 10, 10, 'Thando', 'Platon', '1989-11-14');
+INSERT INTO tenants VALUES(NULL, 11, 11, 'Galen', 'Benjamín', '1965-10-19');
+INSERT INTO tenants VALUES(NULL, 12, 12, 'Lennard', 'Emilia', '1950-03-14');
+INSERT INTO tenants VALUES(NULL, 13, 13, 'Lizzie', 'Gilmore', '1988-04-26');
+INSERT INTO tenants VALUES(NULL, 14, 14, 'Zachary', 'Duran', '1987-01-13');
+INSERT INTO tenants VALUES(NULL, 15, 15, 'David', 'Mcknight', '1971-01-17');
+INSERT INTO tenants VALUES(NULL, 16, 16, 'Merlin', 'Gibbons', '1994-06-23');
+INSERT INTO tenants VALUES(NULL, 17, 17, 'Becky', 'Frazier', '1992-01-12');
+INSERT INTO tenants VALUES(NULL, 18, 18, 'Mazie', 'Beil', '1999-12-12');
+INSERT INTO tenants VALUES(NULL, 19, 19, 'Jimmy', 'Doherty', '1988-04-30');
+INSERT INTO tenants VALUES(NULL, 20, 20, 'Aayan', 'Kent', '1995-09-16');
+INSERT INTO tenants VALUES(NULL, 21, 21, 'Thea', 'Mack', '1985-06-14');
+INSERT INTO tenants VALUES(NULL, 22, 22, 'Trent', 'Rush', '1990-12-07');
+INSERT INTO tenants VALUES(NULL, 23, 23, 'Ashlyn', 'Weiss', '1987-04-23');
+INSERT INTO tenants VALUES(NULL, 24, 24, 'Haidar', 'Perez', '1997-06-13');
+INSERT INTO tenants VALUES(NULL, 25, 25, 'Tahmid', 'Rennie', '2000-06-23');
+INSERT INTO tenants VALUES(NULL, 26, 26, 'Preston', 'Paine', '1989-04-16');
+INSERT INTO tenants VALUES(NULL, 27, 27, 'Judah', 'Brook', '1981-11-26');
+INSERT INTO tenants VALUES(NULL, 28, 28, 'Cristian', 'Amin', '1979-08-12');
+INSERT INTO tenants VALUES(NULL, 29, 29, 'Solomon', 'Ventura', '1995-04-08');
+INSERT INTO tenants VALUES(NULL, 30, 30, 'Caitlin', 'Jenna', '1987-11-15');
 SELECT * FROM tenants;
 
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `locations` (
 CONSTRAINT `PK_locations` PRIMARY KEY (`locationID`)
 );
 -- INSERT data into locations
--- INSERT INTO `locations` VALUES (null, "CF23 9LJ", 228.6, 139.6, "Cardiff", "Housing", "Ael Y Bryn");
+INSERT INTO `locations` VALUES (null, "CF23 9LJ", 58.6, -2.6, "Cardiff", "Housing", "Ael Y Bryn");
 -- INSERT INTO `locations` VALUES (null, "CF24 9LJ", 139.6, 119.6, "Cardiff", "Housing", "Ael Y Bryn");
 -- INSERT INTO `locations` VALUES (null, "CF24 9LK", 8.6, 9.6, "Cardiff", "Housing", "Ael Y Bryn");
 SELECT * FROM locations;
@@ -129,6 +129,38 @@ INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-17', '2021-03-3', 'Pfizer'
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-20', '2021-03-6', 'Pfizer', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-04', '2021-02-15', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-12', '2021-01-22', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Not Effective');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-11-03', '2021-11-17', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-13', '2021-01-30', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-12-04', '2020-12-18', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-06', '2021-03-24', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-04-01', '2021-04-14', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-06', '2021-01-20', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-30', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-08', '2020-10-22', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-09-24', '2020-10-06', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-01', '2020-10-16', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-27', '2021-03-10', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-30', '2021-02-14', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-26', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-12-09', '2020-12-23', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-01', '2021-01-16', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-13', '2021-03-23', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-20', '2021-11-06', 'Pfizer', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
 SELECT * FROM vaccinations;
 
 
@@ -173,6 +205,37 @@ INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
 INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-03-11', '2021-04-05');
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-03-11', '2021-03-20');
+
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-05-01', '2021-05-22');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-05-02', '2021-05-18');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2020-05-03', '2021-05-16');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-08-13', '2021-08-30');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2020-08-14', '2021-08-29');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-08-15', '2021-09-12');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-09-21', '2020-10-24');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-02-22', '2021-03-12');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-02-06', '2021-02-12');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-04-16', '2021-04-30');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-11-11', '2021-12-25');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2021-01-03', '2021-02-12');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-05-12', '2020-06-18');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-02-11', '2021-03-02');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-10-17', '2020-10-31');
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-07-15', '2021-08-01');
+INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-03-07', '2021-03-21');
 SELECT * FROM covidTestResult;
 
 
@@ -185,10 +248,36 @@ CREATE TABLE IF NOT EXISTS `health_linktable` (
     CONSTRAINT `PK_health_linktable` PRIMARY KEY (`healthID`)
 );
 -- INSERT data into health_linktable
-INSERT INTO health_linktable VALUES(NULL, NULL, NULL);
-INSERT INTO health_linktable VALUES(NULL, NULL, NULL);
-INSERT INTO health_linktable VALUES(NULL, NULL, NULL);
-INSERT INTO health_linktable VALUES(NULL, NULL, NULL);
+INSERT INTO health_linktable VALUES(NULL, 1, 1);
+INSERT INTO health_linktable VALUES(NULL, 2, 2);
+INSERT INTO health_linktable VALUES(NULL, 3, 3);
+INSERT INTO health_linktable VALUES(NULL, 4, 4);
+INSERT INTO health_linktable VALUES(NULL, 5, 5);
+INSERT INTO health_linktable VALUES(NULL, 6, 6);
+INSERT INTO health_linktable VALUES(NULL, 7, 7);
+INSERT INTO health_linktable VALUES(NULL, 8, 8);
+INSERT INTO health_linktable VALUES(NULL, 9, 9);
+INSERT INTO health_linktable VALUES(NULL, 10, 10);
+INSERT INTO health_linktable VALUES(NULL, 11, 11);
+INSERT INTO health_linktable VALUES(NULL, 12, 12);
+INSERT INTO health_linktable VALUES(NULL, 13, 13);
+INSERT INTO health_linktable VALUES(NULL, 14, 14);
+INSERT INTO health_linktable VALUES(NULL, 15, 15);
+INSERT INTO health_linktable VALUES(NULL, 16, 16);
+INSERT INTO health_linktable VALUES(NULL, 17, 17);
+INSERT INTO health_linktable VALUES(NULL, 18, 18);
+INSERT INTO health_linktable VALUES(NULL, 19, 19);
+INSERT INTO health_linktable VALUES(NULL, 20, 20);
+INSERT INTO health_linktable VALUES(NULL, 21, 21);
+INSERT INTO health_linktable VALUES(NULL, 22, 22);
+INSERT INTO health_linktable VALUES(NULL, 23, 23);
+INSERT INTO health_linktable VALUES(NULL, 24, 24);
+INSERT INTO health_linktable VALUES(NULL, 25, 25);
+INSERT INTO health_linktable VALUES(NULL, 26, 26);
+INSERT INTO health_linktable VALUES(NULL, 27, 27);
+INSERT INTO health_linktable VALUES(NULL, 28, 28);
+INSERT INTO health_linktable VALUES(NULL, 29, 29);
+INSERT INTO health_linktable VALUES(NULL, 30, 30);
 SELECT * FROM health_linktable;
 
 -- ADDING FOREIGN KEYS
