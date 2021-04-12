@@ -281,9 +281,6 @@ def userLoginTracker():
             cur.close()
    return None
 
-@app.route("/demoMap", methods = ['GET', 'POST'])
-def loadMap():
-    return render_template("demoMap.html")
 
 ## Peer-Programming with Abdul and Archie
 # Function that reads the API URL
