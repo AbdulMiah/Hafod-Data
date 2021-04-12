@@ -46,7 +46,6 @@ INSERT INTO tenants VALUES(NULL, 29, 29, 'Solomon', 'Ventura', '1995-04-08');
 INSERT INTO tenants VALUES(NULL, 30, 30, 'Caitlin', 'Jenna', '1987-11-15');
 SELECT * FROM tenants;
 
-
 -- Table for carers
 DROP TABLE IF EXISTS `carers`;
 CREATE TABLE IF NOT EXISTS `carers` (
@@ -91,6 +90,8 @@ INSERT INTO carers VALUES(751, 58, 44, 'Laura', 'Baitman', 'Registered Nurse', '
 INSERT INTO carers VALUES(100, 59, 86, 'Maddie', 'Clark', 'Registered Nurse', '1990-07-28');
 INSERT INTO carers VALUES(101, 60, 118, 'Samuel', 'Mossaheb', 'Registered Nurse', '1991-02-23');
 SELECT * FROM carers;
+
+
 
 
 -- Table for locations
@@ -423,3 +424,26 @@ CONSTRAINT `PK_VaccinationFigures` PRIMARY KEY (`VaccinatedID`)
 -- INSERT data into VaccinationFigures
 INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
 SELECT * FROM VaccinationFigures;
+
+-- VIEWS 
+CREATE VIEW tenantsVaccinations AS
+SELECT tenants.tenancyNo, tenants.healthID, tenants.locationID,
+tenants.dob, vaccinations.vaccinated, vaccinations.vaccinationType, vaccinations.reasonForNoVaccination
+FROM tenants
+INNER JOIN health_linktable 
+ON tenants.healthID = health_linktable.healthID
+INNER JOIN vaccinations
+ON health_linktable.vaccinationID = vaccinations.vaccinationID;
+-- Create view of tenants who are 
+SELECT * FROM tenantsVaccinations;
+
+-- FUNCTIONS 
+DELIMITER //
+CREATE PROCEDURE countNumberOfVaccinatedTenants()
+BEGIN
+SELECT COUNT(tenancyNO) AS TotalTenantsVaccinated FROM tenantsVaccinations
+WHERE vaccinated = "yes";
+END //
+DELIMITER ;
+
+CALL countNumberOfVaccinatedTenants();
