@@ -33,6 +33,7 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
+    call_numberOfVaccinatedTenants()
     return render_template('mainPage.html', title='Hafod')
 
 # Temp redirect route to the login page - Abdul
@@ -391,6 +392,27 @@ def infectedMap():
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
 # def vaccinesMap():
 #     return render_template("vaccinationsHeatmap.html")
+
+##Function to call number of vaccinated tennants
+##Returns number of vaccinated tennants as an integer
+def call_numberOfVaccinatedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('countNumberOfVaccinatedTenants')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            totalNumberOfVaccinatedTenants = int(res[0][0])
+            print("Total Number Of Vaccinated Tenants:",totalNumberOfVaccinatedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfVaccinatedTenants
+
 
 if __name__ == "__main__":
     app.run(debug=True)
