@@ -33,8 +33,9 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    call_numberOfVaccinatedTenants()
-    return render_template('mainPage.html', title='Hafod')
+    vaccinated = call_numberOfVaccinatedTenants()
+    nonVaccinated = call_numberOfNonVaccinatedTenants()
+    return render_template('mainPage.html', title='Hafod', vaccinated=vaccinated, nonVaccinated=nonVaccinated)
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -232,6 +233,14 @@ def loadCovidFigures():
         flash(msg)
         return redirect("/")
 
+@app.route("/VaccinatedBarGraph", methods = ['GET', 'POST'])
+def loadVaccinatedGraph():
+    if request.method == "GET":
+        vaccinated = call_numberOfVaccinatedTenants()
+        nonVaccinated = call_numberOfNonVaccinatedTenants()
+        return render_template("VaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+
+
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -413,6 +422,25 @@ def call_numberOfVaccinatedTenants():
         conn.close()
         cur.close()
     return totalNumberOfVaccinatedTenants
+
+def call_numberOfNonVaccinatedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('countNumberOfNonVaccinatedTenants')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfNonVaccinatedTenants = int(res[0][0])
+            print("Total Number Of Non-vaccinated Tenants:",totalNumberOfNonVaccinatedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfNonVaccinatedTenants
 
 
 if __name__ == "__main__":
