@@ -20,3 +20,13 @@ END //
 DELIMITER ;
 
 CALL countNumberOfVaccinatedTenants();
+
+DELIMITER //
+CREATE PROCEDURE countNumberOfNonVaccinatedTenants()
+BEGIN
+SELECT COUNT(tenancyNO) AS TotalTenantsVaccinated FROM tenantsVaccinations
+WHERE vaccinated = "no";
+END //
+DELIMITER ;
+
+CALL countNumberOfNonVaccinatedTenants();

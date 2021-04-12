@@ -403,6 +403,7 @@ def call_numberOfVaccinatedTenants():
         cur.callproc('countNumberOfVaccinatedTenants')
         for result in cur.stored_results():
             res = result.fetchall()
+            ##res returns a tuple within a list
             totalNumberOfVaccinatedTenants = int(res[0][0])
             print("Total Number Of Vaccinated Tenants:",totalNumberOfVaccinatedTenants) #Prints returned value to console
 
