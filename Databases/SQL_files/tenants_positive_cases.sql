@@ -9,7 +9,7 @@ JOIN covidTestResult ctr ON h.testID = ctr.testID;
 SELECT * FROM tenantsCases;
 
 DELIMITER //
-CREATE FUNCTION COVIDPositiveCases()
+CREATE FUNCTION tenantsPositiveCases()
 RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
@@ -21,7 +21,7 @@ END //
 DELIMITER ;
 
 DELIMITER //
-CREATE FUNCTION COVIDNegativeCases()
+CREATE FUNCTION tenantsNegativeCases()
 RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
@@ -32,5 +32,5 @@ BEGIN
 END //
 DELIMITER ;
 
-SELECT COVIDPositiveCases();
-SELECT COVIDNegativeCases();
+SELECT tenantsPositiveCases();
+SELECT tenantsNegativeCases();
