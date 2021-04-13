@@ -35,7 +35,9 @@ config = {
 def loadMainPage():
     vaccinated = call_numberOfVaccinatedTenants()
     nonVaccinated = call_numberOfNonVaccinatedTenants()
-    return render_template('mainPage.html', title='Hafod', vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+    tenantsInfected = call_numberOfInfectedTenants()
+    tenantsNotInfected = call_numberOfNonInfectedTenants()
+    return render_template('mainPage.html', title='Hafod', vaccinated=vaccinated, nonVaccinated=nonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -240,7 +242,12 @@ def loadVaccinatedGraph():
         nonVaccinated = call_numberOfNonVaccinatedTenants()
         return render_template("VaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
 
-
+@app.route("/tenantsInfected", methods = ['GET', 'POST'])
+def loadTenantsInfectedGraph():
+    if request.method == "GET":
+        tenantsInfected = call_numberOfInfectedTenants()
+        tenantsNotInfected = call_numberOfNonInfectedTenants()
+        return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -439,6 +446,43 @@ def call_numberOfNonVaccinatedTenants():
         cur.close()
     return totalNumberOfNonVaccinatedTenants
 
+def call_numberOfInfectedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('tenantsPositiveCases')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfInfectedTenants = int(res[0][0])
+            print("Total Number Of Infected Tenants:",totalNumberOfInfectedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfInfectedTenants
+
+def call_numberOfNonInfectedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('tenantsNegativeCases')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfNonInfectedTenants = int(res[0][0])
+            print("Total Number Of Non Infected Tenants:",totalNumberOfNonInfectedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfNonInfectedTenants
 
 if __name__ == "__main__":
     app.run(debug=True)

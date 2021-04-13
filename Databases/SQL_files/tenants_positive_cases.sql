@@ -9,6 +9,29 @@ JOIN covidTestResult ctr ON h.testID = ctr.testID;
 SELECT * FROM tenantsCases;
 
 DELIMITER //
+CREATE PROCEDURE tenantsPositiveCases()
+BEGIN
+	SELECT COUNT(*)
+	FROM tenantsCases
+	WHERE positiveCase = 'yes';
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE tenantsNegativeCases()
+BEGIN
+	SELECT COUNT(*)
+	FROM tenantsCases
+	WHERE positiveCase = 'no';
+END //
+DELIMITER ;
+
+CALL tenantsPositiveCases();
+CALL tenantsNegativeCases();
+
+
+-------- [ FUNCTIONS ] --------------------------------------------------------------------
+DELIMITER //
 CREATE FUNCTION tenantsPositiveCases()
 RETURNS VARCHAR(50)
 BEGIN
