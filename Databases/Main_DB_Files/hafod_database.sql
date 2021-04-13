@@ -46,7 +46,6 @@ INSERT INTO tenants VALUES(NULL, 29, 29, 'Solomon', 'Ventura', '1995-04-08');
 INSERT INTO tenants VALUES(NULL, 30, 30, 'Caitlin', 'Jenna', '1987-11-15');
 SELECT * FROM tenants;
 
-
 -- Table for carers
 DROP TABLE IF EXISTS `carers`;
 CREATE TABLE IF NOT EXISTS `carers` (
@@ -60,15 +59,43 @@ CREATE TABLE IF NOT EXISTS `carers` (
     CONSTRAINT `PK_carers` PRIMARY KEY (`staffNo`)
 );
 -- INSERT data into carers
-INSERT INTO carers VALUES(741, NULL, NULL, 'Tom', 'Cooper', 'Support Assistant', '1968-03-20');
-INSERT INTO carers VALUES(8878, NULL, NULL, 'Charles', 'Osorio', 'Registered Nurse', '2000-02-05');
-INSERT INTO carers VALUES(740, NULL, NULL, 'Ffion', 'Adams', 'Registered Nurse', '1995-08-05');
-INSERT INTO carers VALUES(2345, NULL, NULL, 'Karen', 'Jenkins', 'Support Assistant', '1967-09-05');
+INSERT INTO carers VALUES(741, 31, 564, 'Tom', 'Cooper', 'Support Assistant', '1968-03-20');
+INSERT INTO carers VALUES(8878, 32, 812, 'Charles', 'Osorio', 'Registered Nurse', '2000-02-05');
+INSERT INTO carers VALUES(740, 33, 200, 'Ffion', 'Adams', 'Registered Nurse', '1995-08-05');
+INSERT INTO carers VALUES(2345, 34, 100, 'Karen', 'Jenkins', 'Support Assistant', '1967-09-05');
+INSERT INTO carers VALUES(12, 35, 97, 'John', 'Fallen', 'Registered Nurse', '1980-04-06');
+INSERT INTO carers VALUES(32, 36, 35, 'Steve', 'Rogers', 'Support Assistant', '2001-09-04');
+INSERT INTO carers VALUES(123, 37, 51, 'Cameron', 'Diaz', 'Registered Nurse', '1990-03-15');
+INSERT INTO carers VALUES(111, 38, 65, 'Peter', 'Davids', 'Support Assistant', '1987-09-25');
+INSERT INTO carers VALUES(222, 39, 78, 'Clair', 'Davies', 'Support Assistant', '1999-05-27');
+INSERT INTO carers VALUES(333, 40, 42, 'Martin', 'Clunes', 'Support Assistant', '1994-03-07');
+INSERT INTO carers VALUES(444, 41, 84, 'John', 'Wick', 'Registered Nurse', '2000-01-01');
+INSERT INTO carers VALUES(888, 42, 31, 'Dwayne', 'Johnson', 'Support Assistant', '1989-07-24');
+INSERT INTO carers VALUES(543, 43, 45, 'Henry', 'Cavil', 'Support Assistant', '1986-09-25');
+INSERT INTO carers VALUES(985, 44, 73, 'Jordan', 'Peterson', 'Registered Nurse', '1985-04-03');
+INSERT INTO carers VALUES(1231, 45, 95, 'John', 'Shoe', 'Registered Nurse', '1994-06-19');
+INSERT INTO carers VALUES(4547, 46, 92, 'Mark', 'Henry', 'Registered Nurse', '2001-10-04');
+INSERT INTO carers VALUES(975, 47, 115, 'Ed', 'Sheeran', 'Support Assistant', '2002-01-07');
+INSERT INTO carers VALUES(159, 48, 150, 'Pippa', 'Poppa', 'Registered Nurse', '1963-12-25');
+INSERT INTO carers VALUES(951, 49, 183, 'Winnie', 'Pooh', 'Support Assistant', '1995-02-02');
+INSERT INTO carers VALUES(357, 50, 75, 'Shawn', 'Paul', 'Registered Nurse', '2003-03-18');
+INSERT INTO carers VALUES(753, 51, 94, 'Luke', 'Luwelan', 'Support Assistant', '1969-06-09');
+INSERT INTO carers VALUES(468, 52, 123, 'David', 'Tenent', 'Support Assistant', '1997-07-11');
+INSERT INTO carers VALUES(852, 53, 235, 'Sheila', 'Ronda', 'Support Assistant', '1988-04-14');
+INSERT INTO carers VALUES(1201, 54, 349, 'Kevin', 'Lightning', 'Registered Nurse', '1972-03-22');
+INSERT INTO carers VALUES(350, 55, 433, 'Theo', 'Owens', 'Registered Nurse', '1984-12-10');
+INSERT INTO carers VALUES(7890, 56, 322, 'Riley', 'Ohmad', 'Registered Nurse', '1966-04-20');
+INSERT INTO carers VALUES(567, 57, 111, 'Isobel', 'Robbins', 'Registered Nurse', '2002-09-03');
+INSERT INTO carers VALUES(751, 58, 44, 'Laura', 'Baitman', 'Registered Nurse', '2000-01-05');
+INSERT INTO carers VALUES(100, 59, 86, 'Maddie', 'Clark', 'Registered Nurse', '1990-07-28');
+INSERT INTO carers VALUES(101, 60, 118, 'Samuel', 'Mossaheb', 'Registered Nurse', '1991-02-23');
 SELECT * FROM carers;
 
 
+
+
 -- Table for locations
-DROP TABLE IF EXISTS `locations`;
+-- DROP TABLE IF EXISTS `locations`;
 CREATE TABLE IF NOT EXISTS `locations` (
 `locationID`	 INTEGER NOT NULL AUTO_INCREMENT,
 `postcode`       VARCHAR(20) NOT NULL, 
@@ -80,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `locations` (
 CONSTRAINT `PK_locations` PRIMARY KEY (`locationID`)
 );
 -- INSERT data into locations
-INSERT INTO `locations` VALUES (null, "CF23 9LJ", 58.6, -2.6, "Cardiff", "Housing", "Ael Y Bryn");
+-- INSERT INTO `locations` VALUES (null, "CF23 9LJ", 58.6, -2.6, "Cardiff", "Housing", "Ael Y Bryn");
 -- INSERT INTO `locations` VALUES (null, "CF24 9LJ", 139.6, 119.6, "Cardiff", "Housing", "Ael Y Bryn");
 -- INSERT INTO `locations` VALUES (null, "CF24 9LK", 8.6, 9.6, "Cardiff", "Housing", "Ael Y Bryn");
 SELECT * FROM locations;
@@ -141,7 +168,7 @@ INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-06', '2021-03-24', 'Modern
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-04-01', '2021-04-14', 'Moderna', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-06', '2021-01-20', 'Pfizer', 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-30', 'Moderna', 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-23', 'Moderna', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-08', '2020-10-22', 'Pfizer', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
@@ -278,23 +305,54 @@ INSERT INTO health_linktable VALUES(NULL, 27, 27);
 INSERT INTO health_linktable VALUES(NULL, 28, 28);
 INSERT INTO health_linktable VALUES(NULL, 29, 29);
 INSERT INTO health_linktable VALUES(NULL, 30, 30);
+
+INSERT INTO health_linktable VALUES(NULL, 31, 31);
+INSERT INTO health_linktable VALUES(NULL, 32, 32);
+INSERT INTO health_linktable VALUES(NULL, 33, 33);
+INSERT INTO health_linktable VALUES(NULL, 34, 34);
+INSERT INTO health_linktable VALUES(NULL, 35, 35);
+INSERT INTO health_linktable VALUES(NULL, 36, 36);
+INSERT INTO health_linktable VALUES(NULL, 37, 37);
+INSERT INTO health_linktable VALUES(NULL, 38, 38);
+INSERT INTO health_linktable VALUES(NULL, 39, 39);
+INSERT INTO health_linktable VALUES(NULL, 40, 40);
+INSERT INTO health_linktable VALUES(NULL, 41, 41);
+INSERT INTO health_linktable VALUES(NULL, 42, 42);
+INSERT INTO health_linktable VALUES(NULL, 43, 43);
+INSERT INTO health_linktable VALUES(NULL, 44, 44);
+INSERT INTO health_linktable VALUES(NULL, 45, 45);
+INSERT INTO health_linktable VALUES(NULL, 46, 46);
+INSERT INTO health_linktable VALUES(NULL, 47, 47);
+INSERT INTO health_linktable VALUES(NULL, 48, 48);
+INSERT INTO health_linktable VALUES(NULL, 49, 49);
+INSERT INTO health_linktable VALUES(NULL, 50, 50);
+INSERT INTO health_linktable VALUES(NULL, 51, 51);
+INSERT INTO health_linktable VALUES(NULL, 52, 52);
+INSERT INTO health_linktable VALUES(NULL, 53, 53);
+INSERT INTO health_linktable VALUES(NULL, 54, 54);
+INSERT INTO health_linktable VALUES(NULL, 55, 55);
+INSERT INTO health_linktable VALUES(NULL, 56, 56);
+INSERT INTO health_linktable VALUES(NULL, 57, 57);
+INSERT INTO health_linktable VALUES(NULL, 58, 58);
+INSERT INTO health_linktable VALUES(NULL, 59, 59);
+INSERT INTO health_linktable VALUES(NULL, 60, 60);
 SELECT * FROM health_linktable;
 
 -- ADDING FOREIGN KEYS
-ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_locations`
-	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
-ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_health`
-	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
-    
-ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_locations`
-	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
-ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_health`
-	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
-    
-ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_vaccinations`
-	FOREIGN KEY (`vaccinationID`) REFERENCES `vaccinations` (`vaccinationID`);
-ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_covidTestResult`
-	FOREIGN KEY (`testID`) REFERENCES `covidTestResult` (`testID`);
+-- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_locations`
+-- 	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
+-- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_health`
+-- 	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
+--     
+-- ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_locations`
+-- 	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
+-- ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_health`
+-- 	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
+--     
+-- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_vaccinations`
+-- 	FOREIGN KEY (`vaccinationID`) REFERENCES `vaccinations` (`vaccinationID`);
+-- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_covidTestResult`
+-- 	FOREIGN KEY (`testID`) REFERENCES `covidTestResult` (`testID`);
 
 
 ------------------------------------------------
@@ -337,7 +395,7 @@ CONSTRAINT `PK_AdminLog` PRIMARY KEY (`SessionID`)
 -- SELECT * FROM AdminLog;
 
 -- Table for CovidCaseFigures
-DROP TABLE IF EXISTS `CovidCaseFigures`;
+-- DROP TABLE IF EXISTS `CovidCaseFigures`;
 CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
 `CasesReportID` 			INTEGER NOT NULL AUTO_INCREMENT,
 `Date` 						VARCHAR(10) NOT NULL,
@@ -366,3 +424,26 @@ CONSTRAINT `PK_VaccinationFigures` PRIMARY KEY (`VaccinatedID`)
 -- INSERT data into VaccinationFigures
 INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
 SELECT * FROM VaccinationFigures;
+
+-- VIEWS 
+CREATE VIEW tenantsVaccinations AS
+SELECT tenants.tenancyNo, tenants.healthID, tenants.locationID,
+tenants.dob, vaccinations.vaccinated, vaccinations.vaccinationType, vaccinations.reasonForNoVaccination
+FROM tenants
+INNER JOIN health_linktable 
+ON tenants.healthID = health_linktable.healthID
+INNER JOIN vaccinations
+ON health_linktable.vaccinationID = vaccinations.vaccinationID;
+-- Create view of tenants who are 
+SELECT * FROM tenantsVaccinations;
+
+-- FUNCTIONS 
+DELIMITER //
+CREATE PROCEDURE countNumberOfVaccinatedTenants()
+BEGIN
+SELECT COUNT(tenancyNO) AS TotalTenantsVaccinated FROM tenantsVaccinations
+WHERE vaccinated = "yes";
+END //
+DELIMITER ;
+
+CALL countNumberOfVaccinatedTenants();

@@ -1,0 +1,48 @@
+{% extends 'generalLayout.html' %}
+
+{% block tenantsCovidCases %}
+<!-- Chart.js import -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<!-- Chart js canvas -->
+<br>
+<canvas id="myChart" width="400px" height="100px"></canvas>
+
+<script>
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Positive', 'Negative'],
+        datasets: [{
+            label: 'Graph of Number Residences Infected',
+
+            data: [{{ tenantsInfected }}, {{ tenantsNotInfected }} ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+
+</script>
+
+
+
+{% endblock %}

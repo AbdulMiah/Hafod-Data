@@ -3,6 +3,7 @@
 {% block mainPage %}
 <link rel="stylesheet" href="static/css/heatmaps.css">
 <link rel="stylesheet" href="static/css/successMessage.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <br>
 
 {% with messages = get_flashed_messages() %}
@@ -53,6 +54,37 @@
       </center>
     </div>
   </div>
+
+  <div class="row">
+    <div id="maps">
+      <canvas id="tenantsVaccinationChart"></canvas>
+    </div>
+
+    <!-- Description -->
+    <div class="jumbotron" id="descriptions">
+      <center>
+        <p>This bar graph shows the number of vaccinated and non-vaccinated Residences
+           <a href="/tenantsVaccinated">Click here</a> for a larger view of the bar chart.
+        </p>
+      </center>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="maps">
+      <canvas id="tenantsInfectedChart"></canvas>
+    </div>
+
+    <!-- Description -->
+    <div class="jumbotron" id="descriptions">
+      <center>
+        <p>This bar graph shows the number of Residents who are infected and not infected
+          by COVID-19.
+           <a href="/tenantsInfected">Click here</a> for a larger view of the bar chart.
+        </p>
+      </center>
+    </div>
+  </div>
   <!-- Part of postponed user story issue #31 -->
  <!-- <div class="row">
    <div id="maps">
@@ -70,4 +102,72 @@
 
 </div>
 <br>
+
+<script>
+
+var tenantsVaccChart = document.getElementById('tenantsVaccinationChart').getContext('2d');
+var myChart = new Chart(tenantsVaccChart, {
+    type: 'bar',
+    data: {
+        labels: ['Vaccinated', 'Not Vaccinated'],
+        datasets: [{
+            label: 'Graph of Number Residences Vaccinated',
+
+            data: [{{ tenantsVaccinated }}, {{ tenantsNonVaccinated }} ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+
+var tenantsInfChart = document.getElementById('tenantsInfectedChart').getContext('2d');
+var myChart = new Chart(tenantsInfChart, {
+    type: 'bar',
+    data: {
+        labels: ['Positive', 'Negative'],
+        datasets: [{
+            label: 'Graph of Number Residences Infected',
+
+            data: [{{ tenantsInfected }}, {{ tenantsNotInfected }} ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+
+</script>
+
+
 {% endblock %}

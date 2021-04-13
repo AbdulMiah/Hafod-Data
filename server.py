@@ -33,7 +33,11 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    return render_template('mainPage.html', title='Hafod')
+    tenantsVaccinated = call_numberOfVaccinatedTenants()
+    tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
+    tenantsInfected = call_numberOfInfectedTenants()
+    tenantsNotInfected = call_numberOfNonInfectedTenants()
+    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -231,6 +235,19 @@ def loadCovidFigures():
         flash(msg)
         return redirect("/")
 
+@app.route("/tenantsVaccinated", methods = ['GET', 'POST'])
+def loadVaccinatedGraph():
+    if request.method == "GET":
+        vaccinated = call_numberOfVaccinatedTenants()
+        nonVaccinated = call_numberOfNonVaccinatedTenants()
+        return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+
+@app.route("/tenantsInfected", methods = ['GET', 'POST'])
+def loadTenantsInfectedGraph():
+    if request.method == "GET":
+        tenantsInfected = call_numberOfInfectedTenants()
+        tenantsNotInfected = call_numberOfNonInfectedTenants()
+        return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -271,9 +288,6 @@ def userLoginTracker():
             cur.close()
    return None
 
-@app.route("/demoMap", methods = ['GET', 'POST'])
-def loadMap():
-    return render_template("demoMap.html")
 
 ## Peer-Programming with Abdul and Archie
 # Function that reads the API URL
@@ -391,6 +405,84 @@ def infectedMap():
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
 # def vaccinesMap():
 #     return render_template("vaccinationsHeatmap.html")
+
+##Function to call number of vaccinated tennants
+##Returns number of vaccinated tennants as an integer
+def call_numberOfVaccinatedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('countNumberOfVaccinatedTenants')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfVaccinatedTenants = int(res[0][0])
+            print("Total Number Of Vaccinated Tenants:",totalNumberOfVaccinatedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfVaccinatedTenants
+
+def call_numberOfNonVaccinatedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('countNumberOfNonVaccinatedTenants')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfNonVaccinatedTenants = int(res[0][0])
+            print("Total Number Of Non-vaccinated Tenants:",totalNumberOfNonVaccinatedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfNonVaccinatedTenants
+
+def call_numberOfInfectedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('tenantsPositiveCases')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfInfectedTenants = int(res[0][0])
+            print("Total Number Of Infected Tenants:",totalNumberOfInfectedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfInfectedTenants
+
+def call_numberOfNonInfectedTenants():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.callproc('tenantsNegativeCases')
+        for result in cur.stored_results():
+            res = result.fetchall()
+            ##res returns a tuple within a list
+            totalNumberOfNonInfectedTenants = int(res[0][0])
+            print("Total Number Of Non Infected Tenants:",totalNumberOfNonInfectedTenants) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfNonInfectedTenants
 
 if __name__ == "__main__":
     app.run(debug=True)
