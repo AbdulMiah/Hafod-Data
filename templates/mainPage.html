@@ -64,7 +64,7 @@
     <div class="jumbotron" id="descriptions">
       <center>
         <p>This bar graph shows the number of vaccinated and non-vaccinated Residences
-           <a href="/VaccinatedBarGraph">Click here</a> for a larger view of the bargraph.
+           <a href="/tenantsVaccinated">Click here</a> for a larger view of the bar chart.
         </p>
       </center>
     </div>
@@ -80,7 +80,7 @@
       <center>
         <p>This bar graph shows the number of Residents who are infected and not infected
           by COVID-19.
-           <a href="/tenantsInfected">Click here</a> for a larger view of the bargraph.
+           <a href="/tenantsInfected">Click here</a> for a larger view of the bar chart.
         </p>
       </center>
     </div>
@@ -113,7 +113,7 @@ var myChart = new Chart(tenantsVaccChart, {
         datasets: [{
             label: 'Graph of Number Residences Vaccinated',
 
-            data: [{{ vaccinated }}, {{ nonVaccinated }} ],
+            data: [{{ tenantsVaccinated }}, {{ tenantsNonVaccinated }} ],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

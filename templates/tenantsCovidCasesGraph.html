@@ -14,9 +14,9 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Vaccinated', 'Not Vaccinated'],
+        labels: ['Positive', 'Negative'],
         datasets: [{
-            label: 'Graph of Number Residences Vaccinated',
+            label: 'Graph of Number Residences Infected',
 
             data: [{{ tenantsInfected }}, {{ tenantsNotInfected }} ],
             backgroundColor: [

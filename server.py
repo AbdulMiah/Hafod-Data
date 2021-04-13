@@ -33,11 +33,11 @@ config = {
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
 def loadMainPage():
-    vaccinated = call_numberOfVaccinatedTenants()
-    nonVaccinated = call_numberOfNonVaccinatedTenants()
+    tenantsVaccinated = call_numberOfVaccinatedTenants()
+    tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
     tenantsInfected = call_numberOfInfectedTenants()
     tenantsNotInfected = call_numberOfNonInfectedTenants()
-    return render_template('mainPage.html', title='Hafod', vaccinated=vaccinated, nonVaccinated=nonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -235,12 +235,12 @@ def loadCovidFigures():
         flash(msg)
         return redirect("/")
 
-@app.route("/VaccinatedBarGraph", methods = ['GET', 'POST'])
+@app.route("/tenantsVaccinated", methods = ['GET', 'POST'])
 def loadVaccinatedGraph():
     if request.method == "GET":
         vaccinated = call_numberOfVaccinatedTenants()
         nonVaccinated = call_numberOfNonVaccinatedTenants()
-        return render_template("VaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+        return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
 
 @app.route("/tenantsInfected", methods = ['GET', 'POST'])
 def loadTenantsInfectedGraph():
