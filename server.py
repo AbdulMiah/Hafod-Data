@@ -39,10 +39,35 @@ def loadMainPage():
     tenantsNotInfected = call_numberOfNonInfectedTenants()
     return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
+# Redirect to Edit Page - Archie and Abdul
+@app.route("/Edit", methods = ['GET', 'POST'])
+def loadeditPage():
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM tenants")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editPage.html", data=allData)
+
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
 def loadLoginPage():
+
     return render_template("loginPage.html")
+
 
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
