@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session
+import os
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
@@ -59,8 +60,35 @@ def loadeditPage():
             conn.close()
             cur.close()
             print("End of fetch")
-            print(allData)
+            #print(allData)
             return render_template("editPage.html", data=allData)
+
+    if request.method == 'POST':
+        print("Search Request Submitted")
+        tenantName = request.form.get("searchTenantName", default="Error")
+        allData = []
+        print(tenantName)
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM tenants "
+                    "WHERE firstName LIKE ?")
+            value = 'tenantName%'
+            cur.execute(query, value)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            #print(allData)
+            return render_template("editPage.html", data=allData)
+
+
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
