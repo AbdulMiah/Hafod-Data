@@ -14,15 +14,17 @@
     </tr>
   </thead>
   <tbody>
+  {% for d in data %}
     <tr>
-      <th scope="row">123</th>
-      <td>1</td>
-      <td>1</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>19/05/1995</td>
+      <td>{{d[0]}}</td>
+      <td>{{d[1]}}</td>
+      <td>{{d[2]}}</td>
+      <td>{{d[3]}}</td>
+      <td>{{d[4]}}</td>
+      <td>{{d[5]}}</td>
     </tr>
-    <tr>
+  {% endfor %}
+    <!-- <tr>
       <th scope="row">234</th>
       <td>2</td>
       <td>2</td>
@@ -37,7 +39,7 @@
       <td>Example2 First Name</td>
       <td>Example2 Surname</td>
       <td>01/01/2000</td>
-    </tr>
+    </tr> -->
   </tbody>
 </table>
 
