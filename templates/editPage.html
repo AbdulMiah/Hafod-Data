@@ -1,18 +1,27 @@
 {% extends 'generalLayout.html' %}
 
 {% block editTable %}
+<style>
+  .searchBar {
+    width: 50%;
+  }
+</style>
 
-<div class="input-group rounded">
-  <form id="searchTenantsForm" method="post" onsubmit="searchForTenants()">
-  <input type="search" name="searchTenantName" class="form-control rounded" placeholder="Search for tenants" aria-label="Search" aria-describedby="search-addon" />
-  <button type="submit" class="input-group-text border-0" id="search-addon">
-    <i class="fa fa-search"></i>
-  </buttin>
-  </form>
-</div>
-
-<span id="txt"></span>
-
+<center><br>
+  <div class="searchBar">
+    <form id="searchTenantsForm" method="post" onsubmit="searchForTenants()">
+      <div class="input-group">
+        <input type="text" class="form-control" name="searchTenantName" placeholder="Search for tenants">
+        <div class="input-group-append">
+          <button class="btn btn-secondary" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+      </div>
+    </div>
+    </form>
+  </div><br>
+  <span id="txt"></span>
+</center>
 
 
 <table class="table">
@@ -37,28 +46,10 @@
       <td>{{d[5]}}</td>
     </tr>
     {% endfor %}
-    <!-- <tr>
-      <th scope="row">234</th>
-      <td>2</td>
-      <td>2</td>
-      <td>Larry</td>
-      <td>Brandon</td>
-      <td>15/06/1979</td>
-    </tr>
-    <tr>
-      <th scope="row">456</th>
-      <td>3</td>
-      <td>3</td>
-      <td>Example2 First Name</td>
-      <td>Example2 Surname</td>
-      <td>01/01/2000</td>
-    </tr> -->
   </tbody>
 </table>
 
 <script>
-  //Add blog script
-
   function searchForTenants() {
     console.log("Searching for tenant")
     var addTenantName = document.forms["searchTenantsForm"]["searchTenantName"].value;

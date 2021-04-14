@@ -65,17 +65,14 @@ def loadeditPage():
 
     if request.method == 'POST':
         print("Search Request Submitted")
-        tenantName = request.form.get("searchTenantName", default="Error")
+        tenantName = "%" + request.form.get("searchTenantName", default="Error") + "%"
         allData = []
         print(tenantName)
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            query = ("SELECT * FROM tenants "
-                    "WHERE firstName LIKE ?")
-            value = 'tenantName%'
-            cur.execute(query, value)
+            cur.execute("SELECT * FROM tenants WHERE firstname LIKE %s", [tenantName])
             allData = cur.fetchall()
             print("Received all data")
         except mysql.connector.Error as e:
@@ -85,7 +82,7 @@ def loadeditPage():
             conn.close()
             cur.close()
             print("End of fetch")
-            #print(allData)
+            print(allData)
             return render_template("editPage.html", data=allData)
 
 
