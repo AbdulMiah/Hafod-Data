@@ -49,8 +49,14 @@ def loadEditPage():
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            query = ("SELECT * FROM tenants")
-            cur.execute(query)
+            # adminViewOfTenantData = ("CREATE VIEW adminViewOfData AS "
+            #                         " SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated FROM tenants t "
+            #                         " JOIN locations l ON t.locationID = l.locationID "
+            #                         " JOIN health_linktable h ON t.healthID = h.healthID "
+            #                         " JOIN covidTestResult c ON h.testID = c.testID "
+            #                         " JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;")
+            selectAdminData = ("SELECT * FROM adminViewOfData")
+            cur.execute(selectAdminData)
             allData = cur.fetchall()
             print("Received all data")
         except mysql.connector.Error as e:
@@ -60,7 +66,7 @@ def loadEditPage():
             conn.close()
             cur.close()
             print("End of fetch")
-            #print(allData)
+            print(allData)
             return render_template("editPage.html", data=allData)
 
     if request.method == 'POST':
@@ -72,7 +78,7 @@ def loadEditPage():
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            cur.execute("SELECT * FROM tenants WHERE firstname LIKE %s", [tenantName])
+            cur.execute("SELECT * FROM adminViewOfData WHERE firstname LIKE %s", [tenantName])
             allData = cur.fetchall()
             print("Received all data")
         except mysql.connector.Error as e:
