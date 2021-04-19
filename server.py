@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session
+import os
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
@@ -39,16 +40,91 @@ def loadMainPage():
     tenantsNotInfected = call_numberOfNonInfectedTenants()
     return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
 
+# Redirect to Edit Page - Archie and Abdul
+@app.route("/Edit", methods = ['GET', 'POST'])
+def loadEditPage():
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            # adminViewOfTenantData = ("CREATE VIEW adminViewOfData AS "
+            #                         " SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated FROM tenants t "
+            #                         " JOIN locations l ON t.locationID = l.locationID "
+            #                         " JOIN health_linktable h ON t.healthID = h.healthID "
+            #                         " JOIN covidTestResult c ON h.testID = c.testID "
+            #                         " JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;")
+            selectAdminData = ("SELECT * FROM adminViewOfData")
+            cur.execute(selectAdminData)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editPage.html", data=allData)
+
+    if request.method == 'POST':
+        print("Search Request Submitted")
+        tenantName = "%" + request.form.get("searchTenantName", default="Error") + "%"
+        allData = []
+        print(tenantName)
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            cur.execute("SELECT * FROM adminViewOfData WHERE firstname LIKE %s", [tenantName])
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editPage.html", data=allData)
+
+
+@app.route("/EditData", methods = ['GET', 'POST'])
+def editData():
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM tenants")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            #print(allData)
+            return render_template("editData.html", data=allData)
+
+
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
 def loadLoginPage():
     return render_template("loginPage.html")
 
+
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
 def checkLoginDetails():
     print("Validating Credentials...")
-    # res = ''
 
     if request.method == 'POST':
         # Taking input from the login form and saving them as local variables in server
