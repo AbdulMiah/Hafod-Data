@@ -161,33 +161,34 @@ def checkLoginDetails():
                 #Sets session user to username, used to track admin login
                 #
                 print("Session started")
-                session["AdminID"] = res[0]
-                session["loginTime"] = datetime.datetime.now() #Must remove seconds from value
+                # session["AdminID"] = res[0]
+                # session["loginTime"] = datetime.datetime.now() #Must remove seconds from value
                 #userLoginTracker() #Updates the time for when user leaves every minute
                 print("User name = " , username)
-                print("Login time is " , session["loginTime"])
+                # print("Login time is " , session["loginTime"])
 
                 ##PAIR PROGRAMMED WITH ABDUL AND ARCHIE
-                try:
-                   print("Connected to database 2 successfully")
+                # try:
+                #    print("Connected to database 2 successfully")
+                #
+                #    # SELECT query for appropriate fields and used WHERE clause to compare the values
+                #    query = ("INSERT INTO `AdminLog` VALUES (%s, %s, %s, %s)")
+                #    VALUES = (None, session["AdminID"], session["loginTime"], None)
+                #    # Execute query
+                #    cur.execute(query, VALUES)
+                #    msg = "Successfully inserted details into database"      # Print this message if details are found
+                #    conn.commit()
+                #    userLoginTracker()
+                # except mysql.connector.Error as e:
+                #    # Error message if SELECT operation failed to fetch from database
+                #    msg = "Failed to insert into database"
+                #    print(msg,"\nError:", e)
+                # finally:
+                #    # conn.close()
+                #    # cur.close()
+                #    print(msg)
 
-                   # SELECT query for appropriate fields and used WHERE clause to compare the values
-                   query = ("INSERT INTO `AdminLog` VALUES (%s, %s, %s, %s)")
-                   VALUES = (None, session["AdminID"], session["loginTime"], None)
-                   # Execute query
-                   cur.execute(query, VALUES)
-                   msg = "Successfully inserted details into database"      # Print this message if details are found
-                   conn.commit()
-                   userLoginTracker()
-                except mysql.connector.Error as e:
-                   # Error message if SELECT operation failed to fetch from database
-                   msg = "Failed to insert into database"
-                   print(msg,"\nError:", e)
-                finally:
-                   # conn.close()
-                   # cur.close()
-                   print(msg)
-
+                flash(f"Successfully logged in as: {username}")
                 return redirect("/")
 
             # Otherwise, print an error message

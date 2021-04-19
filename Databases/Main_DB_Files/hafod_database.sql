@@ -44,7 +44,7 @@ INSERT INTO tenants VALUES(NULL, 27, 27, 'Judah', 'Brook', '1981-11-26');
 INSERT INTO tenants VALUES(NULL, 28, 28, 'Cristian', 'Amin', '1979-08-12');
 INSERT INTO tenants VALUES(NULL, 29, 29, 'Solomon', 'Ventura', '1995-04-08');
 INSERT INTO tenants VALUES(NULL, 30, 30, 'Caitlin', 'Jenna', '1987-11-15');
-SELECT * FROM tenants;
+-- SELECT * FROM tenants;
 
 -- Table for carers
 DROP TABLE IF EXISTS `carers`;
@@ -89,9 +89,7 @@ INSERT INTO carers VALUES(567, 57, 111, 'Isobel', 'Robbins', 'Registered Nurse',
 INSERT INTO carers VALUES(751, 58, 44, 'Laura', 'Baitman', 'Registered Nurse', '2000-01-05');
 INSERT INTO carers VALUES(100, 59, 86, 'Maddie', 'Clark', 'Registered Nurse', '1990-07-28');
 INSERT INTO carers VALUES(101, 60, 118, 'Samuel', 'Mossaheb', 'Registered Nurse', '1991-02-23');
-SELECT * FROM carers;
-
-
+-- SELECT * FROM carers;
 
 
 -- Table for locations
@@ -108,9 +106,7 @@ CONSTRAINT `PK_locations` PRIMARY KEY (`locationID`)
 );
 -- INSERT data into locations
 -- INSERT INTO `locations` VALUES (null, "CF23 9LJ", 58.6, -2.6, "Cardiff", "Housing", "Ael Y Bryn");
--- INSERT INTO `locations` VALUES (null, "CF24 9LJ", 139.6, 119.6, "Cardiff", "Housing", "Ael Y Bryn");
--- INSERT INTO `locations` VALUES (null, "CF24 9LK", 8.6, 9.6, "Cardiff", "Housing", "Ael Y Bryn");
-SELECT * FROM locations;
+-- SELECT * FROM locations;
 
 
 -- Table for vaccinations
@@ -188,7 +184,7 @@ INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-20', '2021-11-06', 'Pfizer', 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
-SELECT * FROM vaccinations;
+-- SELECT * FROM vaccinations;
 
 
 -- Table for covidTestResult
@@ -263,7 +259,7 @@ INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
 INSERT INTO covidTestResult VALUES(NULL, 'no', NULL, NULL, NULL);
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-07-15', '2021-08-01');
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-03-07', '2021-03-21');
-SELECT * FROM covidTestResult;
+-- SELECT * FROM covidTestResult;
 
 
 -- Table for health_linktable
@@ -336,7 +332,7 @@ INSERT INTO health_linktable VALUES(NULL, 57, 57);
 INSERT INTO health_linktable VALUES(NULL, 58, 58);
 INSERT INTO health_linktable VALUES(NULL, 59, 59);
 INSERT INTO health_linktable VALUES(NULL, 60, 60);
-SELECT * FROM health_linktable;
+-- SELECT * FROM health_linktable;
 
 -- ADDING FOREIGN KEYS
 -- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_locations`
@@ -370,8 +366,8 @@ CREATE TABLE `AdminCredentials` (
 -- INSERT data into AdminCredentials
 INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass');
 INSERT INTO `AdminCredentials` VALUES (null, 'test', 'test@test.com', 'testpass');
-INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah123', 'miaham@cardiff.ac.uk', 'abdulpass12');
-SELECT * FROM AdminCredentials;
+INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass');
+-- SELECT * FROM AdminCredentials;
 
 
 -- Table for AdminLog
@@ -409,7 +405,7 @@ CONSTRAINT `PK_CovidCaseFigures` PRIMARY KEY (`CasesReportID`)
 );
 -- INSERT data into covidcasefigures
 -- INSERT INTO `CovidCaseFigures` VALUES (null, '2021-04-03', 'Cardiff', 'ltlt', 1, Null);
-SELECT * FROM CovidCaseFigures;
+-- SELECT * FROM CovidCaseFigures;
 
 
 -- Table for VaccinationFigures
@@ -423,9 +419,14 @@ CONSTRAINT `PK_VaccinationFigures` PRIMARY KEY (`VaccinatedID`)
 );
 -- INSERT data into VaccinationFigures
 INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
-SELECT * FROM VaccinationFigures;
+-- SELECT * FROM VaccinationFigures;
 
--- VIEWS 
+
+
+-- -- VIEWS -- --
+
+-- VIEW for tenants Vaccinations
+DROP VIEW IF EXISTS `tenantsVaccinations`;
 CREATE VIEW tenantsVaccinations AS
 SELECT tenants.tenancyNo, tenants.healthID, tenants.locationID,
 tenants.dob, vaccinations.vaccinated, vaccinations.vaccinationType, vaccinations.reasonForNoVaccination
@@ -434,10 +435,42 @@ INNER JOIN health_linktable
 ON tenants.healthID = health_linktable.healthID
 INNER JOIN vaccinations
 ON health_linktable.vaccinationID = vaccinations.vaccinationID;
--- Create view of tenants who are 
-SELECT * FROM tenantsVaccinations;
+-- SELECT * FROM tenantsVaccinations;
 
--- FUNCTIONS 
+-- VIEW for tenants COVID cases
+DROP VIEW IF EXISTS `tenantsCases`;
+CREATE VIEW tenantsCases AS
+SELECT t.firstname, t.surname, t.dob, ctr.positiveCase
+FROM tenants t
+JOIN health_linktable h ON t.healthID = h.healthID
+JOIN covidTestResult ctr ON h.testID = ctr.testID;
+-- SELECT * FROM tenantsCases;
+
+-- VIEW for carer COVID cases
+DROP VIEW IF EXISTS `carersCases`;
+CREATE VIEW carersCases AS 
+SELECT c.firstname, c.surname, c.dob, ctr.positiveCase
+FROM carers c
+JOIN health_linktable h ON c.healthID = h.healthID
+JOIN covidTestResult ctr ON h.testID = ctr.testID;
+-- SELECT * FROM carersCases;
+
+-- VIEW for relevent data for tenants
+DROP VIEW IF EXISTS `adminViewOfData`;
+CREATE VIEW adminViewOfData AS
+SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated
+FROM tenants t
+JOIN locations l ON t.locationID = l.locationID
+JOIN health_linktable h ON t.healthID = h.healthID
+JOIN covidTestResult c ON h.testID = c.testID
+JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
+-- SELECT * FROM adminViewOfData;
+
+
+-- STORED PROCEDURES -- --
+
+-- SP for number of tenants vaccinated
+DROP PROCEDURE IF EXISTS countNumberOfVaccinatedTenants;
 DELIMITER //
 CREATE PROCEDURE countNumberOfVaccinatedTenants()
 BEGIN
@@ -446,4 +479,97 @@ WHERE vaccinated = "yes";
 END //
 DELIMITER ;
 
-CALL countNumberOfVaccinatedTenants();
+-- SP for number of tenants not vaccinated
+DROP PROCEDURE IF EXISTS countNumberOfNonVaccinatedTenants;
+DELIMITER //
+CREATE PROCEDURE countNumberOfNonVaccinatedTenants()
+BEGIN
+SELECT COUNT(tenancyNO) AS TotalTenantsVaccinated FROM tenantsVaccinations
+WHERE vaccinated = "no";
+END //
+DELIMITER ;
+-- CALL countNumberOfVaccinatedTenants();
+-- CALL countNumberOfNonVaccinatedTenants();
+
+-- SP for number of tenants with COVID
+DROP PROCEDURE IF EXISTS tenantsPositiveCases;
+DELIMITER //
+CREATE PROCEDURE tenantsPositiveCases()
+BEGIN
+	SELECT COUNT(*)
+	FROM tenantsCases
+	WHERE positiveCase = 'yes';
+END //
+DELIMITER ;
+
+-- SP for number of tenants without COVID
+DROP PROCEDURE IF EXISTS tenantsNegativeCases;
+DELIMITER //
+CREATE PROCEDURE tenantsNegativeCases()
+BEGIN
+	SELECT COUNT(*)
+	FROM tenantsCases
+	WHERE positiveCase = 'no';
+END //
+DELIMITER ;
+-- CALL tenantsPositiveCases();
+-- CALL tenantsNegativeCases();
+
+-- SP for number of carers with COVID
+DROP PROCEDURE IF EXISTS carerPositiveCases;
+DELIMITER ££ 
+CREATE PROCEDURE carerPositiveCases()
+BEGIN 
+	SELECT COUNT(*)
+    FROM carersCases
+    WHERE positiveCase = "yes";
+END ££
+DELIMITER ;
+
+-- SP for number of carers without COVID
+DROP PROCEDURE IF EXISTS carerNegativeCases;
+DELIMITER ££ 
+CREATE PROCEDURE carerNegativeCases()
+BEGIN 
+	SELECT COUNT(*)
+    FROM carersCases
+    WHERE positiveCase = "no";
+END ££
+DELIMITER ;
+
+-- CALL carerPositiveCases();
+-- CALL carerNegativeCases();
+
+
+-- -- FUNCTIONS -- -- 
+
+-- Function for number of tenants with COVID
+DROP FUNCTION IF EXISTS tenantsPositiveCases;
+DELIMITER //
+CREATE FUNCTION tenantsPositiveCases()
+RETURNS VARCHAR(50)
+BEGIN
+	RETURN (
+		SELECT COUNT(*)
+		FROM tenantsCases
+		WHERE positiveCase = 'yes'
+	);
+END //
+DELIMITER ;
+
+-- Function for number of tenants without COVID
+DROP FUNCTION IF EXISTS tenantsNegativeCases;
+DELIMITER //
+CREATE FUNCTION tenantsNegativeCases()
+RETURNS VARCHAR(50)
+BEGIN
+	RETURN (
+		SELECT COUNT(*)
+		FROM tenantsCases
+		WHERE positiveCase = 'no'
+	);
+END //
+DELIMITER ;
+
+-- SELECT tenantsPositiveCases();
+-- SELECT tenantsNegativeCases();
