@@ -1,130 +1,119 @@
 {% extends 'generalLayout.html' %}
 
 {% block editData %}
-<br>
-<div class="container-fluid">
-  <table class="table">
-    <thead>
-      <tr>
-        <th style="width: 50px" scope="col">tenancyNo</th>
-        <th style="width: 50px" scope="col">First Name</th>
-        <th style="width: 50px" scope="col">Surname</th>
-        <th style="width: 50px" scope="col">Date of Birth</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for d in data %}
-      <!-- <form id="updateTenantsForm" method="post" onsubmit="updateTenantsData()"> -->
-      <tr>
-        <td>
-          {{d[0]}}
-        </td>
-        <td>
-          <input type="text" name="First Name" value="{{d[1]}}">
-        </td>
-        <td>
-          <input type="text" name="Surname" value="{{d[2]}}">
-        </td>
-        <td>
-          <input type="text" name="Date of Birth" value="{{d[3]}}">
-        </td>
-      </tr>
-      <!-- </form> -->
-    </tbody>
-  </table>
-  <br>
-</div>
 
-<br>
-<div class="container-fluid">
-  <table class="table">
-    <thead>
-      <tr>
-        <th style="width: 50px" scope="col">Postcode</th>
-        <th style="width: 50px" scope="col">Local Authority</th>
-        <th style="width: 50px" scope="col">Business Area</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <input type="text" name="Postcode" value="{{d[4]}}">
-        </td>
-        <td>
-          <input type="text" name="localAuthority" value="{{d[5]}}">
-        </td>
-        <td>
-          <input type="text" name="businessArea" value="{{d[6]}}">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<style>
+  .tenantDataGrid {
+    display: grid;
+    grid-template-rows: repeat(4, 100px);
+    grid-gap: 10px;
+  }
 
-<br>
-<div class="container-fluid">
-  <table class="table">
-    <thead>
-      <tr>
-        <th style="width: 25%" scope="col">COVID Positive</th>
-        <th style="width: 25%" scope="col">Status</th>
-        <th style="width: 25%" scope="col">Results Date</th>
-        <th style="width: 25%" scope="col">End Of Isolation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <input type="text" name="positiveCase" value="{{d[7]}}">
-        </td>
-        <td>
-          <input type="text" name="status" value="{{d[8]}}">
-        </td>
-        <td>
-          <input type="text" name="resultDate" value="{{d[9]}}">
-        </td>
-        <td>
-          <input type="text" name="endOfIsolation" value="{{d[10]}}">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  .dataRow {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(190px,220px));
+    overflow-x: auto;
+    grid-gap: 4px;
+    padding: 3px;
+    padding-left: 5%;
+    padding-top: 13px;
+  }
 
-<br>
-<div class="container-fluid">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">COVID Vaccinated</th>
-        <th scope="col">Date Vaccinated</th>
-        <th scope="col">Date Vaccination Effective</th>
-        <th scope="col">Vaccination Type</th>
-        <th scope="col">Reason for no Vaccination</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <input type="text" name="vaccinated" value="{{d[11]}}">
-        </td>
-        <td>
-          <input type="text" name="dateVaccinated" value="{{d[12]}}">
-        </td>
-        <td>
-          <input type="text" name="dateVacEffective" value="{{d[13]}}">
-        </td>
-        <td>
-          <input type="text" name="vaccinationType" value="{{d[14]}}">
-        </td>
-        <td>
-          <input type="text" name="reasonForNoVaccination" value="{{d[15]}}">
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  .dataRow:nth-child(odd){
+    background-color: #dddddd;
+  }
+
+  .dataRow h3{
+    margin-left: 50%;
+    transform: translateX(-60%);
+  }
+</style>
+
+<div class="tenantDataGrid">
+  {% for d in data %}
+
+  <!-- General Tenenat Info -->
+  <div class="dataRow">
+    <div class="dataTile">
+      <label class="dataTitle">Tenant ID</label>
+      <h3> {{d[0]}}</h3>
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">First Name</label>
+      <input type="text" class="dataInput" value="{{d[1]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Last Name </label>
+      <input type="text" class="dataInput" value="{{d[2]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Date Of Birth</label>
+      <input type="text" class="dataInput" value="{{d[3]}}">
+    </div>
+  </div>
+
+  <!-- Tenant Location Infomation -->
+  <div class="dataRow">
+    <div class="dataTile">
+      <label class="dataTitle">Post Code</label>
+      <input type="text" class="dataInput" value="{{d[4]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Local Authority</label>
+      <input type="text" class="dataInput" value="{{d[5]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Business Area </label>
+      <input type="text" class="dataInput" value="{{d[6]}}">
+    </div>
+  </div>
+
+  <!-- Tenant Covid Status Infomation -->
+  <div class="dataRow">
+    <div class="dataTile">
+      <label class="dataTitle">Covid Positive</label>
+      <input type="text" class="dataInput" value="{{d[7]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Status</label>
+      <input type="text" class="dataInput" value="{{d[8]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Date of Result</label>
+      <input type="text" class="dataInput" value="{{d[9]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Isolating Till</label>
+      <input type="text" class="dataInput" value="{{d[10]}}">
+    </div>
+  </div>
+
+  <!-- Tenant Vaccination Status Infomation -->
+  <div class="dataRow">
+    <div class="dataTile">
+      <label class="dataTitle">Covid Vaccination Recieved</label>
+      <input type="text" class="dataInput" value="{{d[11]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Date Vaccinated</label>
+      <input type="text" class="dataInput" value="{{d[12]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Date Vaccination Effective </label>
+      <input type="text" class="dataInput" value="{{d[13]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Vaccination Type</label>
+      <input type="text" class="dataInput" value="{{d[14]}}">
+    </div>
+    <div class="dataTile">
+      <label for="" class="dataTitle">Reason For No Vaccination</label>
+      <input type="text" class="dataInput" value="{{d[15]}}">
+    </div>
+  </div>
+  {% endfor %}
 </div>
-{% endfor %}
 
 
 <div class="row" style="justify-content: center">
