@@ -6,60 +6,133 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">tenancyNo</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Surname</th>
-        <th scope="col">Date of Birth</th>
-        <th scope="col">Postcode</th>
-        <th scope="col">Local Authority</th>
-        <th scope="col">Business Area</th>
-        <th scope="col">Positive Case?</th>
-        <th scope="col">Vaccinated?</th>
+        <th style="width: 50px" scope="col">tenancyNo</th>
+        <th style="width: 50px" scope="col">First Name</th>
+        <th style="width: 50px" scope="col">Surname</th>
+        <th style="width: 50px" scope="col">Date of Birth</th>
       </tr>
     </thead>
     <tbody>
+      {% for d in data %}
       <!-- <form id="updateTenantsForm" method="post" onsubmit="updateTenantsData()"> -->
       <tr>
         <td>
-          <!-- <input type="text" name="tenancyNo" value="1"> -->
-          1
+          {{d[0]}}
         </td>
         <td>
-          <input type="text" name="First Name" value="John">
+          <input type="text" name="First Name" value="{{d[1]}}">
         </td>
         <td>
-          <input type="text" name="Surname" value="Doe">
+          <input type="text" name="Surname" value="{{d[2]}}">
         </td>
         <td>
-          <input type="text" name="Date of Birth" value="12/06/1989">
-        </td>
-        <td>
-          <input type="text" name="Postcode" value="CF23 3DF">
-        </td>
-        <td>
-          <input type="text" name="localAuthority" value="Cardiff">
-        </td>
-        <td>
-          <input type="text" name="businessArea" value="Housing">
-        </td>
-        <td>
-          <input type="text" name="positiveCase" value="yes">
-        </td>
-        <td>
-          <input type="text" name="vaccinated" value="yes">
+          <input type="text" name="Date of Birth" value="{{d[3]}}">
         </td>
       </tr>
       <!-- </form> -->
     </tbody>
-  </table><br>
+  </table>
+  <br>
 </div>
+
+<br>
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 50px" scope="col">Postcode</th>
+        <th style="width: 50px" scope="col">Local Authority</th>
+        <th style="width: 50px" scope="col">Business Area</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" name="Postcode" value="{{d[4]}}">
+        </td>
+        <td>
+          <input type="text" name="localAuthority" value="{{d[5]}}">
+        </td>
+        <td>
+          <input type="text" name="businessArea" value="{{d[6]}}">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 25%" scope="col">COVID Positive</th>
+        <th style="width: 25%" scope="col">Status</th>
+        <th style="width: 25%" scope="col">Results Date</th>
+        <th style="width: 25%" scope="col">End Of Isolation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" name="positiveCase" value="{{d[7]}}">
+        </td>
+        <td>
+          <input type="text" name="status" value="{{d[8]}}">
+        </td>
+        <td>
+          <input type="text" name="resultDate" value="{{d[9]}}">
+        </td>
+        <td>
+          <input type="text" name="endOfIsolation" value="{{d[10]}}">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">COVID Vaccinated</th>
+        <th scope="col">Date Vaccinated</th>
+        <th scope="col">Date Vaccination Effective</th>
+        <th scope="col">Vaccination Type</th>
+        <th scope="col">Reason for no Vaccination</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" name="vaccinated" value="{{d[11]}}">
+        </td>
+        <td>
+          <input type="text" name="dateVaccinated" value="{{d[12]}}">
+        </td>
+        <td>
+          <input type="text" name="dateVacEffective" value="{{d[13]}}">
+        </td>
+        <td>
+          <input type="text" name="vaccinationType" value="{{d[14]}}">
+        </td>
+        <td>
+          <input type="text" name="reasonForNoVaccination" value="{{d[15]}}">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endfor %}
+
 
 <div class="row" style="justify-content: center">
   <button class="btn btn-success" type="submit" name="confirm" onclick="return confirm('Are you sure you want to change this data?')">
     Confirm Changes
     <i class="fa fa-check"></i>
   </button>
-</div>
+</div><br>
 
 <span id="txt"></span>
 

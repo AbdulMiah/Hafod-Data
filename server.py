@@ -96,16 +96,17 @@ def loadEditPage():
             return render_template("editPage.html", data=allData)
 
 
-@app.route("/EditData", methods = ['GET', 'POST'])
-def editData():
+@app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
+def editData(tenantID): # tenantID=None
     if request.method == 'GET':
         allData = []
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            query = ("SELECT * FROM tenants")
-            cur.execute(query)
+            query = ("SELECT * FROM tenantsEditData "
+                    " WHERE tenancyNo = %s ")
+            cur.execute(query, [tenantID])
             allData = cur.fetchall()
             print("Received all data")
         except mysql.connector.Error as e:
@@ -115,7 +116,7 @@ def editData():
             conn.close()
             cur.close()
             print("End of fetch")
-            #print(allData)
+            print(allData)
             return render_template("editData.html", data=allData)
 
 
@@ -414,11 +415,11 @@ def uploadCSVFile():
 
                         # INSERT query to insert all the values
                         query = ("INSERT INTO locations "
-                                "(locationID, postcode, latitude, longitude, localAuthority, businessArea, streetName) "
-                                "VALUES(%s,%s,%s,%s,%s,%s,%s)")
+                                "(locationID, postcode, latitude, longitude, localAuthority, businessArea) "
+                                "VALUES(%s,%s,%s,%s,%s,%s)")
 
                         # All the values
-                        values = (None, postcode, lat, long, row[1].strip(), row[2].strip(), None)
+                        values = (None, postcode, lat, long, row[1].strip(), row[2].strip())
                         cur.execute(query, values)
                         print(f"Successfully inserted data")
                         conn.commit()
