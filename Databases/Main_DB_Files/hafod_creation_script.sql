@@ -101,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `locations` (
 `longitude`      DECIMAL(9,6),
 `localAuthority` VARCHAR(30) NOT NULL,
 `businessArea`   VARCHAR(30) NOT NULL, 
-`streetName`     VARCHAR(30),
 CONSTRAINT `PK_locations` PRIMARY KEY (`locationID`)
 );
 -- INSERT data into locations
@@ -115,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
 	`vaccinationID`				INTEGER NOT NULL AUTO_INCREMENT,
     `vaccinated`				ENUM('yes','no') NOT NULL,
     `dateVaccinated`			DATE,
-    `dataVacEffective`			DATE,
+    `dateVacEffective`			DATE,
     `vaccinationType`			VARCHAR(25),
 	`reasonForNoVaccination`	ENUM('N/A', 'Pregnant', 'Refused', 'Not Effective', 'Allergic') NOT NULL,
     CONSTRAINT `PK_vaccinations` PRIMARY KEY (`vaccinationID`)
@@ -466,6 +465,16 @@ JOIN covidTestResult c ON h.testID = c.testID
 JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfData;
 
+-- VIEW for data to edit on the tenants edit page
+DROP VIEW IF EXISTS `tenantsEditData`;
+CREATE VIEW tenantsEditData AS
+SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, v.vaccinationType, v.reasonForNoVaccination
+FROM tenants t
+JOIN locations l ON t.locationID = l.locationID
+JOIN health_linktable h ON t.healthID = h.healthID
+JOIN covidTestResult c ON h.testID = c.testID
+JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
+-- SELECT * FROM tenantsEditData;
 
 -- STORED PROCEDURES -- --
 
