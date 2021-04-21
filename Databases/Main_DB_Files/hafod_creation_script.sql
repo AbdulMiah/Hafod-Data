@@ -593,29 +593,23 @@ CREATE TRIGGER noneToNullConverter_BEFORE_UPDATE
 BEFORE UPDATE ON covidtestresult 
 FOR EACH ROW 
 BEGIN 
-
-    IF NEW.positiveCase = "no" THEN 
-        SET NEW.status = "Test", NEW.resultDate = NULL, NEW.endOfIsolation = Null;
-        
-	ELSEIF NEW.positiveCase = "yes" THEN 
-        IF NEW.resultDate = "None" THEN  
-			SET NEW.resultDATE = GETDATE();
-        END IF; 
-        IF NEW.endOfIsolation = "None" THEN 
-			SET NEW.endOfIsolation = GETDATE() + 10; 
-		END IF; 
-		IF NEW.status = "None" THEN 
+	IF OLD.positiveCase <> NEW.positiveCase THEN
+		IF NEW.positiveCase = "no" THEN 
+			SET NEW.`status` = "At Home";
+			SET NEW.resultDate = NULL;
+			SET NEW.endOfIsolation = Null;
+			
+		ELSEIF NEW.positiveCase = "yes" THEN 
+			SET NEW.resultDATE = NOW();
+			SET NEW.endOfIsolation = DATE_ADD(NOW(), INTERVAL 10 DAY); 
 			SET NEW.status = "Isolating"; 
-		END IF; 
-        
-    END IF;
+		END IF;
+	END IF;
 END // 
 DELIMITER ; 
-   
-SELECT * FROM tenantseditdata;
-
-UPDATE tenantseditdata SET positiveCase = "no" 
-WHERE tenancyNo = 1 
+-- SELECT * FROM tenantseditdata;
+-- UPDATE tenantseditdata SET positiveCase = "no" 
+-- WHERE tenancyNo = 1 
    
    
    

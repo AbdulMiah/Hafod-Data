@@ -119,6 +119,7 @@ def editData(tenantID):
             return render_template("editData.html", data=allData, title='Edit Tenants Data')
 
     if request.method == 'POST':
+        updateData = []
         print("Updating data...")
         updateTenantFirstName = request.form.get("firstName", default="Error")
         updateTenantSurname = request.form.get("surname", default="Error")
@@ -135,14 +136,27 @@ def editData(tenantID):
         updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         updateTenantVacType = request.form.get("vaccinationType", default="Error")
         updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
-        # print(updateTenantDOB)
-        # print(updateTenantDateVacEff)
-        # print(updateTenantDateVac)
-        # print(updateTenantDateOfRes)
-        # print(updateTenantFirstName)
-        # print(updateTenantRFNV)
 
-        # Create a trigger before insert/update to change 'None' to 'NULL'
+        updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
+        updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,
+        updateTenantVacType, updateTenantRFNV]
+
+        # Replace fields with string None or Error with None type value
+        for i in updateData:
+            if (i == "None" or i == "Error"):
+                pos = updateData.index(i)
+                updateData.remove(i)
+                updateData.insert(pos, None)
+            # print(i)
+
+        # if updateTenantDateOfRes == "None":
+        #     updateTenantDateOfRes = None
+        # if updateTenantIsoDate == "None":
+        #     updateTenantIsoDate = None
+        # print(updateData[8])
+        # print(updateData[0])
+        # print(updateData[13])
+
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
@@ -150,28 +164,28 @@ def editData(tenantID):
             updateTenants = ("UPDATE tenantsEditData "
                             " SET firstname=%s, surname=%s, dob=%s "
                             " WHERE tenancyNo=%s; ")
-            cur.execute(updateTenants, [updateTenantFirstName, updateTenantSurname, updateTenantDOB, tenantID])
+            cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
             print("Success in updating tenants")
             conn.commit()
 
             updateLocations = ("UPDATE tenantsEditData "
                             " SET postcode=%s, localAuthority=%s, businessArea=%s"
                             " WHERE tenancyNo=%s; ")
-            cur.execute(updateLocations, [updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea, tenantID])
+            cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
             print("Success in updating locations")
             conn.commit()
 
             updateCTR = ("UPDATE tenantsEditData "
                         " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
                         " WHERE tenancyNo=%s; ")
-            cur.execute(updateCTR, [updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, tenantID])
+            cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
             print("Success in updating ctr")
             conn.commit()
 
             updateVac = ("UPDATE tenantsEditData "
                         " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
                         " WHERE tenancyNo=%s; ")
-            cur.execute(updateVac, [updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff, updateTenantVacType, updateTenantRFNV, tenantID])
+            cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
             print("Success in updating vaccinations")
             conn.commit()
             msg = "Successfully updated all data"
