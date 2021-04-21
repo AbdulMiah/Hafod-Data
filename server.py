@@ -71,7 +71,7 @@ def loadEditPage():
             cur.close()
             print("End of fetch")
             print(allData)
-            return render_template("editPage.html", data=allData)
+            return render_template("editPage.html", data=allData, title='All Tenants')
 
     if request.method == 'POST':
         print("Search Request Submitted")
@@ -116,8 +116,8 @@ def editData(tenantID): # tenantID=None
             conn.close()
             cur.close()
             print("End of fetch")
-            print(allData)
-            return render_template("editData.html", data=allData)
+            # print(allData)
+            return render_template("editData.html", data=allData, title='Edit Tenants Data')
 
 
 # Temp redirect route to the login page - Abdul
