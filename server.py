@@ -97,9 +97,9 @@ def loadEditPage():
 
 
 @app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST', 'PUT'])
-def editData(tenantID): # tenantID=None
+def editData(tenantID):
+    allData = []
     if request.method == 'GET':
-        allData = []
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
@@ -116,44 +116,74 @@ def editData(tenantID): # tenantID=None
             conn.close()
             cur.close()
             print("End of fetch")
-            # print(allData)
             return render_template("editData.html", data=allData, title='Edit Tenants Data')
 
-    if request.method == 'PUT':
-        if tenantID in allData:
-            print("Updating data...")
-            updateTenantFirstName = request.form.get("sample", default="Error")
-            updateTenantSurname = request.form.get("sample", default="Error")
-            updateTenantDOB = request.form.get("sample", default="Error")
-            updateTenantPostCode = request.form.get("sample", default="Error")
-            updateTenantLocalAuth = request.form.get("sample", default="Error")
-            updateTenantBusArea = request.form.get("sample", default="Error")
-            updateTenantCovidCase = request.form.get("sample", default="Error")
-            updateTenantStatus = request.form.get("sample", default="Error")
-            updateTenantDateOfRes = request.form.get("sample", default="Error")
-            updateTenantIsoDate = request.form.get("sample", default="Error")
-            updateTenantDateVac = request.form.get("sample", default="Error")
-            updateTenantDateVacEff = request.form.get("sample", default="Error")
-            updateTenantVacType = request.form.get("sample", default="Error")
-            updateTenantRFNV = request.form.get("sample", default="Error")
-            try:
-                conn = mysql.connector.connect(**config)
-                cur = conn.cursor()
-                print("Connected to database successfully")
-                query = ("SELECT * FROM tenantsEditData "
-                        " WHERE tenancyNo = %s ")
-                cur.execute(query, [tenantID])
-                allData = cur.fetchall()
-                print("Received all data")
-            except mysql.connector.Error as e:
-                conn.rollback()
-                print("Ran into an error: ", e)
-            finally:
-                conn.close()
-                cur.close()
-                print("End of fetch")
-                # print(allData)
-                return render_template("editData.html", data=allData, title='Edit Tenants Data')
+    if request.method == 'POST':
+        print("Updating data...")
+        updateTenantFirstName = request.form.get("firstName", default="Error")
+        updateTenantSurname = request.form.get("surname", default="Error")
+        updateTenantDOB = request.form.get("dob", default="Error")
+        updateTenantPostCode = request.form.get("postcode", default="Error")
+        updateTenantLocalAuth = request.form.get("localAuthority", default="Error")
+        updateTenantBusArea = request.form.get("businessArea", default="Error")
+        updateTenantCovidCase = request.form.get("positiveCase", default="Error")
+        updateTenantStatus = request.form.get("status", default="Error")
+        updateTenantDateOfRes = request.form.get("resultDate", default="Error")
+        updateTenantIsoDate = request.form.get("endOfIsolation", default="Error")
+        updateTenantVaccinated = request.form.get("vaccinated", default="Error")
+        updateTenantDateVac = request.form.get("dateVaccinated", default="Error")
+        updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
+        updateTenantVacType = request.form.get("vaccinationType", default="Error")
+        updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        # print(updateTenantDOB)
+        # print(updateTenantDateVacEff)
+        # print(updateTenantDateVac)
+        # print(updateTenantDateOfRes)
+        # print(updateTenantFirstName)
+        # print(updateTenantRFNV)
+
+        # Create a trigger before insert/update to change 'None' to 'NULL'
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            updateTenants = ("UPDATE tenantsEditData "
+                            " SET firstname=%s, surname=%s, dob=%s "
+                            " WHERE tenancyNo=%s; ")
+            cur.execute(updateTenants, [updateTenantFirstName, updateTenantSurname, updateTenantDOB, tenantID])
+            print("Success in updating tenants")
+            conn.commit()
+
+            updateLocations = ("UPDATE tenantsEditData "
+                            " SET postcode=%s, localAuthority=%s, businessArea=%s"
+                            " WHERE tenancyNo=%s; ")
+            cur.execute(updateLocations, [updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea, tenantID])
+            print("Success in updating locations")
+            conn.commit()
+
+            updateCTR = ("UPDATE tenantsEditData "
+                        " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
+                        " WHERE tenancyNo=%s; ")
+            cur.execute(updateCTR, [updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, tenantID])
+            print("Success in updating ctr")
+            conn.commit()
+
+            updateVac = ("UPDATE tenantsEditData "
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
+                        " WHERE tenancyNo=%s; ")
+            cur.execute(updateVac, [updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff, updateTenantVacType, updateTenantRFNV, tenantID])
+            print("Success in updating vaccinations")
+            conn.commit()
+
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return render_template("editData.html", data=allData, title='Edit Tenants Data')
 
 
 # Temp redirect route to the login page - Abdul

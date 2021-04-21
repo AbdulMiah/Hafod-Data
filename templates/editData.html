@@ -38,8 +38,8 @@
     <!-- General Tenenat Info -->
     <div class="dataRow">
       <div class="dataTile">
-        <label class="dataTitle">Tenant ID</label>
-        <h3> {{d[0]}}</h3>
+        <label class="dataTitle"">Tenant ID</label>
+        <h3 name="tenancyNo" id="tenancyNo"> {{d[0]}}</h3>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">First Name</label>
@@ -130,7 +130,7 @@
 <script>
   function updateTenantsData() {
     console.log("updating tenants data...")
-    var tenancyNo = document.forms["updateTenantsForm"]["tenancyNo"].value; //Come back to
+    var tenancyNo = document.getElementById("tenancyNo").innerText; //Come back to
     var firstName = document.forms["updateTenantsForm"]["firstName"].value;
     var surname = document.forms["updateTenantsForm"]["surname"].value;
     var dob = document.forms["updateTenantsForm"]["dob"].value;
@@ -145,20 +145,17 @@
     var dateVaccinated = document.forms["updateTenantsForm"]["dateVaccinated"].value;
     var dateVacEffective = document.forms["updateTenantsForm"]["dateVacEffective"].value;
     var reasonForNoVac = document.forms["updateTenantsForm"]["reasonForNoVac"].value;
+    console.log(dob)
+    console.log(firstName)
 
-    params = 'tenancyNo=' + tenancyNo + 'firstName=' + firstName + 'surname=' + surname +
-    'dob=' + dob + 'postcode=' + postcode + 'localAuthority=' + localAuthority
-    + 'businessArea=' + businessArea + 'positiveCase=' + positiveCase + 'status=' + status
-    + 'resultDate=' + resultDate + 'endOfIsolation=' + endOfIsolation + 'vaccinated=' + vaccinated
-    + 'dateVaccinated=' + dateVaccinated + 'dateVacEffective=' + dateVacEffective
-    + 'reasonForNoVac=' + reasonForNoVac;
+    params = 'tenancyNo=' + tenancyNo + '&firstName=' + firstName + '&surname=' + surname + '&dob=' + dob + '&postcode=' + postcode + '&localAuthority=' + localAuthority + '&businessArea=' + businessArea + '&positiveCase=' + positiveCase + '&status=' + status + '&resultDate=' + resultDate + '&endOfIsolation=' + endOfIsolation + '&vaccinated=' + vaccinated + '&dateVaccinated=' + dateVaccinated + '&dateVacEffective=' + dateVacEffective + '&reasonForNoVac=' + reasonForNoVac;
 
     console.log(params)
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/EditData', true); // true is asynchronous
+    xhttp.open("POST", '/EditData/{{d[0]}}', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.onreadystatechange = function() {
+    xhttp.onload = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         console.log(xhttp.responseText);
         document.getElementById("txt").innerHTML = xhttp.responseText;
