@@ -144,12 +144,14 @@
     var vaccinated = document.forms["updateTenantsForm"]["vaccinated"].value;
     var dateVaccinated = document.forms["updateTenantsForm"]["dateVaccinated"].value;
     var dateVacEffective = document.forms["updateTenantsForm"]["dateVacEffective"].value;
+    var vaccinationType = document.forms["updateTenantsForm"]["vaccinationType"].value;
     var reasonForNoVac = document.forms["updateTenantsForm"]["reasonForNoVac"].value;
     console.log(dob)
     console.log(firstName)
 
     params = 'tenancyNo=' + tenancyNo + '&firstName=' + firstName + '&surname=' + surname + '&dob=' + dob + '&postcode=' + postcode + '&localAuthority=' + localAuthority + '&businessArea=' + businessArea + '&positiveCase=' + positiveCase +
-      '&status=' + status + '&resultDate=' + resultDate + '&endOfIsolation=' + endOfIsolation + '&vaccinated=' + vaccinated + '&dateVaccinated=' + dateVaccinated + '&dateVacEffective=' + dateVacEffective + '&reasonForNoVac=' + reasonForNoVac;
+      '&status=' + status + '&resultDate=' + resultDate + '&endOfIsolation=' + endOfIsolation + '&vaccinated=' + vaccinated + '&dateVaccinated=' + dateVaccinated + '&dateVacEffective=' + dateVacEffective + '&vaccinationType=' + vaccinationType +
+      '&reasonForNoVac=' + reasonForNoVac;
 
     console.log(params)
 
