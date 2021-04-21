@@ -12,7 +12,7 @@
   .dataRow {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: repeat(5, minmax(190px,220px));
+    grid-template-columns: repeat(5, minmax(190px, 220px));
     overflow-x: auto;
     grid-gap: 4px;
     padding: 3px;
@@ -20,118 +20,143 @@
     padding-top: 13px;
   }
 
-  .dataRow:nth-child(odd){
+  .dataRow:nth-child(odd) {
     background-color: #dddddd;
   }
 
-  .dataRow h3{
+  .dataRow h3 {
     margin-left: 50%;
     transform: translateX(-60%);
   }
 </style>
 
-<div class="tenantDataGrid">
-  {% for d in data %}
+<form id="updateTenantsForm" onsubmit="updateTenantsData()">
+  <div class="tenantDataGrid">
 
-  <!-- General Tenenat Info -->
-  <div class="dataRow">
-    <div class="dataTile">
-      <label class="dataTitle">Tenant ID</label>
-      <h3> {{d[0]}}</h3>
+    {% for d in data %}
+
+    <!-- General Tenenat Info -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Tenant ID</label>
+        <h3> {{d[0]}}</h3>
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">First Name</label>
+        <input type="text" class="dataInput" value="{{d[1]}}" name="firstName">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Last Name </label>
+        <input type="text" class="dataInput" value="{{d[2]}}" name="surname">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date Of Birth</label>
+        <input type="text" class="dataInput" value="{{d[3]}}" name="dob">
+      </div>
     </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">First Name</label>
-      <input type="text" class="dataInput" value="{{d[1]}}">
+
+    <!-- Tenant Location Infomation -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Post Code</label>
+        <input type="text" class="dataInput" value="{{d[4]}}" name="postcode">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Local Authority</label>
+        <input type="text" class="dataInput" value="{{d[5]}}" name="localAuthority">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Business Area </label>
+        <input type="text" class="dataInput" value="{{d[6]}}" name="businessArea">
+      </div>
     </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Last Name </label>
-      <input type="text" class="dataInput" value="{{d[2]}}">
+
+    <!-- Tenant Covid Status Infomation -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Covid Positive</label>
+        <input type="text" class="dataInput" value="{{d[7]}}" name="positiveCase">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Status</label>
+        <input type="text" class="dataInput" value="{{d[8]}}" name="status">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date of Result</label>
+        <input type="text" class="dataInput" value="{{d[9]}}" name="resultDate">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Isolating Till</label>
+        <input type="text" class="dataInput" value="{{d[10]}}" name="endOfIsolation">
+      </div>
     </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Date Of Birth</label>
-      <input type="text" class="dataInput" value="{{d[3]}}">
+
+    <!-- Tenant Vaccination Status Infomation -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Covid Vaccination Recieved</label>
+        <input type="text" class="dataInput" value="{{d[11]}}" name="vaccinated">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date Vaccinated</label>
+        <input type="text" class="dataInput" value="{{d[12]}}" name="dateVaccinated">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date Vaccination Effective </label>
+        <input type="text" class="dataInput" value="{{d[13]}}" name="dateVacEffective">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Vaccination Type</label>
+        <input type="text" class="dataInput" value="{{d[14]}}" name="vaccinationType">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Reason For No Vaccination</label>
+        <input type="text" class="dataInput" value="{{d[15]}}" name="reasonForNoVac">
+      </div>
     </div>
   </div>
 
-  <!-- Tenant Location Infomation -->
-  <div class="dataRow">
-    <div class="dataTile">
-      <label class="dataTitle">Post Code</label>
-      <input type="text" class="dataInput" value="{{d[4]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Local Authority</label>
-      <input type="text" class="dataInput" value="{{d[5]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Business Area </label>
-      <input type="text" class="dataInput" value="{{d[6]}}">
-    </div>
+  <div class="row" style="justify-content: center">
+    <button class="btn btn-success" type="submit" name="confirm" onclick="return updateTenantsData()">
+      <i class="fa fa-check"></i>
+    </button>
   </div>
+  <br>
+</form>
 
-  <!-- Tenant Covid Status Infomation -->
-  <div class="dataRow">
-    <div class="dataTile">
-      <label class="dataTitle">Covid Positive</label>
-      <input type="text" class="dataInput" value="{{d[7]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Status</label>
-      <input type="text" class="dataInput" value="{{d[8]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Date of Result</label>
-      <input type="text" class="dataInput" value="{{d[9]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Isolating Till</label>
-      <input type="text" class="dataInput" value="{{d[10]}}">
-    </div>
-  </div>
-
-  <!-- Tenant Vaccination Status Infomation -->
-  <div class="dataRow">
-    <div class="dataTile">
-      <label class="dataTitle">Covid Vaccination Recieved</label>
-      <input type="text" class="dataInput" value="{{d[11]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Date Vaccinated</label>
-      <input type="text" class="dataInput" value="{{d[12]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Date Vaccination Effective </label>
-      <input type="text" class="dataInput" value="{{d[13]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Vaccination Type</label>
-      <input type="text" class="dataInput" value="{{d[14]}}">
-    </div>
-    <div class="dataTile">
-      <label for="" class="dataTitle">Reason For No Vaccination</label>
-      <input type="text" class="dataInput" value="{{d[15]}}">
-    </div>
-  </div>
-  {% endfor %}
-</div>
-
-
-<div class="row" style="justify-content: center">
-  <button class="btn btn-success" type="submit" name="confirm" onclick="return confirm('Are you sure you want to change this data?')">
-    Confirm Changes
-    <i class="fa fa-check"></i>
-  </button>
-</div><br>
 
 <span id="txt"></span>
 
-<!-- <script>
+<script>
   function updateTenantsData() {
     console.log("updating tenants data...")
-    var tenancyNo = document.forms["updateTenantsForm"]["tenancyNo"].value;
-    params = 'tenancyNo='+tenancyNo;
+    var tenancyNo = document.forms["updateTenantsForm"]["tenancyNo"].value; //Come back to
+    var firstName = document.forms["updateTenantsForm"]["firstName"].value;
+    var surname = document.forms["updateTenantsForm"]["surname"].value;
+    var dob = document.forms["updateTenantsForm"]["dob"].value;
+    var postcode = document.forms["updateTenantsForm"]["postcode"].value;
+    var localAuthority = document.forms["updateTenantsForm"]["localAuthority"].value;
+    var businessArea = document.forms["updateTenantsForm"]["businessArea"].value;
+    var positiveCase = document.forms["updateTenantsForm"]["positiveCase"].value;
+    var status = document.forms["updateTenantsForm"]["status"].value;
+    var resultDate = document.forms["updateTenantsForm"]["resultDate"].value;
+    var endOfIsolation = document.forms["updateTenantsForm"]["endOfIsolation"].value;
+    var vaccinated = document.forms["updateTenantsForm"]["vaccinated"].value;
+    var dateVaccinated = document.forms["updateTenantsForm"]["dateVaccinated"].value;
+    var dateVacEffective = document.forms["updateTenantsForm"]["dateVacEffective"].value;
+    var reasonForNoVac = document.forms["updateTenantsForm"]["reasonForNoVac"].value;
+
+    params = 'tenancyNo=' + tenancyNo + 'firstName=' + firstName + 'surname=' + surname +
+    'dob=' + dob + 'postcode=' + postcode + 'localAuthority=' + localAuthority
+    + 'businessArea=' + businessArea + 'positiveCase=' + positiveCase + 'status=' + status
+    + 'resultDate=' + resultDate + 'endOfIsolation=' + endOfIsolation + 'vaccinated=' + vaccinated
+    + 'dateVaccinated=' + dateVaccinated + 'dateVacEffective=' + dateVacEffective
+    + 'reasonForNoVac=' + reasonForNoVac;
+
+    console.log(params)
+
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/UpdateData', true); // true is asynchronous
+    xhttp.open("POST", '/EditData', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
@@ -144,5 +169,6 @@
     xhttp.send(params);
     return false;
   }
-</script> -->
+</script>
+{% endfor %}
 {% endblock %}
