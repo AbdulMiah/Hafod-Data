@@ -96,7 +96,7 @@ def loadEditPage():
             return render_template("editPage.html", data=allData)
 
 
-@app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
+@app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST', 'PUT'])
 def editData(tenantID): # tenantID=None
     if request.method == 'GET':
         allData = []
@@ -118,6 +118,42 @@ def editData(tenantID): # tenantID=None
             print("End of fetch")
             # print(allData)
             return render_template("editData.html", data=allData, title='Edit Tenants Data')
+
+    if request.method == 'PUT':
+        if tenantID in allData:
+            print("Updating data...")
+            updateTenantFirstName = request.form.get("sample", default="Error")
+            updateTenantSurname = request.form.get("sample", default="Error")
+            updateTenantDOB = request.form.get("sample", default="Error")
+            updateTenantPostCode = request.form.get("sample", default="Error")
+            updateTenantLocalAuth = request.form.get("sample", default="Error")
+            updateTenantBusArea = request.form.get("sample", default="Error")
+            updateTenantCovidCase = request.form.get("sample", default="Error")
+            updateTenantStatus = request.form.get("sample", default="Error")
+            updateTenantDateOfRes = request.form.get("sample", default="Error")
+            updateTenantIsoDate = request.form.get("sample", default="Error")
+            updateTenantDateVac = request.form.get("sample", default="Error")
+            updateTenantDateVacEff = request.form.get("sample", default="Error")
+            updateTenantVacType = request.form.get("sample", default="Error")
+            updateTenantRFNV = request.form.get("sample", default="Error")
+            try:
+                conn = mysql.connector.connect(**config)
+                cur = conn.cursor()
+                print("Connected to database successfully")
+                query = ("SELECT * FROM tenantsEditData "
+                        " WHERE tenancyNo = %s ")
+                cur.execute(query, [tenantID])
+                allData = cur.fetchall()
+                print("Received all data")
+            except mysql.connector.Error as e:
+                conn.rollback()
+                print("Ran into an error: ", e)
+            finally:
+                conn.close()
+                cur.close()
+                print("End of fetch")
+                # print(allData)
+                return render_template("editData.html", data=allData, title='Edit Tenants Data')
 
 
 # Temp redirect route to the login page - Abdul
