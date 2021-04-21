@@ -582,3 +582,56 @@ DELIMITER ;
 
 -- SELECT tenantsPositiveCases();
 -- SELECT tenantsNegativeCases();
+
+-- ----------------------------------------------------
+-- TRIGGERS 
+-- ---------------------------------------------------
+
+DROP TRIGGER IF EXISTS noneToNullConverter_BEFORE_UPDATE;
+DELIMITER // 
+CREATE TRIGGER noneToNullConverter_BEFORE_UPDATE
+BEFORE UPDATE ON covidtestresult 
+FOR EACH ROW 
+BEGIN 
+
+    IF NEW.positiveCase = "no" THEN 
+        SET NEW.status = "Test", NEW.resultDate = NULL, NEW.endOfIsolation = Null;
+        
+	ELSEIF NEW.positiveCase = "yes" THEN 
+        IF NEW.resultDate = "None" THEN  
+			SET NEW.resultDATE = GETDATE();
+        END IF; 
+        IF NEW.endOfIsolation = "None" THEN 
+			SET NEW.endOfIsolation = GETDATE() + 10; 
+		END IF; 
+		IF NEW.status = "None" THEN 
+			SET NEW.status = "Isolating"; 
+		END IF; 
+        
+    END IF;
+END // 
+DELIMITER ; 
+   
+SELECT * FROM tenantseditdata;
+
+UPDATE tenantseditdata SET positiveCase = "no" 
+WHERE tenancyNo = 1 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

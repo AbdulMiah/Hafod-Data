@@ -174,16 +174,18 @@ def editData(tenantID):
             cur.execute(updateVac, [updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff, updateTenantVacType, updateTenantRFNV, tenantID])
             print("Success in updating vaccinations")
             conn.commit()
+            msg = "Successfully updated all data"
 
         except mysql.connector.Error as e:
             conn.rollback()
             print("Ran into an error: ", e)
+            msg =("Error Encountered")
         finally:
             conn.close()
             cur.close()
             print("End of fetch")
             # print(allData)
-            return render_template("editData.html", data=allData, title='Edit Tenants Data')
+            return msg;
 
 
 # Temp redirect route to the login page - Abdul
