@@ -33,6 +33,8 @@ config = {
     'database': db['mysql_db'],
     'raise_on_warnings': True
 }
+
+mysql = mySQL(app)
 # #===========================
 
 # Abdul - route to main page, where all maps/graphs are displayed
@@ -139,6 +141,23 @@ def addCarerData():
         cur.close()
         return "Data has been inserted successfully"
     return render_template("editCarerTable.html")
+
+    @app.route("//")
+    def retrieveCarerData():
+        cur = mysql.connection.cursor()
+        numData = cur.execute("SELECT * FROM carer_table")
+        if numData > 0:
+            carerData = cur.fetchall()
+            return render_template("blah.html", carerData = carerData)
+
+# view carer data Mahi
+@app.route("//")
+def retrieveCarerData():
+    cur = mysql.connection.cursor()
+    numData = cur.execute("SELECT * FROM carer_table")
+    if numData > 0:
+        carerData = cur.fetchall()
+        return render_template("blah.html", carerData = carerData)
 
 
 # Temp redirect route to the login page - Abdul
