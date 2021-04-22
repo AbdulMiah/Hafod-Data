@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session, escape
+# from flask_login import login_required
 import os
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
@@ -37,6 +38,7 @@ config = {
 
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
+# @login_required
 def loadMainPage():
     tenantsVaccinated = call_numberOfVaccinatedTenants()
     tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
@@ -166,10 +168,21 @@ def checkLoginDetails():
                 #Sets session user to username, used to track admin login
                 #
                 print("Session started")
-                # session["AdminID"] = res[0]
+                session["username"] = username
+                session["password"] = password
+
                 # session["loginTime"] = datetime.datetime.now() #Must remove seconds from value
                 #userLoginTracker() #Updates the time for when user leaves every minute
                 print("User name = " , username)
+                print(res)
+                if (res[4] == 'admin'):
+                    session["usertype"] = 'Admin'
+                elif (res[4] == 'staff'):
+                    session["usertype"] = 'Staff'
+                else:
+                    session["usertype"] = 'InvalidUser'
+
+                print("This user is "+session["usertype"])
                 # print("Login time is " , session["loginTime"])
 
                 ##PAIR PROGRAMMED WITH ABDUL AND ARCHIE

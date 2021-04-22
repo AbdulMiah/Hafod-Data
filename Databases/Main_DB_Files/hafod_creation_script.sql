@@ -360,12 +360,13 @@ CREATE TABLE `AdminCredentials` (
     `Username`			VARCHAR(25) NOT NULL,
     `Email`				VARCHAR(50) NOT NULL,
     `Password`			VARCHAR(25) NOT NULL,
+    `role`				ENUM('admin','staff') NOT NULL,
     CONSTRAINT `PK_AdminCredentials` PRIMARY KEY (`AdminID`)
 );
 -- INSERT data into AdminCredentials
-INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass');
-INSERT INTO `AdminCredentials` VALUES (null, 'test', 'test@test.com', 'testpass');
-INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass');
+INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass', 'admin');
+INSERT INTO `AdminCredentials` VALUES (null, 'staff', 'staff@staff.com', 'staffpass', 'staff');
+INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass', 'staff');
 -- SELECT * FROM AdminCredentials;
 
 
