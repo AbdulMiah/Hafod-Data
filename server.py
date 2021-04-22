@@ -49,31 +49,38 @@ def loadMainPage():
 # Redirect to Edit Page - Archie and Abdul
 @app.route("/Edit", methods = ['GET', 'POST'])
 def loadEditPage():
-    if request.method == 'GET':
-        allData = []
-        try:
-            conn = mysql.connector.connect(**config)
-            cur = conn.cursor()
-            print("Connected to database successfully")
-            # adminViewOfTenantData = ("CREATE VIEW adminViewOfData AS "
-            #                         " SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated FROM tenants t "
-            #                         " JOIN locations l ON t.locationID = l.locationID "
-            #                         " JOIN health_linktable h ON t.healthID = h.healthID "
-            #                         " JOIN covidTestResult c ON h.testID = c.testID "
-            #                         " JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;")
-            selectAdminData = ("SELECT * FROM adminViewOfData")
-            cur.execute(selectAdminData)
-            allData = cur.fetchall()
-            print("Received all data")
-        except mysql.connector.Error as e:
-            conn.rollback()
-            print("Ran into an error: ", e)
-        finally:
-            conn.close()
-            cur.close()
-            print("End of fetch")
-            print(allData)
-            return render_template("editPage.html", data=allData, title='All Tenants')
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin':
+        if request.method == 'GET':
+            allData = []
+            try:
+                conn = mysql.connector.connect(**config)
+                cur = conn.cursor()
+                print("Connected to database successfully")
+                # adminViewOfTenantData = ("CREATE VIEW adminViewOfData AS "
+                #                         " SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated FROM tenants t "
+                #                         " JOIN locations l ON t.locationID = l.locationID "
+                #                         " JOIN health_linktable h ON t.healthID = h.healthID "
+                #                         " JOIN covidTestResult c ON h.testID = c.testID "
+                #                         " JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;")
+                selectAdminData = ("SELECT * FROM adminViewOfData")
+                cur.execute(selectAdminData)
+                allData = cur.fetchall()
+                print("Received all data")
+            except mysql.connector.Error as e:
+                conn.rollback()
+                print("Ran into an error: ", e)
+            finally:
+                conn.close()
+                cur.close()
+                print("End of fetch")
+                print(allData)
+                return render_template("editPage.html", data=allData, title='All Tenants')
+    else:
+        flash('Sorry, only Admins have access to this page')
+        return redirect("/")
 
     if request.method == 'POST':
         print("Search Request Submitted")
@@ -100,27 +107,33 @@ def loadEditPage():
 
 @app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
 def editData(tenantID): # tenantID=None
-    if request.method == 'GET':
-        allData = []
-        try:
-            conn = mysql.connector.connect(**config)
-            cur = conn.cursor()
-            print("Connected to database successfully")
-            query = ("SELECT * FROM tenantsEditData "
-                    " WHERE tenancyNo = %s ")
-            cur.execute(query, [tenantID])
-            allData = cur.fetchall()
-            print("Received all data")
-        except mysql.connector.Error as e:
-            conn.rollback()
-            print("Ran into an error: ", e)
-        finally:
-            conn.close()
-            cur.close()
-            print("End of fetch")
-            # print(allData)
-            return render_template("editData.html", data=allData, title='Edit Tenants Data')
-
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin':
+        if request.method == 'GET':
+            allData = []
+            try:
+                conn = mysql.connector.connect(**config)
+                cur = conn.cursor()
+                print("Connected to database successfully")
+                query = ("SELECT * FROM tenantsEditData "
+                        " WHERE tenancyNo = %s ")
+                cur.execute(query, [tenantID])
+                allData = cur.fetchall()
+                print("Received all data")
+            except mysql.connector.Error as e:
+                conn.rollback()
+                print("Ran into an error: ", e)
+            finally:
+                conn.close()
+                cur.close()
+                print("End of fetch")
+                # print(allData)
+                return render_template("editData.html", data=allData, title='Edit Tenants Data')
+    else:
+        flash('Sorry, only Admins have access to this page')
+        return redirect("/")
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
