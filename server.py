@@ -141,6 +141,13 @@ def loadLoginPage():
     return render_template("loginPage.html")
 
 
+@app.route("/Logout")
+def logout():
+    session.pop('username', None)
+    session.pop('password', None)
+    flash("You have Successfully Logged Out!")
+    return redirect("/Login")
+
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
 def checkLoginDetails():
