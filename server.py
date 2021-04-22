@@ -1,5 +1,4 @@
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session, escape
-# from flask_login import login_required
 import os
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
@@ -38,13 +37,19 @@ config = {
 
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
-# @login_required
 def loadMainPage():
-    tenantsVaccinated = call_numberOfVaccinatedTenants()
-    tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
-    tenantsInfected = call_numberOfInfectedTenants()
-    tenantsNotInfected = call_numberOfNonInfectedTenants()
-    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin' or usertype == 'Staff':
+        tenantsVaccinated = call_numberOfVaccinatedTenants()
+        tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
+        tenantsInfected = call_numberOfInfectedTenants()
+        tenantsNotInfected = call_numberOfNonInfectedTenants()
+        return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    else:
+        flash("Please Login first to access the site!")
+        return redirect("/Login")
 
 # Redirect to Edit Page - Archie and Abdul
 @app.route("/Edit", methods = ['GET', 'POST'])
@@ -143,8 +148,9 @@ def loadLoginPage():
 
 @app.route("/Logout")
 def logout():
-    session.pop('username', None)
-    session.pop('password', None)
+    session.clear()
+    # session.pop('username', None)
+    # session.pop('password', None)
     flash("You have Successfully Logged Out!")
     return redirect("/Login")
 
@@ -352,17 +358,31 @@ def loadCovidFigures():
 
 @app.route("/tenantsVaccinated", methods = ['GET', 'POST'])
 def loadVaccinatedGraph():
-    if request.method == "GET":
-        vaccinated = call_numberOfVaccinatedTenants()
-        nonVaccinated = call_numberOfNonVaccinatedTenants()
-        return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin' or usertype == 'Staff':
+        if request.method == "GET":
+            vaccinated = call_numberOfVaccinatedTenants()
+            nonVaccinated = call_numberOfNonVaccinatedTenants()
+            return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+    else:
+        flash("Please Login first to access the site!")
+        return redirect("/Login")
 
 @app.route("/tenantsInfected", methods = ['GET', 'POST'])
 def loadTenantsInfectedGraph():
-    if request.method == "GET":
-        tenantsInfected = call_numberOfInfectedTenants()
-        tenantsNotInfected = call_numberOfNonInfectedTenants()
-        return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin' or usertype == 'Staff':
+        if request.method == "GET":
+            tenantsInfected = call_numberOfInfectedTenants()
+            tenantsNotInfected = call_numberOfNonInfectedTenants()
+            return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    else:
+        flash("Please Login first to access the site!")
+        return redirect("/Login")
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -474,47 +494,61 @@ def uploadCSVFile():
 # Route to display all properties in map
 @app.route("/mapOfProperties", methods = ['GET', 'POST'])
 def displayProperties():
-    if request.method == 'GET':
-        allData = []
-        try:
-            conn = mysql.connector.connect(**config)
-            cur = conn.cursor()
-            print("Connected to database successfully")
-            query = ("SELECT * FROM locations")
-            cur.execute(query)
-            allData = cur.fetchall()
-            print("Received all data")
-        except mysql.connector.Error as e:
-            conn.rollback()
-            print("Ran into an error: ", e)
-        finally:
-            conn.close()
-            cur.close()
-            print("End of fetch")
-            # print(allData)
-            return render_template("mapOfProperties.html", data=allData)
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin' or usertype == 'Staff':
+        if request.method == 'GET':
+            allData = []
+            try:
+                conn = mysql.connector.connect(**config)
+                cur = conn.cursor()
+                print("Connected to database successfully")
+                query = ("SELECT * FROM locations")
+                cur.execute(query)
+                allData = cur.fetchall()
+                print("Received all data")
+            except mysql.connector.Error as e:
+                conn.rollback()
+                print("Ran into an error: ", e)
+            finally:
+                conn.close()
+                cur.close()
+                print("End of fetch")
+                # print(allData)
+                return render_template("mapOfProperties.html", data=allData)
+    else:
+        flash("Please Login first to access the site!")
+        return redirect("/Login")
 
 @app.route("/infectedHeatmap", methods = ['GET', 'POST'])
 def infectedMap():
-    if request.method == 'GET':
-        allData = []
-        try:
-            conn = mysql.connector.connect(**config)
-            cur = conn.cursor()
-            print("Connected to database successfully")
-            query = ("SELECT * FROM CovidCaseFigures")
-            cur.execute(query)
-            allData = cur.fetchall()
-            print("Received all data")
-        except mysql.connector.Error as e:
-            conn.rollback()
-            print("Ran into an error: ", e)
-        finally:
-            conn.close()
-            cur.close()
-            print("End of fetch")
-            # print(allData)
-            return render_template("infected_heatmap.html", data=allData)
+    usertype = 'null'
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == 'Admin' or usertype == 'Staff':
+        if request.method == 'GET':
+            allData = []
+            try:
+                conn = mysql.connector.connect(**config)
+                cur = conn.cursor()
+                print("Connected to database successfully")
+                query = ("SELECT * FROM CovidCaseFigures")
+                cur.execute(query)
+                allData = cur.fetchall()
+                print("Received all data")
+            except mysql.connector.Error as e:
+                conn.rollback()
+                print("Ran into an error: ", e)
+            finally:
+                conn.close()
+                cur.close()
+                print("End of fetch")
+                # print(allData)
+                return render_template("infected_heatmap.html", data=allData)
+    else:
+        flash("Please Login first to access the site!")
+        return redirect("/Login")
 
 # Postponed User Story #31
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
