@@ -118,6 +118,28 @@ def editData():
             #print(allData)
             return render_template("editData.html", data=allData)
 
+#retrieve carer data and edit - Mahi
+@app.route("/", methods=["GET", "POST"])
+def addCarerData():
+    if request.method=="POST":
+        carerData = request.form
+        staffNo = carerData["staffNo"]
+        healthID = carerData["healthID"]
+        firstname = carerData["firstname"]
+        surname = carerData["surname"]
+        role = carerData["role"]
+        dob = carerData["dob"]
+        locationID = carerData["locationID"]
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        print("Connected to database successfully")
+        query = ("INSERT INTO carer_table(staffNo, healthID, firstname, surname, role, dob, locationID) VALUES(?,?,?,?,?,?,?)(staffNo, healthID, firstname, surname, role, dob, locationID)")
+        cur.execute(query)
+        mysql.connection.commit()
+        cur.close()
+        return "Data has been inserted successfully"
+    return render_template("editCarerTable.html")
+
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
