@@ -1,5 +1,6 @@
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session, escape
 import os
+from functools import wraps
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
@@ -35,57 +36,86 @@ config = {
 }
 # #===========================
 
+# Help from flask documentation https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        usertype = 'null'
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype == 'Admin' or usertype == 'Staff':
+            return f(*args, **kwargs)
+        else:
+            flash("You need to login first!")
+            return redirect(url_for('loadLoginPage'))
+    return decorated_function
+
+def admin_login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        usertype = 'null'
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype == 'Admin':
+            return f(*args, **kwargs)
+        else:
+            flash("Permission Denied! Only Admin's have access to this page!")
+            return redirect(url_for('loadMainPage'))
+    return decorated_function
+
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
+@login_required
 def loadMainPage():
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin' or usertype == 'Staff':
-        tenantsVaccinated = call_numberOfVaccinatedTenants()
-        tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
-        tenantsInfected = call_numberOfInfectedTenants()
-        tenantsNotInfected = call_numberOfNonInfectedTenants()
-        return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
-    else:
-        flash("Please Login first to access the site!")
-        return redirect("/Login")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
+    tenantsVaccinated = call_numberOfVaccinatedTenants()
+    tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
+    tenantsInfected = call_numberOfInfectedTenants()
+    tenantsNotInfected = call_numberOfNonInfectedTenants()
+    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 # Redirect to Edit Page - Archie and Abdul
 @app.route("/Edit", methods = ['GET', 'POST'])
+@admin_login_required
 def loadEditPage():
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin':
-        if request.method == 'GET':
-            allData = []
-            try:
-                conn = mysql.connector.connect(**config)
-                cur = conn.cursor()
-                print("Connected to database successfully")
-                # adminViewOfTenantData = ("CREATE VIEW adminViewOfData AS "
-                #                         " SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated FROM tenants t "
-                #                         " JOIN locations l ON t.locationID = l.locationID "
-                #                         " JOIN health_linktable h ON t.healthID = h.healthID "
-                #                         " JOIN covidTestResult c ON h.testID = c.testID "
-                #                         " JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;")
-                selectAdminData = ("SELECT * FROM adminViewOfData")
-                cur.execute(selectAdminData)
-                allData = cur.fetchall()
-                print("Received all data")
-            except mysql.connector.Error as e:
-                conn.rollback()
-                print("Ran into an error: ", e)
-            finally:
-                conn.close()
-                cur.close()
-                print("End of fetch")
-                print(allData)
-                return render_template("editPage.html", data=allData, title='All Tenants')
-    else:
-        flash('Sorry, only Admins have access to this page')
-        return redirect("/")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin':
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            # adminViewOfTenantData = ("CREATE VIEW adminViewOfData AS "
+            #                         " SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated FROM tenants t "
+            #                         " JOIN locations l ON t.locationID = l.locationID "
+            #                         " JOIN health_linktable h ON t.healthID = h.healthID "
+            #                         " JOIN covidTestResult c ON h.testID = c.testID "
+            #                         " JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;")
+            selectAdminData = ("SELECT * FROM adminViewOfData")
+            cur.execute(selectAdminData)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editPage.html", data=allData, title='All Tenants')
+    # else:
+    #     flash('Sorry, only Admins have access to this page')
+    #     return redirect("/")
 
     if request.method == 'POST':
         print("Search Request Submitted")
@@ -111,34 +141,35 @@ def loadEditPage():
 
 
 @app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
+@admin_login_required
 def editData(tenantID): # tenantID=None
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin':
-        if request.method == 'GET':
-            allData = []
-            try:
-                conn = mysql.connector.connect(**config)
-                cur = conn.cursor()
-                print("Connected to database successfully")
-                query = ("SELECT * FROM tenantsEditData "
-                        " WHERE tenancyNo = %s ")
-                cur.execute(query, [tenantID])
-                allData = cur.fetchall()
-                print("Received all data")
-            except mysql.connector.Error as e:
-                conn.rollback()
-                print("Ran into an error: ", e)
-            finally:
-                conn.close()
-                cur.close()
-                print("End of fetch")
-                # print(allData)
-                return render_template("editData.html", data=allData, title='Edit Tenants Data')
-    else:
-        flash('Sorry, only Admins have access to this page')
-        return redirect("/")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin':
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM tenantsEditData "
+                    " WHERE tenancyNo = %s ")
+            cur.execute(query, [tenantID])
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return render_template("editData.html", data=allData, title='Edit Tenants Data')
+    # else:
+    #     flash('Sorry, only Admins have access to this page')
+    #     return redirect("/")
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -147,6 +178,7 @@ def loadLoginPage():
 
 
 @app.route("/Logout")
+@login_required
 def logout():
     session.clear()
     # session.pop('username', None)
@@ -357,32 +389,34 @@ def loadCovidFigures():
         return redirect("/")
 
 @app.route("/tenantsVaccinated", methods = ['GET', 'POST'])
+@login_required
 def loadVaccinatedGraph():
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin' or usertype == 'Staff':
-        if request.method == "GET":
-            vaccinated = call_numberOfVaccinatedTenants()
-            nonVaccinated = call_numberOfNonVaccinatedTenants()
-            return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
-    else:
-        flash("Please Login first to access the site!")
-        return redirect("/Login")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
+    if request.method == "GET":
+        vaccinated = call_numberOfVaccinatedTenants()
+        nonVaccinated = call_numberOfNonVaccinatedTenants()
+        return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 @app.route("/tenantsInfected", methods = ['GET', 'POST'])
+@login_required
 def loadTenantsInfectedGraph():
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin' or usertype == 'Staff':
-        if request.method == "GET":
-            tenantsInfected = call_numberOfInfectedTenants()
-            tenantsNotInfected = call_numberOfNonInfectedTenants()
-            return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
-    else:
-        flash("Please Login first to access the site!")
-        return redirect("/Login")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
+    if request.method == "GET":
+        tenantsInfected = call_numberOfInfectedTenants()
+        tenantsNotInfected = call_numberOfNonInfectedTenants()
+        return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -493,62 +527,65 @@ def uploadCSVFile():
 ## Peer-Programming with Abdul and Archie
 # Route to display all properties in map
 @app.route("/mapOfProperties", methods = ['GET', 'POST'])
+@login_required
 def displayProperties():
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin' or usertype == 'Staff':
-        if request.method == 'GET':
-            allData = []
-            try:
-                conn = mysql.connector.connect(**config)
-                cur = conn.cursor()
-                print("Connected to database successfully")
-                query = ("SELECT * FROM locations")
-                cur.execute(query)
-                allData = cur.fetchall()
-                print("Received all data")
-            except mysql.connector.Error as e:
-                conn.rollback()
-                print("Ran into an error: ", e)
-            finally:
-                conn.close()
-                cur.close()
-                print("End of fetch")
-                # print(allData)
-                return render_template("mapOfProperties.html", data=allData)
-    else:
-        flash("Please Login first to access the site!")
-        return redirect("/Login")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM locations")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return render_template("mapOfProperties.html", data=allData)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 @app.route("/infectedHeatmap", methods = ['GET', 'POST'])
+@login_required
 def infectedMap():
-    usertype = 'null'
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == 'Admin' or usertype == 'Staff':
-        if request.method == 'GET':
-            allData = []
-            try:
-                conn = mysql.connector.connect(**config)
-                cur = conn.cursor()
-                print("Connected to database successfully")
-                query = ("SELECT * FROM CovidCaseFigures")
-                cur.execute(query)
-                allData = cur.fetchall()
-                print("Received all data")
-            except mysql.connector.Error as e:
-                conn.rollback()
-                print("Ran into an error: ", e)
-            finally:
-                conn.close()
-                cur.close()
-                print("End of fetch")
-                # print(allData)
-                return render_template("infected_heatmap.html", data=allData)
-    else:
-        flash("Please Login first to access the site!")
-        return redirect("/Login")
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
+    if request.method == 'GET':
+        allData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM CovidCaseFigures")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return render_template("infected_heatmap.html", data=allData)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
+
 
 # Postponed User Story #31
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
