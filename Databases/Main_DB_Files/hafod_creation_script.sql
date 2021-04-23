@@ -583,3 +583,69 @@ DELIMITER ;
 
 -- SELECT tenantsPositiveCases();
 -- SELECT tenantsNegativeCases();
+
+-- ----------------------------------------------------
+-- TRIGGERS 
+-- ---------------------------------------------------
+
+DROP TRIGGER IF EXISTS changeCTR_BEFORE_UPDATE;
+DELIMITER // 
+CREATE TRIGGER changeCTR_BEFORE_UPDATE
+BEFORE UPDATE ON covidtestresult 
+FOR EACH ROW 
+BEGIN 
+	IF OLD.positiveCase <> NEW.positiveCase THEN
+		IF NEW.positiveCase = "no" THEN 
+			SET NEW.`status` = "At Home";
+			SET NEW.resultDate = NULL;
+			SET NEW.endOfIsolation = Null;
+			
+		ELSEIF NEW.positiveCase = "yes" THEN 
+			SET NEW.resultDATE = NOW();
+			SET NEW.endOfIsolation = DATE_ADD(NOW(), INTERVAL 10 DAY); 
+			SET NEW.status = "Isolating"; 
+		END IF;
+	END IF;
+END // 
+DELIMITER ; 
+-- SELECT * FROM tenantseditdata;
+-- UPDATE tenantseditdata SET positiveCase = "no" 
+-- WHERE tenancyNo = 1 
+   
+DROP TRIGGER IF EXISTS changeVaccinations_BEFORE_UPDATE;
+DELIMITER // 
+CREATE TRIGGER changeVaccinations_BEFORE_UPDATE
+BEFORE UPDATE ON vaccinations
+FOR EACH ROW 
+BEGIN 
+	IF OLD.vaccinated <> NEW.vaccinated THEN
+		IF NEW.vaccinated = "no" THEN 
+			SET NEW.dateVaccinated = NULL;
+			SET NEW.dateVacEffective = NULL;
+			SET NEW.vaccinationType = NULL;
+            SET NEW.reasonForNoVaccination = 'Refused';
+			
+		ELSEIF NEW.vaccinated = "yes" THEN 
+			SET NEW.dateVaccinated = NOW();
+			SET NEW.dateVacEffective = DATE_ADD(NOW(), INTERVAL 14 DAY); 
+            SET NEW.reasonForNoVaccination = 'N/A';
+		END IF;
+	END IF;
+END // 
+DELIMITER ;
+-- UPDATE tenantseditdata SET vaccinated = "yes" 
+-- WHERE tenancyNo = 1;
+-- SELECT * FROM tenantseditdata;
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

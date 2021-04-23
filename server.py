@@ -148,7 +148,6 @@ def editData(tenantID): # tenantID=None
     #     usertype = escape(session['usertype'])
     # if usertype == 'Admin':
     if request.method == 'GET':
-        allData = []
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
@@ -165,11 +164,91 @@ def editData(tenantID): # tenantID=None
             conn.close()
             cur.close()
             print("End of fetch")
-            # print(allData)
             return render_template("editData.html", data=allData, title='Edit Tenants Data')
-    # else:
-    #     flash('Sorry, only Admins have access to this page')
-    #     return redirect("/")
+
+    if request.method == 'POST':
+        updateData = []
+        print("Updating data...")
+        updateTenantFirstName = request.form.get("firstName", default="Error")
+        updateTenantSurname = request.form.get("surname", default="Error")
+        updateTenantDOB = request.form.get("dob", default="Error")
+        updateTenantPostCode = request.form.get("postcode", default="Error")
+        updateTenantLocalAuth = request.form.get("localAuthority", default="Error")
+        updateTenantBusArea = request.form.get("businessArea", default="Error")
+        updateTenantCovidCase = request.form.get("positiveCase", default="Error")
+        updateTenantStatus = request.form.get("status", default="Error")
+        updateTenantDateOfRes = request.form.get("resultDate", default="Error")
+        updateTenantIsoDate = request.form.get("endOfIsolation", default="Error")
+        updateTenantVaccinated = request.form.get("vaccinated", default="Error")
+        updateTenantDateVac = request.form.get("dateVaccinated", default="Error")
+        updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
+        updateTenantVacType = request.form.get("vaccinationType", default="Error")
+        updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+
+        updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
+        updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,
+        updateTenantVacType, updateTenantRFNV]
+
+        # Replace fields with string None or Error with None type value
+        for i in updateData:
+            if (i == "None" or i == "Error"):
+                pos = updateData.index(i)
+                updateData.remove(i)
+                updateData.insert(pos, None)
+            # print(i)
+
+        # if updateTenantDateOfRes == "None":
+        #     updateTenantDateOfRes = None
+        # if updateTenantIsoDate == "None":
+        #     updateTenantIsoDate = None
+        # print(updateData[8])
+        # print(updateData[0])
+        # print(updateData[13])
+
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            updateTenants = ("UPDATE tenantsEditData "
+                            " SET firstname=%s, surname=%s, dob=%s "
+                            " WHERE tenancyNo=%s; ")
+            cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
+            print("Success in updating tenants")
+            conn.commit()
+
+            updateLocations = ("UPDATE tenantsEditData "
+                            " SET postcode=%s, localAuthority=%s, businessArea=%s"
+                            " WHERE tenancyNo=%s; ")
+            cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
+            print("Success in updating locations")
+            conn.commit()
+
+            updateCTR = ("UPDATE tenantsEditData "
+                        " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
+                        " WHERE tenancyNo=%s; ")
+            cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
+            print("Success in updating ctr")
+            conn.commit()
+
+            updateVac = ("UPDATE tenantsEditData "
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
+                        " WHERE tenancyNo=%s; ")
+            cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
+            print("Success in updating vaccinations")
+            conn.commit()
+            msg = "Successfully updated all data"
+
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+            msg =("Error Encountered")
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return msg;
+
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
