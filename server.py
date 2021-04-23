@@ -588,8 +588,6 @@ def infectedandPropertiesMap():
             conn.close()
             cur.close()
             print("End of fetch")
-            print(allCovidData)
-            # print(allPropertiesData)
             return render_template("mapOfPropertiesAndCovid.html", covidData=allCovidData, propertiesData=allPropertiesData)
 
 # Postponed User Story #31

@@ -96,6 +96,17 @@
       {% endfor %}
       //end displaying properties
 
+      //Creating Green Marker
+      var redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+  });
+
+
       //Inserting Covid Data Points
       let allPoints = [];
       {% for d in covidData %}
@@ -104,7 +115,7 @@
         map.on('zoomend', function (e) {
           // console.log(map.getZoom());
           if (map.getZoom()>=12) {
-            var marker = L.marker([{{ d[6] }}, {{ d[7] }}]).addTo(map);
+            var marker = L.marker([{{ d[6] }}, {{ d[7] }}], {icon: redIcon}).addTo(map);
             marker.bindPopup("City: {{ d[2] }}, New Cases: {{ d[4] }}, Reported Deaths: {{ d[5] }}")
           } else {
             if (marker !== undefined) {
