@@ -565,6 +565,33 @@ def infectedMap():
             # print(allData)
             return render_template("infected_heatmap.html", data=allData)
 
+@app.route("/propertiesAndCovidHeatMap", methods = ['GET', 'POST'])
+def infectedandPropertiesMap():
+    if request.method == 'GET':
+        allCovidData = []
+        allPropertiesData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM CovidCaseFigures")
+            cur.execute(query)
+            allCovidData = cur.fetchall()
+            query = ("SELECT * FROM locations")
+            cur.execute(query)
+            allPropertiesData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allCovidData)
+            # print(allPropertiesData)
+            return render_template("mapOfPropertiesAndCovid.html", covidData=allCovidData, propertiesData=allPropertiesData)
+
 # Postponed User Story #31
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])
 # def vaccinesMap():
