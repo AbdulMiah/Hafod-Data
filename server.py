@@ -121,43 +121,27 @@ def editData():
             return render_template("editData.html", data=allData)
 
 #retrieve carer data and edit - Mahi
-@app.route("/", methods=["GET", "POST"])
-def addCarerData():
-    if request.method=="POST":
-        carerData = request.form
-        staffNo = carerData["staffNo"]
-        healthID = carerData["healthID"]
-        firstname = carerData["firstname"]
-        surname = carerData["surname"]
-        role = carerData["role"]
-        dob = carerData["dob"]
-        locationID = carerData["locationID"]
-        conn = mysql.connector.connect(**config)
-        cur = conn.cursor()
-        print("Connected to database successfully")
-        query = ("INSERT INTO carer_table(staffNo, healthID, firstname, surname, role, dob, locationID) VALUES(?,?,?,?,?,?,?)(staffNo, healthID, firstname, surname, role, dob, locationID)")
-        cur.execute(query)
-        mysql.connection.commit()
-        cur.close()
-        return "Data has been inserted successfully"
-    return render_template("editCarerTable.html")
-
-    @app.route("//")
-    def retrieveCarerData():
-        cur = mysql.connection.cursor()
-        numData = cur.execute("SELECT * FROM carer_table")
-        if numData > 0:
-            carerData = cur.fetchall()
-            return render_template("blah.html", carerData = carerData)
-
-# view carer data Mahi
-@app.route("//")
-def retrieveCarerData():
-    cur = mysql.connection.cursor()
-    numData = cur.execute("SELECT * FROM carer_table")
-    if numData > 0:
-        carerData = cur.fetchall()
-        return render_template("blah.html", carerData = carerData)
+@app.route("/EditCarer", methods = ['GET', 'POST'])
+def loadEditCarerPage():
+    if request.method == 'GET':
+        allCarerData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            selectAdminCarerData = ("SELECT * FROM adminViewOfCarersData")
+            cur.execute(selectAdminCarerData)
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editPage.html", data=allCarerData)
 
 
 # Temp redirect route to the login page - Abdul
