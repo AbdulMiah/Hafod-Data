@@ -3,12 +3,13 @@
   width: 60%;
 }
 
-.error-message-block {
+/* .message-block {
   height: 100px;
-  background-color: #ff6666;
+  background-color: #EE9B5C;
+  border-color: #FFC400;
   width: 60%;
-}
+} */
 
-.error-text {
+/* .msg-text {
   padding-top: 5%;
-}
+} */

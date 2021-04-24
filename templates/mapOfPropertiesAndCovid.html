@@ -16,7 +16,7 @@
     <!-- CSS for navbar -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarStyle.css') }}">
 
-    <title>Map of Properties</title>
+    <title>Map of Properties and Covid Infections</title>
   </head>
   <body>
 
@@ -57,6 +57,22 @@
       </div>
     </nav>
 
+    <div class="date">
+      <center>
+        <!-- Show when update was last updated -->
+        <!-- Give user option to update data with most recent from API -->
+        {% if covidData %}
+          <p>Covid Data last updated on {{ covidData[0][1] }}</p>
+          Not today's date? <a href="/CovidData"> Click Here</a> to update! (This might take a while)
+        {% endif %}
+
+        <!-- If there is not data being displayed, then give option to add data from API -->
+        {% if not covidData %}
+          <p>No data being displayed? <a href="/CovidData"> Click Here</a> to add data! (This might take a while)</p>
+        {% endif %}
+      </center>
+    </div>
+
     <!-- map container -->
     <div id="map"></div>
 
@@ -73,13 +89,76 @@
 
       map.setView([52.1307, -3.7837], 7);
 
-      // Added sample markers to the map
-      {% for d in data %}
-        var marker = L.marker([{{ d[2] }}, {{ d[3] }}]).addTo(map);
-        marker.bindPopup("Postcode: {{ d[1] }}, Business Area: {{ d[5] }}")
+      // displaying properties
+      {% for d in propertiesData %}
+        var propertyMarker = L.marker([{{ d[2] }}, {{ d[3] }}]).addTo(map);
+        propertyMarker.bindPopup("Postcode: {{ d[1] }}, Business Area: {{ d[5] }}")
       {% endfor %}
+      //end displaying properties
 
-      // Adding a watermark on the map, to represent the brand
+      //Creating Red Marker
+      var redIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+
+      //Inserting Covid Data Points
+      let allPoints = [];
+      {% for d in covidData %}
+      // Display the markers on zoom level 12
+      // Adapted from https://stackoverflow.com/questions/42163558/leaflet-hide-markers-in-zoom-levels
+        map.on('zoomend', function (e) {
+          // console.log(map.getZoom());
+          if (map.getZoom()>=8) {
+            var marker = L.marker([{{ d[6] }}, {{ d[7] }}], {icon: redIcon}).addTo(map);
+            marker.bindPopup("City: {{ d[2] }}, New Cases: {{ d[4] }}, Reported Deaths: {{ d[5] }}")
+          } else {
+            if (marker !== undefined) {
+              marker.remove();
+            }
+          }
+        });
+        allPoints.push({{ d[4] }});
+      {% endfor %}
+      //End Inserting Covid Data Points
+
+      maxIntensity = Math.max(...allPoints);
+      minIntensity = Math.min(...allPoints);
+      console.log("max point: "+maxIntensity);
+      console.log("min point: "+minIntensity);
+
+      // Displaying covid heatmap
+      var heat = L.heatLayer([
+      {% for d in covidData %}
+          //  lat,         lng,    intensity
+        	[{{ d[6] }}, {{ d[7] }}, {{ d[4] }} / maxIntensity],
+        {% endfor %}
+      ], {
+        radius: 30,   // Radius of the heat
+        blur: 15,
+        minOpacity: 0.4,    // Minimum opacity of the intensity/heat
+        max: 1, // This is default intensity
+
+        // The colour gradient to visualise the intensity
+        gradient: {
+          '0': 'Navy',
+          '0.25': 'Blue',
+          '0.5': 'Green',
+          '0.75': 'Yellow',
+          '1': 'Red'
+        }
+      }).addTo(map);
+      console.log(heat);    // Printing to console to see my result
+      // End displaying covid heatmap
+
+
+
+      //Adding a watermark on the map, to represent the brand
       L.Control.Watermark=L.Control.extend({
         onAdd:function(map){
           var img = L.DomUtil.create('img');
