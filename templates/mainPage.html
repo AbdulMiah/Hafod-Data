@@ -57,6 +57,23 @@
 
   <div class="row">
     <div id="maps">
+      <iframe src="{{ url_for('infectedandPropertiesMap') }}" scrolling="no" style="height: 500px; width: 500px; margin-top: -250px;">
+      </iframe>
+    </div>
+
+    <!-- Description -->
+    <div class="jumbotron" id="descriptions">
+      <center>
+        <p>This heatmap highlights up-to-date information about new cases
+          of COVID-19 near Wales around properties owned by Hafod.
+           <a href="/propertiesAndCovidHeatMap">Click here</a> for full heatmap view.
+        </p>
+      </center>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="maps">
       <canvas id="tenantsVaccinationChart"></canvas>
     </div>
 
