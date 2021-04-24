@@ -6,8 +6,10 @@
   width: 500px;
 }
 
-#descriptions{
-  height: 50px;
-  margin-top: 20px;
-  width: 600px;
+.col-md-6 {
+  padding: 3%;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  background-color: #e6e6e6;
+  border-radius: 5px;
 }

@@ -667,6 +667,7 @@ def infectedMap():
 
 
 @app.route("/propertiesAndCovidHeatMap", methods = ['GET', 'POST'])
+@login_required
 def infectedandPropertiesMap():
     if request.method == 'GET':
         allCovidData = []
