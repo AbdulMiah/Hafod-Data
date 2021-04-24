@@ -1,5 +1,6 @@
 from flask import Flask, redirect, request, render_template, url_for, jsonify, flash, make_response, session, escape
 import os
+from functools import wraps
 from uk_covid19 import Cov19API #Used to call for covid case stats
 # In CMD: pipenv install uk-covid19
 
@@ -37,18 +38,58 @@ config = {
 mysql = mySQL(app)
 # #===========================
 
+# Help from flask documentation https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        usertype = 'null'
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype == 'Admin' or usertype == 'Staff':
+            return f(*args, **kwargs)
+        else:
+            flash("You need to login first!")
+            return redirect(url_for('loadLoginPage'))
+    return decorated_function
+
+def admin_login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        usertype = 'null'
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype == 'Admin':
+            return f(*args, **kwargs)
+        else:
+            flash("Permission Denied! Only Admin's have access to this page!")
+            return redirect(url_for('loadMainPage'))
+    return decorated_function
+
 # Abdul - route to main page, where all maps/graphs are displayed
 @app.route("/", methods = ['GET', 'POST'])
+@login_required
 def loadMainPage():
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
     tenantsVaccinated = call_numberOfVaccinatedTenants()
     tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
     tenantsInfected = call_numberOfInfectedTenants()
     tenantsNotInfected = call_numberOfNonInfectedTenants()
     return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 # Redirect to Edit Page - Archie and Abdul
 @app.route("/Edit", methods = ['GET', 'POST'])
+@admin_login_required
 def loadEditPage():
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin':
     if request.method == 'GET':
         allData = []
         try:
@@ -73,7 +114,10 @@ def loadEditPage():
             cur.close()
             print("End of fetch")
             print(allData)
-            return render_template("editPage.html", data=allData)
+            return render_template("editPage.html", data=allData, title='All Tenants')
+    # else:
+    #     flash('Sorry, only Admins have access to this page')
+    #     return redirect("/")
 
     if request.method == 'POST':
         print("Search Request Submitted")
@@ -98,16 +142,21 @@ def loadEditPage():
             return render_template("editPage.html", data=allData)
 
 
-@app.route("/EditData", methods = ['GET', 'POST'])
-def editData():
+@app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
+@admin_login_required
+def editData(tenantID): # tenantID=None
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin':
     if request.method == 'GET':
-        allData = []
         try:
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            query = ("SELECT * FROM tenants")
-            cur.execute(query)
+            query = ("SELECT * FROM tenantsEditData "
+                    " WHERE tenancyNo = %s ")
+            cur.execute(query, [tenantID])
             allData = cur.fetchall()
             print("Received all data")
         except mysql.connector.Error as e:
@@ -117,8 +166,90 @@ def editData():
             conn.close()
             cur.close()
             print("End of fetch")
-            #print(allData)
-            return render_template("editData.html", data=allData)
+            return render_template("editData.html", data=allData, title='Edit Tenants Data')
+
+    if request.method == 'POST':
+        updateData = []
+        print("Updating data...")
+        updateTenantFirstName = request.form.get("firstName", default="Error")
+        updateTenantSurname = request.form.get("surname", default="Error")
+        updateTenantDOB = request.form.get("dob", default="Error")
+        updateTenantPostCode = request.form.get("postcode", default="Error")
+        updateTenantLocalAuth = request.form.get("localAuthority", default="Error")
+        updateTenantBusArea = request.form.get("businessArea", default="Error")
+        updateTenantCovidCase = request.form.get("positiveCase", default="Error")
+        updateTenantStatus = request.form.get("status", default="Error")
+        updateTenantDateOfRes = request.form.get("resultDate", default="Error")
+        updateTenantIsoDate = request.form.get("endOfIsolation", default="Error")
+        updateTenantVaccinated = request.form.get("vaccinated", default="Error")
+        updateTenantDateVac = request.form.get("dateVaccinated", default="Error")
+        updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
+        updateTenantVacType = request.form.get("vaccinationType", default="Error")
+        updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+
+        updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
+        updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,
+        updateTenantVacType, updateTenantRFNV]
+
+        # Replace fields with string None or Error with None type value
+        for i in updateData:
+            if (i == "None" or i == "Error"):
+                pos = updateData.index(i)
+                updateData.remove(i)
+                updateData.insert(pos, None)
+            # print(i)
+
+        # if updateTenantDateOfRes == "None":
+        #     updateTenantDateOfRes = None
+        # if updateTenantIsoDate == "None":
+        #     updateTenantIsoDate = None
+        # print(updateData[8])
+        # print(updateData[0])
+        # print(updateData[13])
+
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            updateTenants = ("UPDATE tenantsEditData "
+                            " SET firstname=%s, surname=%s, dob=%s "
+                            " WHERE tenancyNo=%s; ")
+            cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
+            print("Success in updating tenants")
+            conn.commit()
+
+            updateLocations = ("UPDATE tenantsEditData "
+                            " SET postcode=%s, localAuthority=%s, businessArea=%s"
+                            " WHERE tenancyNo=%s; ")
+            cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
+            print("Success in updating locations")
+            conn.commit()
+
+            updateCTR = ("UPDATE tenantsEditData "
+                        " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
+                        " WHERE tenancyNo=%s; ")
+            cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
+            print("Success in updating ctr")
+            conn.commit()
+
+            updateVac = ("UPDATE tenantsEditData "
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
+                        " WHERE tenancyNo=%s; ")
+            cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
+            print("Success in updating vaccinations")
+            conn.commit()
+            msg = "Successfully updated all data"
+
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+            msg =("Error Encountered")
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return msg;
 
 #retrieve carer data and edit - Mahi
 @app.route("/EditCarer", methods = ['GET', 'POST'])
@@ -149,6 +280,15 @@ def loadEditCarerPage():
 def loadLoginPage():
     return render_template("loginPage.html")
 
+
+@app.route("/Logout")
+@login_required
+def logout():
+    session.clear()
+    # session.pop('username', None)
+    # session.pop('password', None)
+    flash("You have Successfully Logged Out!")
+    return redirect("/Login")
 
 # Abdul - Created route to validate the login details
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
@@ -190,10 +330,21 @@ def checkLoginDetails():
                 #Sets session user to username, used to track admin login
                 #
                 print("Session started")
-                # session["AdminID"] = res[0]
+                session["username"] = username
+                session["password"] = password
+
                 # session["loginTime"] = datetime.datetime.now() #Must remove seconds from value
                 #userLoginTracker() #Updates the time for when user leaves every minute
                 print("User name = " , username)
+                print(res)
+                if (res[4] == 'admin'):
+                    session["usertype"] = 'Admin'
+                elif (res[4] == 'staff'):
+                    session["usertype"] = 'Staff'
+                else:
+                    session["usertype"] = 'InvalidUser'
+
+                print("This user is "+session["usertype"])
                 # print("Login time is " , session["loginTime"])
 
                 ##PAIR PROGRAMMED WITH ABDUL AND ARCHIE
@@ -342,18 +493,34 @@ def loadCovidFigures():
         return redirect("/")
 
 @app.route("/tenantsVaccinated", methods = ['GET', 'POST'])
+@login_required
 def loadVaccinatedGraph():
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
     if request.method == "GET":
         vaccinated = call_numberOfVaccinatedTenants()
         nonVaccinated = call_numberOfNonVaccinatedTenants()
         return render_template("tenantsVaccinatedBarGraph.html", vaccinated=vaccinated, nonVaccinated=nonVaccinated)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 @app.route("/tenantsInfected", methods = ['GET', 'POST'])
+@login_required
 def loadTenantsInfectedGraph():
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
     if request.method == "GET":
         tenantsInfected = call_numberOfInfectedTenants()
         tenantsNotInfected = call_numberOfNonInfectedTenants()
         return render_template('tenantsCovidCasesGraph.html', tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -439,11 +606,11 @@ def uploadCSVFile():
 
                         # INSERT query to insert all the values
                         query = ("INSERT INTO locations "
-                                "(locationID, postcode, latitude, longitude, localAuthority, businessArea, streetName) "
-                                "VALUES(%s,%s,%s,%s,%s,%s,%s)")
+                                "(locationID, postcode, latitude, longitude, localAuthority, businessArea) "
+                                "VALUES(%s,%s,%s,%s,%s,%s)")
 
                         # All the values
-                        values = (None, postcode, lat, long, row[1].strip(), row[2].strip(), None)
+                        values = (None, postcode, lat, long, row[1].strip(), row[2].strip())
                         cur.execute(query, values)
                         print(f"Successfully inserted data")
                         conn.commit()
@@ -464,7 +631,12 @@ def uploadCSVFile():
 ## Peer-Programming with Abdul and Archie
 # Route to display all properties in map
 @app.route("/mapOfProperties", methods = ['GET', 'POST'])
+@login_required
 def displayProperties():
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
     if request.method == 'GET':
         allData = []
         try:
@@ -484,9 +656,17 @@ def displayProperties():
             print("End of fetch")
             # print(allData)
             return render_template("mapOfProperties.html", data=allData)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
 
 @app.route("/infectedHeatmap", methods = ['GET', 'POST'])
+@login_required
 def infectedMap():
+    # usertype = 'null'
+    # if 'usertype' in session:
+    #     usertype = escape(session['usertype'])
+    # if usertype == 'Admin' or usertype == 'Staff':
     if request.method == 'GET':
         allData = []
         try:
@@ -506,6 +686,10 @@ def infectedMap():
             print("End of fetch")
             # print(allData)
             return render_template("infected_heatmap.html", data=allData)
+    # else:
+    #     flash("Please Login first to access the site!")
+    #     return redirect("/Login")
+
 
 # Postponed User Story #31
 # @app.route("/vaccinationsHeatmap", methods = ['GET', 'POST'])

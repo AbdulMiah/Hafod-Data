@@ -101,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `locations` (
 `longitude`      DECIMAL(9,6),
 `localAuthority` VARCHAR(30) NOT NULL,
 `businessArea`   VARCHAR(30) NOT NULL, 
-`streetName`     VARCHAR(30),
 CONSTRAINT `PK_locations` PRIMARY KEY (`locationID`)
 );
 -- INSERT data into locations
@@ -115,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
 	`vaccinationID`				INTEGER NOT NULL AUTO_INCREMENT,
     `vaccinated`				ENUM('yes','no') NOT NULL,
     `dateVaccinated`			DATE,
-    `dataVacEffective`			DATE,
+    `dateVacEffective`			DATE,
     `vaccinationType`			VARCHAR(25),
 	`reasonForNoVaccination`	ENUM('N/A', 'Pregnant', 'Refused', 'Not Effective', 'Allergic') NOT NULL,
     CONSTRAINT `PK_vaccinations` PRIMARY KEY (`vaccinationID`)
@@ -361,12 +360,13 @@ CREATE TABLE `AdminCredentials` (
     `Username`			VARCHAR(25) NOT NULL,
     `Email`				VARCHAR(50) NOT NULL,
     `Password`			VARCHAR(25) NOT NULL,
+    `role`				ENUM('admin','staff') NOT NULL,
     CONSTRAINT `PK_AdminCredentials` PRIMARY KEY (`AdminID`)
 );
 -- INSERT data into AdminCredentials
-INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass');
-INSERT INTO `AdminCredentials` VALUES (null, 'test', 'test@test.com', 'testpass');
-INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass');
+INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass', 'admin');
+INSERT INTO `AdminCredentials` VALUES (null, 'staff', 'staff@staff.com', 'staffpass', 'staff');
+INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass', 'staff');
 -- SELECT * FROM AdminCredentials;
 
 
@@ -466,6 +466,26 @@ JOIN covidTestResult c ON h.testID = c.testID
 JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfData;
 
+-- VIEW for data to edit on the tenants edit page
+DROP VIEW IF EXISTS `tenantsEditData`;
+CREATE VIEW tenantsEditData AS
+SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, v.vaccinationType, v.reasonForNoVaccination
+FROM tenants t
+JOIN locations l ON t.locationID = l.locationID
+JOIN health_linktable h ON t.healthID = h.healthID
+JOIN covidTestResult c ON h.testID = c.testID
+JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
+-- SELECT * FROM tenantsEditData;
+
+-- VIEW for carer data 
+CREATE VIEW adminViewOfCarersData AS 
+SELECT c.staffNo, c.firstname, c.surname, c.role, c.dob, l.postcode, l.localAuthority, l.businessArea, ctr.positiveCase, v.vaccinated
+FROM carers c
+JOIN locations l ON l.locationID = c.locationID
+JOIN health_linktable h ON c.healthID = h.healthID
+JOIN covidTestResult ctr ON h.testID = ctr.testID
+JOIN vaccinations v ON v.vaccinationID = h.vaccinationID;
+-- SELECT * FROM adminViewOfCarersData;
 
 -- STORED PROCEDURES -- --
 
@@ -573,3 +593,69 @@ DELIMITER ;
 
 -- SELECT tenantsPositiveCases();
 -- SELECT tenantsNegativeCases();
+
+-- ----------------------------------------------------
+-- TRIGGERS 
+-- ---------------------------------------------------
+
+DROP TRIGGER IF EXISTS changeCTR_BEFORE_UPDATE;
+DELIMITER // 
+CREATE TRIGGER changeCTR_BEFORE_UPDATE
+BEFORE UPDATE ON covidtestresult 
+FOR EACH ROW 
+BEGIN 
+	IF OLD.positiveCase <> NEW.positiveCase THEN
+		IF NEW.positiveCase = "no" THEN 
+			SET NEW.`status` = "At Home";
+			SET NEW.resultDate = NULL;
+			SET NEW.endOfIsolation = Null;
+			
+		ELSEIF NEW.positiveCase = "yes" THEN 
+			SET NEW.resultDATE = NOW();
+			SET NEW.endOfIsolation = DATE_ADD(NOW(), INTERVAL 10 DAY); 
+			SET NEW.status = "Isolating"; 
+		END IF;
+	END IF;
+END // 
+DELIMITER ; 
+-- SELECT * FROM tenantseditdata;
+-- UPDATE tenantseditdata SET positiveCase = "no" 
+-- WHERE tenancyNo = 1 
+   
+DROP TRIGGER IF EXISTS changeVaccinations_BEFORE_UPDATE;
+DELIMITER // 
+CREATE TRIGGER changeVaccinations_BEFORE_UPDATE
+BEFORE UPDATE ON vaccinations
+FOR EACH ROW 
+BEGIN 
+	IF OLD.vaccinated <> NEW.vaccinated THEN
+		IF NEW.vaccinated = "no" THEN 
+			SET NEW.dateVaccinated = NULL;
+			SET NEW.dateVacEffective = NULL;
+			SET NEW.vaccinationType = NULL;
+            SET NEW.reasonForNoVaccination = 'Refused';
+			
+		ELSEIF NEW.vaccinated = "yes" THEN 
+			SET NEW.dateVaccinated = NOW();
+			SET NEW.dateVacEffective = DATE_ADD(NOW(), INTERVAL 14 DAY); 
+            SET NEW.reasonForNoVaccination = 'N/A';
+		END IF;
+	END IF;
+END // 
+DELIMITER ;
+-- UPDATE tenantseditdata SET vaccinated = "yes" 
+-- WHERE tenancyNo = 1;
+-- SELECT * FROM tenantseditdata;
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
