@@ -201,6 +201,111 @@ def editData(tenantID):
             # print(allData)
             return msg;
 
+@app.route("/insertTenantData", methods = ['GET', 'POST'])
+def insertTenantData():
+    allData = []
+    if request.method == 'GET':
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            query = ("SELECT * FROM tenants "
+                    "ORDER BY tenancyNo DESC "
+                    "LIMIT 1")
+            cur.execute(query)
+            allData = cur.fetchall()
+            print(allData)
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            return render_template("insertTenantData.html", data=allData, title='Insert New Tenants Data')
+
+    if request.method == 'POST':
+        print(allData)
+        insertData = []
+        print("Inserting data...")
+        insertTenantFirstName = request.form.get("firstName", default="Error")
+        insertTenantSurname = request.form.get("surname", default="Error")
+        insertTenantDOB = request.form.get("dob", default="Error")
+        insertTenantPostCode = request.form.get("postcode", default="Error")
+        insertTenantLocalAuth = request.form.get("localAuthority", default="Error")
+        insertTenantBusArea = request.form.get("businessArea", default="Error")
+        insertTenantCovidCase = request.form.get("positiveCase", default="Error")
+        insertTenantStatus = request.form.get("status", default="Error")
+        insertTenantDateOfRes = request.form.get("resultDate", default="Error")
+        insertTenantIsoDate = request.form.get("endOfIsolation", default="Error")
+        insertTenantVaccinated = request.form.get("vaccinated", default="Error")
+        insertTenantDateVac = request.form.get("dateVaccinated", default="Error")
+        insertTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
+        insertTenantVacType = request.form.get("vaccinationType", default="Error")
+        insertTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+
+        insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantPostCode, insertTenantLocalAuth, insertTenantBusArea,
+        insertTenantCovidCase, insertTenantStatus, insertTenantDateOfRes, insertTenantIsoDate, insertTenantVaccinated, insertTenantDateVac, insertTenantDateVacEff,
+        insertTenantVacType, insertTenantRFNV]
+        print(insertData)
+        # Replace fields with string None or Error with None type value
+        for i in insertData:
+            if (i == "None" or i == "Error"):
+                pos = insertData.index(i)
+                insertData.remove(i)
+                insertData.insert(pos, None)
+
+        # if insertTenantDateOfRes == "None":
+        #     insertTenantDateOfRes = None
+        # if insertTenantIsoDate == "None":
+        #     insertTenantIsoDate = None
+        # print(insertData[8])
+        # print(insertData[0])
+        # print(insertData[13])
+
+        try:
+            msg = ""
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            insertTenants = ("INSERT INTO tenantsEditData "
+                            " (firstname, surname, dob) VALUES (%s,%s,%s)")
+            cur.execute(insertTenants, [insertData[0], insertData[1], insertData[2]])
+            print("Success inserting tenants")
+            conn.commit()
+
+            insertLocations = ("INSERT tenantsEditData "
+                            " SET postcode=%s, localAuthority=%s, businessArea=%s")
+            cur.execute(insertLocations, [insertData[3], insertData[4], insertData[5]])
+            print("Success inserting locations")
+            conn.commit()
+
+            insertCTR = ("INSERT tenantsEditData "
+                        " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s")
+            cur.execute(insertCTR, [insertData[6], insertData[7], insertData[8], insertData[9]])
+            print("Success inserting ctr")
+            conn.commit()
+
+            insertVac = ("INSERT tenantsEditData "
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s")
+            cur.execute(insertVac, [insertData[10], insertData[11], insertData[12], insertData[13], insertData[14]])
+            print("Success inserting vaccinations")
+            conn.commit()
+            msg = "Successfully inserted all data"
+
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+            msg =("Error Encountered")
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            # print(allData)
+            return msg;
+
+
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])

@@ -587,54 +587,79 @@ DELIMITER ;
 -- TRIGGERS 
 -- ---------------------------------------------------
 
-DROP TRIGGER IF EXISTS changeCTR_BEFORE_UPDATE;
+DROP TRIGGER IF EXISTS noneToNullConverter_BEFORE_UPDATE;
 DELIMITER // 
-CREATE TRIGGER changeCTR_BEFORE_UPDATE
+CREATE TRIGGER noneToNullConverter_BEFORE_UPDATE
 BEFORE UPDATE ON covidtestresult 
 FOR EACH ROW 
 BEGIN 
-	IF OLD.positiveCase <> NEW.positiveCase THEN
-		IF NEW.positiveCase = "no" THEN 
-			SET NEW.`status` = "At Home";
-			SET NEW.resultDate = NULL;
-			SET NEW.endOfIsolation = Null;
-			
-		ELSEIF NEW.positiveCase = "yes" THEN 
-			SET NEW.resultDATE = NOW();
-			SET NEW.endOfIsolation = DATE_ADD(NOW(), INTERVAL 10 DAY); 
+
+    IF NEW.positiveCase = "no" THEN 
+        SET NEW.status = "Test", NEW.resultDate = NULL, NEW.endOfIsolation = Null;
+        
+	ELSEIF NEW.positiveCase = "yes" THEN 
+        IF NEW.resultDate = "" THEN  
+			SET NEW.resultDATE = GETDATE();
+        END IF; 
+        IF NEW.endOfIsolation = "" THEN 
+			SET NEW.endOfIsolation = GETDATE() + 10; 
+		END IF; 
+		IF NEW.status = Null THEN 
 			SET NEW.status = "Isolating"; 
-		END IF;
-	END IF;
+		END IF; 
+        
+    END IF;
 END // 
 DELIMITER ; 
--- SELECT * FROM tenantseditdata;
--- UPDATE tenantseditdata SET positiveCase = "no" 
--- WHERE tenancyNo = 1 
    
-DROP TRIGGER IF EXISTS changeVaccinations_BEFORE_UPDATE;
+SELECT * FROM tenantseditdata;
+
+UPDATE tenantseditdata SET positiveCase = "no" 
+WHERE tenancyNo = 1;
+   
+SELECT * FROM tenants
+ORDER BY tenancyNo DESC LIMIT 1;
+
 DELIMITER // 
-CREATE TRIGGER changeVaccinations_BEFORE_UPDATE
-BEFORE UPDATE ON vaccinations
+CREATE OR REPLACE TRIGGER healthIDUpdate_After_Tenants_Insert
+AFTER INSERT ON tenants
 FOR EACH ROW 
 BEGIN 
-	IF OLD.vaccinated <> NEW.vaccinated THEN
-		IF NEW.vaccinated = "no" THEN 
-			SET NEW.dateVaccinated = NULL;
-			SET NEW.dateVacEffective = NULL;
-			SET NEW.vaccinationType = NULL;
-            SET NEW.reasonForNoVaccination = 'Refused';
-			
-		ELSEIF NEW.vaccinated = "yes" THEN 
-			SET NEW.dateVaccinated = NOW();
-			SET NEW.dateVacEffective = DATE_ADD(NOW(), INTERVAL 14 DAY); 
-            SET NEW.reasonForNoVaccination = 'N/A';
-		END IF;
-	END IF;
+		SET healthID = tenancyNo;
 END // 
-DELIMITER ;
--- UPDATE tenantseditdata SET vaccinated = "yes" 
--- WHERE tenancyNo = 1;
--- SELECT * FROM tenantseditdata;
+DELIMITER ; 
+
+
+DROP TRIGGER IF EXISTS 
+DELIMITER // 
+CREATE OR REPLACE TRIGGER healthLinkTable_Insert
+BEFORE INSERT ON covidtestresult
+FOR EACH ROW 
+BEGIN 
+	DECLARE healthID_value integer;
+    SET @healthID_value := (SELECT healthID FROM tenants ORDER BY tenancyNo DESC LIMIT 1);
+    
+	INSERT INTO health_linktable VALUES(NULL, @healthID, @healthID );
+        -- Line 632 is messy.
+        
+END // 
+DELIMITER ; 
+ 
+
+
+-- --------------------------------------------- -- 
+-- SQL QUERIES USED IN SERVER 
+-- --------------------------------------------- -- 
+SELECT * FROM tenantsEditData
+ORDER BY tenancyNo DESC LIMIT 1;
+
+SELECT * FROM tenants
+ORDER BY tenancyNo DESC LIMIT 1;
+
+
+
+   
+   
    
    
    

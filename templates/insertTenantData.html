@@ -1,0 +1,174 @@
+{% extends 'generalLayout.html' %}
+
+{% block insertTenantData %}
+<title>{{ title }}</title>
+<style>
+  .tenantDataGrid {
+    display: grid;
+    grid-template-rows: repeat(4, 100px);
+    grid-gap: 10px;
+  }
+
+  .dataRow {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(190px, 220px));
+    overflow-x: auto;
+    grid-gap: 4px;
+    padding: 3px;
+    padding-left: 5%;
+    padding-top: 13px;
+  }
+
+  .dataRow:nth-child(odd) {
+    background-color: #dddddd;
+  }
+
+  .dataRow h3 {
+    margin-left: 50%;
+    transform: translateX(-60%);
+  }
+</style>
+
+<form id="insertTenantsForm" onsubmit="insertTenantsData()">
+  <div class="tenantDataGrid">
+
+    {% for d in data %}
+
+    <!-- General Tenenat Info -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Tenant ID</label>
+        <h3 name="tenancyNo" id="tenancyNo"> {{d[0] + 1}}</h3>
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">First Name</label>
+        <input type="text" class="dataInput" value="" name="firstName">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Last Name </label>
+        <input type="text" class="dataInput" value="" name="surname">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date Of Birth</label>
+        <input type="text" class="dataInput" value="" name="dob">
+      </div>
+    </div>
+
+    <!-- Tenant Location Infomation -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Post Code</label>
+        <input type="text" class="dataInput" value="" name="postcode">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Local Authority</label>
+        <input type="text" class="dataInput" value="" name="localAuthority">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Business Area </label>
+        <input type="text" class="dataInput" value="" name="businessArea">
+      </div>
+    </div>
+
+    <!-- Tenant Covid Status Infomation -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Covid Positive</label>
+        <input type="text" class="dataInput" value="" name="positiveCase">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Status</label>
+        <input type="text" class="dataInput" value="" name="status">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date of Result</label>
+        <input type="text" class="dataInput" value="" name="resultDate">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Isolating Till</label>
+        <input type="text" class="dataInput" value="" name="endOfIsolation">
+      </div>
+    </div>
+
+    <!-- Tenant Vaccination Status Infomation -->
+    <div class="dataRow">
+      <div class="dataTile">
+        <label class="dataTitle">Covid Vaccination Recieved</label>
+        <input type="text" class="dataInput" value="" name="vaccinated">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date Vaccinated</label>
+        <input type="text" class="dataInput" value="" name="dateVaccinated">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Date Vaccination Effective </label>
+        <input type="text" class="dataInput" value="" name="dateVacEffective">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Vaccination Type</label>
+        <input type="text" class="dataInput" value="" name="vaccinationType">
+      </div>
+      <div class="dataTile">
+        <label for="" class="dataTitle">Reason For No Vaccination</label>
+        <input type="text" class="dataInput" value="" name="reasonForNoVac">
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="justify-content: center">
+    <button class="btn btn-success" type="submit" name="confirm" onclick="return insertTenantsData()">
+      Insert Data <i class="fa fa-check"></i>
+    </button>
+  </div>
+  <br>
+</form>
+
+
+<span id="txt" class="text-center"></span>
+
+<script>
+  function insertTenantsData() {
+    console.log("inserting tenants data...")
+    var tenancyNo = document.getElementById("tenancyNo").innerText;
+    var firstName = document.forms["insertTenantsForm"]["firstName"].value;
+    var surname = document.forms["insertTenantsForm"]["surname"].value;
+    var dob = document.forms["insertTenantsForm"]["dob"].value;
+    var postcode = document.forms["insertTenantsForm"]["postcode"].value;
+    var localAuthority = document.forms["insertTenantsForm"]["localAuthority"].value;
+    var businessArea = document.forms["insertTenantsForm"]["businessArea"].value;
+    var positiveCase = document.forms["insertTenantsForm"]["positiveCase"].value;
+    var status = document.forms["insertTenantsForm"]["status"].value;
+    var resultDate = document.forms["insertTenantsForm"]["resultDate"].value;
+    var endOfIsolation = document.forms["insertTenantsForm"]["endOfIsolation"].value;
+    var vaccinated = document.forms["insertTenantsForm"]["vaccinated"].value;
+    var dateVaccinated = document.forms["insertTenantsForm"]["dateVaccinated"].value;
+    var dateVacEffective = document.forms["insertTenantsForm"]["dateVacEffective"].value;
+    var vaccinationType = document.forms["insertTenantsForm"]["vaccinationType"].value;
+    var reasonForNoVac = document.forms["insertTenantsForm"]["reasonForNoVac"].value;
+    console.log(dob)
+    console.log(firstName)
+
+    params = 'tenancyNo=' + tenancyNo + '&firstName=' + firstName + '&surname=' + surname + '&dob=' + dob + '&postcode=' + postcode + '&localAuthority=' + localAuthority + '&businessArea=' + businessArea + '&positiveCase=' + positiveCase +
+      '&status=' + status + '&resultDate=' + resultDate + '&endOfIsolation=' + endOfIsolation + '&vaccinated=' + vaccinated + '&dateVaccinated=' + dateVaccinated + '&dateVacEffective=' + dateVacEffective + '&vaccinationType=' + vaccinationType +
+      '&reasonForNoVac=' + reasonForNoVac;
+
+    console.log(params)
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", 'insertTenantData', true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+    xhttp.send(params);
+    return false;
+  }
+</script>
+{% endfor %}
+{% endblock %}
