@@ -251,7 +251,7 @@ def editData(tenantID): # tenantID=None
             return msg;
 
 #retrieve carer data and edit - Mahi
-@app.route("/Edit/Carer", methods = ['GET', 'POST'])
+@app.route("/Edit/Carers", methods = ['GET', 'POST'])
 @admin_login_required
 def loadEditCarerPage():
     if request.method == 'GET':
