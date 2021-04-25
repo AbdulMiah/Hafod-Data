@@ -273,6 +273,28 @@ def loadEditCarerPage():
             print(allCarerData)
             return render_template("editPage.html", data=allCarerData)
 
+    if request.method == 'POST':
+        print("Search Request Submitted")
+        carerName = "%" + request.form.get("searchCarerName", default="Error") + "%"
+        allData = []
+        print(carerName)
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            cur.execute("SELECT * FROM adminViewOfCarersData WHERE firstname LIKE %s", [carerName])
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editCarerPage.html", data=allData)
+
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
