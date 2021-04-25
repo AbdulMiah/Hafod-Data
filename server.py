@@ -251,7 +251,7 @@ def editData(tenantID): # tenantID=None
             return msg;
 
 #retrieve carer data and edit - Mahi
-@app.route("/EditCarer", methods = ['GET', 'POST'])
+@app.route("/Edit/Carer", methods = ['GET', 'POST'])
 def loadEditCarerPage():
     if request.method == 'GET':
         allCarerData = []
@@ -271,7 +271,7 @@ def loadEditCarerPage():
             cur.close()
             print("End of fetch")
             print(allCarerData)
-            return render_template("editPage.html", data=allCarerData)
+            return render_template("editCarerPage.html", data=allCarerData)
 
     if request.method == 'POST':
         print("Search Request Submitted")
