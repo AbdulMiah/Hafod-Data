@@ -35,7 +35,6 @@ config = {
     'raise_on_warnings': True
 }
 
-mysql = mySQL(app)
 # #===========================
 
 # Help from flask documentation https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
@@ -262,7 +261,7 @@ def loadEditCarerPage():
             print("Connected to database successfully")
             selectAdminCarerData = ("SELECT * FROM adminViewOfCarersData")
             cur.execute(selectAdminCarerData)
-            allData = cur.fetchall()
+            allCarerData = cur.fetchall()
             print("Received all data")
         except mysql.connector.Error as e:
             conn.rollback()
@@ -271,7 +270,7 @@ def loadEditCarerPage():
             conn.close()
             cur.close()
             print("End of fetch")
-            print(allData)
+            print(allCarerData)
             return render_template("editPage.html", data=allCarerData)
 
 
@@ -294,6 +293,7 @@ def logout():
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
 def checkLoginDetails():
     print("Validating Credentials...")
+    res = ""
 
     if request.method == 'POST':
         # Taking input from the login form and saving them as local variables in server
