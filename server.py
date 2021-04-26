@@ -233,9 +233,7 @@ def insertTenantData():
         insertTenantFirstName = request.form.get("firstName", default="Error")
         insertTenantSurname = request.form.get("surname", default="Error")
         insertTenantDOB = request.form.get("dob", default="Error")
-        insertTenantPostCode = request.form.get("postcode", default="Error")
-        insertTenantLocalAuth = request.form.get("localAuthority", default="Error")
-        insertTenantBusArea = request.form.get("businessArea", default="Error")
+        insertTenantlocationID = request.form.get("locationID", default="Error")
         insertTenantCovidCase = request.form.get("positiveCase", default="Error")
         insertTenantStatus = request.form.get("status", default="Error")
         insertTenantDateOfRes = request.form.get("resultDate", default="Error")
@@ -246,11 +244,11 @@ def insertTenantData():
         insertTenantVacType = request.form.get("vaccinationType", default="Error")
         insertTenantRFNV = request.form.get("reasonForNoVac", default="Error")
 
-        insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantPostCode, insertTenantLocalAuth, insertTenantBusArea,
+        insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantlocationID,
         insertTenantCovidCase, insertTenantStatus, insertTenantDateOfRes, insertTenantIsoDate, insertTenantVaccinated, insertTenantDateVac, insertTenantDateVacEff,
         insertTenantVacType, insertTenantRFNV, insertTenantNo]
         print(insertData)
-        print("Tenant No =", insertData[-1])
+
 
         # Replace fields with string None or Error with None type value
         for i in insertData:
@@ -259,51 +257,62 @@ def insertTenantData():
                 insertData.remove(i)
                 insertData.insert(pos, None)
 
-        # if insertTenantDateOfRes == "None":
-        #     insertTenantDateOfRes = None
-        # if insertTenantIsoDate == "None":
-        #     insertTenantIsoDate = None
-        # print(insertData[8])
-        # print(insertData[0])
-        # print(insertData[13])
-
         try:
             msg = ""
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            insertTenants = ("INSERT INTO tenants"
-                            " (healthID,locationID, firstname, surname, dob) VALUES (%s, %s,%s,%s,%s)")
-            cur.execute(insertTenants, [insertData[-1], 1, insertData[0], insertData[1], insertData[2]])
-            print("Success inserting tenants")
+
+            print("Starting Covid Test Result Insert")
+            insertCTR = ("INSERT INTO covidTestResult "
+                        "(testID, positiveCase, status, resultDate, endOfIsolation) VALUES (%s, %s, %s, %s, %s)")
+            cur.execute(insertCTR, [None, insertData[4], insertData[5], insertData[6], insertData[7]])
+            print("Success inserting covid test result")
             conn.commit()
 
-            # print("locations insert started")
-            # insertLocations = ("INSERT INTO locations "
-            #                 "postcode=%s, localAuthority=%s, businessArea=%s")
-            # cur.execute(insertLocations, [insertData[3], insertData[4], insertData[5]])
-            # print("Success inserting locations")
-            # conn.commit()
+            getTenantTestID = cur.execute("SELECT testID FROM covidTestResult ORDER BY testID DESC LIMIT 1")
+            tenantTestID = cur.fetchall()
+            tenantTestID = tenantTestID[0][0]
+            print(tenantTestID)
 
-            insertHeathLinkTable = ("INSERT INTO health_linktable"
-                            " (vaccinationID, testID) VALUES (%s, %s)")
-            cur.execute(insertHeathLinkTable, [int(insertData[-1]), int(insertData[-1])])
-            print("Success inserting health_linktable")
-            conn.commit()
+            ##############################################
 
-            insertCTR = ("INSERT INTO tenantsEditData "
-                        "positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s")
-            cur.execute(insertCTR, [insertData[6], insertData[7], insertData[8], insertData[9]])
-            print("Success inserting ctr")
-            conn.commit()
-
-            insertVac = ("INSERT INTO tenantsEditData "
-                        "vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s")
-            cur.execute(insertVac, [insertData[10], insertData[11], insertData[12], insertData[13], insertData[14]])
+            print("Starting Vac Insert")
+            insertVac = ("INSERT INTO vaccinations "
+                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccinationType, reasonForNoVaccination)"
+                        " VALUES(%s, %s, %s, %s, %s, %s)")
+            cur.execute(insertVac, [None, insertData[8], insertData[9], insertData[10], insertData[11], insertData[12]])
             print("Success inserting vaccinations")
             conn.commit()
 
+            getTenantVacID = cur.execute("SELECT vaccinationID FROM vaccinations ORDER BY vaccinationID DESC LIMIT 1")
+            tenantVacID = cur.fetchall()
+            tenantVacID = tenantVacID[0][0]
+            print(tenantVacID)
 
+            ########################################
+
+            insertHeathLinkTable = ("INSERT INTO health_linktable"
+                            " (healthID, testID, vaccinationID)"
+                            " VALUES (%s, %s, %s)")
+            cur.execute(insertHeathLinkTable, [None, tenantTestID, tenantVacID])
+            print("Success inserting health_linktable")
+            conn.commit()
+
+            getTenantHealthID = cur.execute("SELECT healthID FROM health_linktable ORDER BY healthID DESC LIMIT 1")
+            tenantHealthID = cur.fetchall()
+            tenantHealthID = tenantHealthID[0][0]
+            print(tenantHealthID)
+
+            ##########################################
+
+
+            print("Starting Tenants Insert")
+            insertTenants = ("INSERT INTO tenants"
+                            " (healthID,locationID, firstname, surname, dob) VALUES (%s, %s,%s,%s,%s)")
+            cur.execute(insertTenants, [tenantHealthID, insertData[3], insertData[0], insertData[1], insertData[2]])
+            print("Success inserting tenants")
+            conn.commit()
 
             msg = "Successfully inserted all data"
 
@@ -314,7 +323,7 @@ def insertTenantData():
         finally:
             conn.close()
             cur.close()
-            print("End of fetch")
+            print("End of Insertion")
             # print(allData)
             return msg;
 

@@ -652,23 +652,6 @@ END //
 DELIMITER ; 
 
 
-DROP TRIGGER IF EXISTS 
-DELIMITER // 
-CREATE OR REPLACE TRIGGER healthLinkTable_Insert
-BEFORE INSERT ON covidtestresult
-FOR EACH ROW 
-BEGIN 
-	DECLARE healthID_value integer;
-    SET @healthID_value := (SELECT healthID FROM tenants ORDER BY tenancyNo DESC LIMIT 1);
-    
-	INSERT INTO health_linktable VALUES(NULL, @healthID, @healthID );
-        -- Line 632 is messy.
-        
-END // 
-DELIMITER ; 
- 
-
-
 -- --------------------------------------------- -- 
 -- SQL QUERIES USED IN SERVER 
 -- --------------------------------------------- -- 
