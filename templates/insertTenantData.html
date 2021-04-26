@@ -5,14 +5,14 @@
 <style>
   .tenantDataGrid {
     display: grid;
-    grid-template-rows: repeat(4, 100px);
+    grid-template-rows: repeat(4, 130px);
     grid-gap: 10px;
   }
 
   .dataRow {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: repeat(5, minmax(190px, 220px));
+    grid-template-columns: repeat(5, minmax(300px, 330px));
     overflow-x: auto;
     grid-gap: 4px;
     padding: 3px;
@@ -32,16 +32,16 @@
 <br>
 
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for msg in messages %}
-      <center>
-        <div class="alert alert-dismissible success-message-block" role="alert" id="txt">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          {{ msg }}
-        </div>
-      </center>
-    {% endfor %}
-  {% endif %}
+{% if messages %}
+{% for msg in messages %}
+<center>
+  <div class="alert alert-dismissible success-message-block" role="alert" id="txt">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ msg }}
+  </div>
+</center>
+{% endfor %}
+{% endif %}
 {% endwith %}
 
 <form id="insertTenantsForm" onsubmit="insertTenantsData()">
@@ -53,26 +53,27 @@
     <div class="dataRow">
       <div class="dataTile">
         <label class="dataTitle">Tenant ID</label>
+        <br>
         <h3 name="tenancyNo" id="tenancyNo"> {{d[0] + 1}}</h3>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">First Name</label>
+        <br>
         <input type="text" class="dataInput" value="" name="firstName" required>
       </div>
       <div class="dataTile (YYYY-MM-DD)">
         <label for="" class="dataTitle">Last Name </label>
+        <br>
         <input type="text" class="dataInput" value="" name="surname" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Date Of Birth (YYYY-MM-DD)</label>
+        <br>
         <input type="text" class="dataInput" value="" name="dob" required>
       </div>
-    </div>
-
-    <!-- Tenant Location Infomation -->
-    <div class="dataRow">
       <div class="dataTile">
         <label class="dataTitle">Location ID</label>
+        <br>
         <input type="text" class="dataInput" value="" name="locationID" required>
       </div>
     </div>
@@ -81,18 +82,22 @@
     <div class="dataRow">
       <div class="dataTile">
         <label class="dataTitle">Covid Positive</label>
+        <br>
         <input type="text" class="dataInput" value="" name="positiveCase" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Status</label>
+        <br>
         <input type="text" class="dataInput" value="" name="status" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Date of Result (YYYY-MM-DD)</label>
+        <br>
         <input type="text" class="dataInput" value="" name="resultDate" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Isolating Till (YYYY-MM-DD)</label>
+        <br>
         <input type="text" class="dataInput" value="" name="endOfIsolation" required>
       </div>
     </div>
@@ -101,22 +106,27 @@
     <div class="dataRow">
       <div class="dataTile">
         <label class="dataTitle">Covid Vaccination Recieved</label>
+        <br>
         <input type="text" class="dataInput" value="" name="vaccinated" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Date Vaccinated (YYYY-MM-DD)</label>
+        <br>
         <input type="text" class="dataInput" value="" name="dateVaccinated" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Date Vaccination Effective (YYYY-MM-DD) </label>
+        <br>
         <input type="text" class="dataInput" value="" name="dateVacEffective" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Vaccination Type</label>
+        <br>
         <input type="text" class="dataInput" value="" name="vaccinationType" required>
       </div>
       <div class="dataTile">
         <label for="" class="dataTitle">Reason For No Vaccination</label>
+        <br>
         <input type="text" class="dataInput" value="" name="reasonForNoVac" required>
       </div>
     </div>
