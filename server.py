@@ -229,6 +229,7 @@ def insertTenantData():
         print(allData)
         insertData = []
         print("Inserting data...")
+        insertTenantNo = request.form.get("tenancyNo", default = "Error")
         insertTenantFirstName = request.form.get("firstName", default="Error")
         insertTenantSurname = request.form.get("surname", default="Error")
         insertTenantDOB = request.form.get("dob", default="Error")
@@ -247,8 +248,10 @@ def insertTenantData():
 
         insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantPostCode, insertTenantLocalAuth, insertTenantBusArea,
         insertTenantCovidCase, insertTenantStatus, insertTenantDateOfRes, insertTenantIsoDate, insertTenantVaccinated, insertTenantDateVac, insertTenantDateVacEff,
-        insertTenantVacType, insertTenantRFNV]
+        insertTenantVacType, insertTenantRFNV, insertTenantNo]
         print(insertData)
+        print("Tenant No =", insertData[-1])
+
         # Replace fields with string None or Error with None type value
         for i in insertData:
             if (i == "None" or i == "Error"):
@@ -269,29 +272,39 @@ def insertTenantData():
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            insertTenants = ("INSERT INTO tenantsEditData "
-                            " (firstname, surname, dob) VALUES (%s,%s,%s)")
-            cur.execute(insertTenants, [insertData[0], insertData[1], insertData[2]])
+            insertTenants = ("INSERT INTO tenants"
+                            " (healthID,locationID, firstname, surname, dob) VALUES (%s, %s,%s,%s,%s)")
+            cur.execute(insertTenants, [insertData[-1], 1, insertData[0], insertData[1], insertData[2]])
             print("Success inserting tenants")
             conn.commit()
 
-            insertLocations = ("INSERT tenantsEditData "
-                            " SET postcode=%s, localAuthority=%s, businessArea=%s")
-            cur.execute(insertLocations, [insertData[3], insertData[4], insertData[5]])
-            print("Success inserting locations")
+            # print("locations insert started")
+            # insertLocations = ("INSERT INTO locations "
+            #                 "postcode=%s, localAuthority=%s, businessArea=%s")
+            # cur.execute(insertLocations, [insertData[3], insertData[4], insertData[5]])
+            # print("Success inserting locations")
+            # conn.commit()
+
+            insertHeathLinkTable = ("INSERT INTO health_linktable"
+                            " (vaccinationID, testID) VALUES (%s, %s)")
+            cur.execute(insertHeathLinkTable, [int(insertData[-1]), int(insertData[-1])])
+            print("Success inserting health_linktable")
             conn.commit()
 
-            insertCTR = ("INSERT tenantsEditData "
-                        " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s")
+            insertCTR = ("INSERT INTO tenantsEditData "
+                        "positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s")
             cur.execute(insertCTR, [insertData[6], insertData[7], insertData[8], insertData[9]])
             print("Success inserting ctr")
             conn.commit()
 
-            insertVac = ("INSERT tenantsEditData "
-                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s")
+            insertVac = ("INSERT INTO tenantsEditData "
+                        "vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s")
             cur.execute(insertVac, [insertData[10], insertData[11], insertData[12], insertData[13], insertData[14]])
             print("Success inserting vaccinations")
             conn.commit()
+
+
+
             msg = "Successfully inserted all data"
 
         except mysql.connector.Error as e:
