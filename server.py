@@ -325,7 +325,8 @@ def insertTenantData():
             cur.close()
             print("End of Insertion")
             # print(allData)
-            return msg;
+            flash(msg)
+            return render_template("insertTenantData.html")
 
 
 

@@ -29,6 +29,20 @@
     transform: translateX(-60%);
   }
 </style>
+<br>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for msg in messages %}
+      <center>
+        <div class="alert alert-dismissible success-message-block" role="alert" id="txt">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ msg }}
+        </div>
+      </center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <form id="insertTenantsForm" onsubmit="insertTenantsData()">
   <div class="tenantDataGrid">
@@ -117,8 +131,6 @@
   <br>
 </form>
 
-
-<span id="txt" class="text-center"></span>
 
 <script>
   function insertTenantsData() {
