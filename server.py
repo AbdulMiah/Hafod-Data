@@ -34,6 +34,7 @@ config = {
     'database': db['mysql_db'],
     'raise_on_warnings': True
 }
+
 # #===========================
 
 # Help from flask documentation https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
@@ -249,6 +250,52 @@ def editData(tenantID): # tenantID=None
             # print(allData)
             return msg;
 
+#retrieve carer data and edit - Mahi
+@app.route("/Edit/Carers", methods = ['GET', 'POST'])
+@admin_login_required
+def loadEditCarerPage():
+    if request.method == 'GET':
+        allCarerData = []
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            selectAdminCarerData = ("SELECT * FROM adminViewOfCarersData")
+            cur.execute(selectAdminCarerData)
+            allCarerData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allCarerData)
+            return render_template("editCarerPage.html", data=allCarerData)
+
+    if request.method == 'POST':
+        print("Search Request Submitted")
+        carerName = "%" + request.form.get("searchCarerName", default="Error") + "%"
+        allData = []
+        print(carerName)
+        try:
+            conn = mysql.connector.connect(**config)
+            cur = conn.cursor()
+            print("Connected to database successfully")
+            cur.execute("SELECT * FROM adminViewOfCarersData WHERE firstname LIKE %s", [carerName])
+            allData = cur.fetchall()
+            print("Received all data")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print("Ran into an error: ", e)
+        finally:
+            conn.close()
+            cur.close()
+            print("End of fetch")
+            print(allData)
+            return render_template("editCarerPage.html", data=allData)
+
 
 # Temp redirect route to the login page - Abdul
 @app.route("/Login", methods = ['GET', 'POST'])
@@ -269,6 +316,7 @@ def logout():
 @app.route("/CheckLogin", methods = ['GET', 'POST'])
 def checkLoginDetails():
     print("Validating Credentials...")
+    res = ""
 
     if request.method == 'POST':
         # Taking input from the login form and saving them as local variables in server
