@@ -320,7 +320,7 @@ def insertTenantData():
             conn.commit()
 
             flashMsg = "Successfully Added New Tenant!"
-            msg = "Successfully Added New Tenant! Please Refresh The Page to see New Record in the Table Above!"
+            msg = "Successfully Added New Tenant! Please Refresh the Page to see New Record in the Table Above!"
 
         except mysql.connector.Error as e:
             conn.rollback()
