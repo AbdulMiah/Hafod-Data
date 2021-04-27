@@ -1,0 +1,35 @@
+.tenantDataGrid {
+  display: grid;
+  grid-template-rows: repeat(4, 130px);
+  grid-gap: 10px;
+}
+
+.dataRow {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(300px, 330px));
+  overflow-x: auto;
+  grid-gap: 4px;
+  padding: 3px;
+  padding-left: 5%;
+  padding-top: 13px;
+}
+
+.dataRow:nth-child(odd) {
+  background-color: #dddddd;
+}
+
+.dataRow h3 {
+  margin-left: 50%;
+  transform: translateX(-60%);
+}
+
+.searchBar {
+  width: 50%;
+}
+
+#addTenantTitle {
+  border-top: 1px #b3b3b3 solid;
+  margin:10px;
+  padding-top:50px;
+}

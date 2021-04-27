@@ -604,7 +604,8 @@ CREATE TRIGGER changeCTR_BEFORE_UPDATE
 BEFORE UPDATE ON covidtestresult 
 FOR EACH ROW 
 BEGIN 
-	IF OLD.positiveCase <> NEW.positiveCase THEN
+
+   IF OLD.positiveCase <> NEW.positiveCase THEN
 		IF NEW.positiveCase = "no" THEN 
 			SET NEW.`status` = "At Home";
 			SET NEW.resultDate = NULL;
@@ -616,13 +617,13 @@ BEGIN
 			SET NEW.status = "Isolating"; 
 		END IF;
 	END IF;
+
 END // 
 DELIMITER ; 
+
 -- SELECT * FROM tenantseditdata;
 -- UPDATE tenantseditdata SET positiveCase = "no" 
 -- WHERE tenancyNo = 1 
-   
-DROP TRIGGER IF EXISTS changeVaccinations_BEFORE_UPDATE;
 DELIMITER // 
 CREATE TRIGGER changeVaccinations_BEFORE_UPDATE
 BEFORE UPDATE ON vaccinations
@@ -646,6 +647,32 @@ DELIMITER ;
 -- UPDATE tenantseditdata SET vaccinated = "yes" 
 -- WHERE tenancyNo = 1;
 -- SELECT * FROM tenantseditdata;
+
+
+DELIMITER // 
+-- CREATE OR REPLACE TRIGGER healthIDUpdate_After_Tenants_Insert
+CREATE TRIGGER healthIDUpdate_After_Tenants_Insert
+AFTER INSERT ON tenants
+FOR EACH ROW 
+BEGIN 
+		SET healthID = tenancyNo;
+END // 
+DELIMITER ; 
+
+
+-- --------------------------------------------- -- 
+-- SQL QUERIES USED IN SERVER 
+-- --------------------------------------------- -- 
+-- SELECT * FROM tenantsEditData
+-- ORDER BY tenancyNo DESC LIMIT 1;
+
+-- SELECT * FROM tenants
+-- ORDER BY tenancyNo DESC LIMIT 1;
+
+
+
+   
+   
    
    
    
