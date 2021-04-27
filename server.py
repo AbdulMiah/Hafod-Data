@@ -215,34 +215,36 @@ def editData(tenantID): # tenantID=None
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
             print("Success in updating tenants")
-            conn.commit()
+            # conn.commit()
 
             updateLocations = ("UPDATE tenantsEditData "
                             " SET postcode=%s, localAuthority=%s, businessArea=%s"
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
             print("Success in updating locations")
-            conn.commit()
+            # conn.commit()
 
             updateCTR = ("UPDATE tenantsEditData "
                         " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
             print("Success in updating ctr")
-            conn.commit()
+            # conn.commit()
 
             updateVac = ("UPDATE tenantsEditData "
                         " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
             print("Success in updating vaccinations")
+
+            # Only commit once everything is correct in the input fields
             conn.commit()
             msg = "Successfully updated all data"
 
         except mysql.connector.Error as e:
             conn.rollback()
             print("Ran into an error: ", e)
-            msg =("Error Encountered")
+            msg =("Error Encountered. Please Check your Entry and Try Again!")
         finally:
             conn.close()
             cur.close()
@@ -356,6 +358,7 @@ def insertTenantData():
 
         try:
             msg = ""
+            flashMsg = ""
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
