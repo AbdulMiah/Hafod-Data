@@ -78,8 +78,9 @@ def loadMainPage():
     tenantsNotInfected = call_numberOfNonInfectedTenants()
     vaccinePfizer = call_pfizer()
     vaccineModerna = call_moderna()
+    vaccineAstrazeneca = call_astrazeneca()
 
-    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected, vaccinePfizer=vaccinePfizer, vaccineModerna = vaccineModerna)
+    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected, vaccinePfizer=vaccinePfizer, vaccineModerna = vaccineModerna, vaccineAstrazeneca = vaccineAstrazeneca)
     # else:
     #     flash("Please Login first to access the site!")
     #     return redirect("/Login")
@@ -687,7 +688,8 @@ def loadVaccinePieChart():
     if request.method == "GET":
         pfizer = call_pfizer()
         moderna = call_moderna()
-        return render_template("popularVaccinesPieChart.html", pfizer = pfizer, moderna = moderna)
+        astrazeneca = call_astrazeneca()
+        return render_template("popularVaccinesPieChart.html", pfizer = pfizer, moderna = moderna, astrazeneca = astrazeneca)
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -1002,6 +1004,24 @@ def call_moderna():
         conn.close()
         cur.close()
     return totalNumberOfModerna
+
+def call_astrazeneca():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.execute('SELECT astrazenecaVaccine()')
+        res = cur.fetchall()
+        for result in res:
+            totalNumberOfAstrazeneca = int(res[0][0])
+            print("Total Number Of Astrazeneca:",totalNumberOfAstrazeneca) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfAstrazeneca
 
 
 if __name__ == "__main__":

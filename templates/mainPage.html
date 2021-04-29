@@ -203,18 +203,20 @@ var pieChartVaccines = document.getElementById('vaccinesPieChart').getContext('2
 var myChart = new Chart(pieChartVaccines, {
   type: 'pie',
   data: {
-    labels: ['Moderna', 'Pfizer'],
+    labels: ['Moderna', 'Pfizer', 'Astrazeneca'],
     datasets: [{
       label: 'Graph of Popular Vaccines',
 
-      data: [{{vaccineModerna}}, {{vaccinePfizer}}],
+      data: [{{vaccineModerna}}, {{vaccinePfizer}}, {{vaccineAstrazeneca}}],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
+        'rgba(209, 114, 238, 0.2)',
       ],
       borderColor: [
         'rgba(255, 99, 132, 1)',
         'rgba(54, 162, 235, 1)',
+        'rgba(209, 114, 238, 1)',
       ],
       borderWidth: 1
     }]
