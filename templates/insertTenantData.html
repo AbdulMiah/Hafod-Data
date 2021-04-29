@@ -1,94 +1,60 @@
 {% extends 'generalLayout.html' %}
 
-{% block editTable %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/addTenantStyle.css') }}">
+{% block insertTenantData %}
 <title>{{ title }}</title>
-<br>
+<style>
+  .tenantDataGrid {
+    display: grid;
+    grid-template-rows: repeat(4, 130px);
+    grid-gap: 10px;
+  }
+
+  .dataRow {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(300px, 330px));
+    overflow-x: auto;
+    grid-gap: 4px;
+    padding: 3px;
+    padding-left: 5%;
+    padding-top: 13px;
+  }
+
+  .dataRow:nth-child(odd) {
+    background-color: #dddddd;
+  }
+
+  .dataRow h3 {
+    margin-left: 50%;
+    transform: translateX(-60%);
+  }
+</style>
 
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for msg in messages %}
-      <center>
-        <div class="alert alert-warning alert-dismissible" role="alert" style="width: 50%">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          {{ msg }}
-        </div>
-      </center>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-
+{% if messages %}
+{% for msg in messages %}
 <center><br>
-  <div class="searchBar">
-    <form id="searchTenantsForm" method="post" onsubmit="searchForTenants()">
-      <div class="input-group">
-        <input type="text" class="form-control" name="searchTenantName" placeholder="Search for tenants">
-        <div class="input-group-append">
-          <button class="btn btn-secondary" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-      </div>
-    </div>
-    </form>
-  </div><br>
-  <span id="txt"></span>
-</center>
-
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">tenancyNo</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Surname</th>
-      <th scope="col">Date of Birth</th>
-      <th scope="col">Postcode</th>
-      <th scope="col">Local Authority</th>
-      <th scope="col">Business Area</th>
-      <th scope="col">Positive Case?</th>
-      <th scope="col">Vaccinated?</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for d in data %}
-    <tr>
-      <td>{{d[0]}}</td>
-      <td>{{d[1]}}</td>
-      <td>{{d[2]}}</td>
-      <td>{{d[3]}}</td>
-      <td>{{d[4]}}</td>
-      <td>{{d[5]}}</td>
-      <td>{{d[6]}}</td>
-      <td>{{d[7]}}</td>
-      <td>{{d[8]}}</td>
-      <td>
-        <a href="/EditData/{{d[0]}}">
-          <button class="btn btn-secondary" type="submit" name="edit">
-            <i class="fa fa-edit"></i> Edit
-          </button>
-        </a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table><br>
-
-<center>
-  <h1 id="addTenantTitle">Add New Tenant</h1><br>
-</center>
+  <div class="alert alert-warning alert-dismissible" role="alert" style="width: 50%">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <span id="txt">{{msg}}</span>
+  </div>
+</center><br>
+{% endfor %}
+{% endif %}
+{% endwith %}
 
 <form id="insertTenantsForm" onsubmit="insertTenantsData()">
   <div class="tenantDataGrid">
-    {% for e in editData %}
+
+    {% for d in data %}
 
     <!-- General Tenenat Info -->
     <div class="dataRow">
       <div class="dataTile">
         <label class="dataTitle">Tenant ID</label>
         <br>
-        <h3 name="tenancyNo" id="tenancyNo"> {{e[0] + 1}}</h3>
+        <h3 name="tenancyNo" id="tenancyNo"> {{d[0] + 1}}</h3>
       </div>
-      {% endfor %}
       <div class="dataTile">
         <label for="" class="dataTitle">First Name</label>
         <br>
@@ -165,6 +131,9 @@
     </div>
   </div>
 
+  <!-- Response message -->
+  <!-- <span id="txt"></span> -->
+
   <div class="row" style="justify-content: center">
     <button class="btn btn-success" type="submit" name="confirm" onclick="return insertTenantsData()">
       <i class="fa fa-plus"> Add Tenant</i>
@@ -173,33 +142,9 @@
   <br>
 </form>
 
-<center>
-  <span id="tenant-added-confirmation"></span>
-</center>
-<br>
+
 
 <script>
-  function searchForTenants() {
-    console.log("Searching for tenant")
-    var addTenantName = document.forms["searchTenantsForm"]["searchTenantName"].value;
-    params = 'searchTenantName='+searchTenantName;
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/Edit', true); // true is asynchronous
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.onload = function() {
-      if (xhttp.readyState === 4 && xhttp.status === 200) {
-        console.log(xhttp.responseText);
-        document.getElementById("txt").innerHTML = xhttp.responseText;
-      } else {
-        console.error(xhttp.statusText);
-      }
-    };
-    xhttp.send(params);
-    return false;
-  }
-
-  /////////////////////////////////////////////////////////////////////////
-
   function insertTenantsData() {
     console.log("inserting tenants data...")
     var tenancyNo = document.getElementById("tenancyNo").innerText;
@@ -231,7 +176,7 @@
     xhttp.onload = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         console.log(xhttp.responseText);
-        document.getElementById("tenant-added-confirmation").innerHTML = xhttp.responseText;
+        document.getElementById("txt").innerHTML = xhttp.responseText;
       } else {
         console.error(xhttp.statusText);
       }
@@ -240,4 +185,5 @@
     return false;
   }
 </script>
+{% endfor %}
 {% endblock %}

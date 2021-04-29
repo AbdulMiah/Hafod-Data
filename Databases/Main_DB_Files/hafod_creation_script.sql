@@ -477,6 +477,16 @@ JOIN covidTestResult c ON h.testID = c.testID
 JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
 -- SELECT * FROM tenantsEditData;
 
+-- VIEW for carer data 
+CREATE VIEW adminViewOfCarersData AS 
+SELECT c.staffNo, c.firstname, c.surname, c.role, c.dob, l.postcode, l.localAuthority, l.businessArea, ctr.positiveCase, v.vaccinated
+FROM carers c
+JOIN locations l ON l.locationID = c.locationID
+JOIN health_linktable h ON c.healthID = h.healthID
+JOIN covidTestResult ctr ON h.testID = ctr.testID
+JOIN vaccinations v ON v.vaccinationID = h.vaccinationID;
+-- SELECT * FROM adminViewOfCarersData;
+
 -- STORED PROCEDURES -- --
 
 -- SP for number of tenants vaccinated
@@ -594,7 +604,8 @@ CREATE TRIGGER changeCTR_BEFORE_UPDATE
 BEFORE UPDATE ON covidtestresult 
 FOR EACH ROW 
 BEGIN 
-	IF OLD.positiveCase <> NEW.positiveCase THEN
+
+   IF OLD.positiveCase <> NEW.positiveCase THEN
 		IF NEW.positiveCase = "no" THEN 
 			SET NEW.`status` = "At Home";
 			SET NEW.resultDate = NULL;
@@ -606,13 +617,13 @@ BEGIN
 			SET NEW.status = "Isolating"; 
 		END IF;
 	END IF;
+
 END // 
 DELIMITER ; 
+
 -- SELECT * FROM tenantseditdata;
 -- UPDATE tenantseditdata SET positiveCase = "no" 
 -- WHERE tenancyNo = 1 
-   
-DROP TRIGGER IF EXISTS changeVaccinations_BEFORE_UPDATE;
 DELIMITER // 
 CREATE TRIGGER changeVaccinations_BEFORE_UPDATE
 BEFORE UPDATE ON vaccinations
@@ -636,6 +647,32 @@ DELIMITER ;
 -- UPDATE tenantseditdata SET vaccinated = "yes" 
 -- WHERE tenancyNo = 1;
 -- SELECT * FROM tenantseditdata;
+
+
+DELIMITER // 
+-- CREATE OR REPLACE TRIGGER healthIDUpdate_After_Tenants_Insert
+CREATE TRIGGER healthIDUpdate_After_Tenants_Insert
+AFTER INSERT ON tenants
+FOR EACH ROW 
+BEGIN 
+		SET healthID = tenancyNo;
+END // 
+DELIMITER ; 
+
+
+-- --------------------------------------------- -- 
+-- SQL QUERIES USED IN SERVER 
+-- --------------------------------------------- -- 
+-- SELECT * FROM tenantsEditData
+-- ORDER BY tenancyNo DESC LIMIT 1;
+
+-- SELECT * FROM tenants
+-- ORDER BY tenancyNo DESC LIMIT 1;
+
+
+
+   
+   
    
    
    
