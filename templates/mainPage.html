@@ -102,6 +102,21 @@
       </center>
     </div>
   </div>
+
+  <div class="row">
+    <div id="maps">
+      <canvas id="vaccinesPieChart"></canvas>
+    </div>
+
+    <!-- Description -->
+    <div class="col-md-6 h-100" id="descriptions">
+      <center>
+        <p>This pie graph shows the most popular vaccines amongst Carers and Tenants.
+           <a href="/pieChart/Vaccines">Click here</a> for a larger view of the pie chart.
+        </p>
+      </center>
+    </div>
+  </div>
   <!-- Part of postponed user story issue #31 -->
  <!-- <div class="row">
    <div id="maps">
@@ -182,6 +197,41 @@ var myChart = new Chart(tenantsInfChart, {
         }]
     }
 }
+});
+
+var pieChartVaccines = document.getElementById('vaccinesPieChart').getContext('2d');
+var myChart = new Chart(pieChartVaccines, {
+  type: 'pie',
+  data: {
+    labels: ['Moderna', 'Pfizer'],
+    datasets: [{
+      label: 'Graph of Popular Vaccines',
+
+      data: [{{vaccineModerna}}, {{vaccinePfizer}}],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Pie Chart of Popular Vaccines'
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
 });
 
 </script>
