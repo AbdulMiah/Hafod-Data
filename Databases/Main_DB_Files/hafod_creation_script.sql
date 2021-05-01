@@ -267,6 +267,7 @@ CREATE TABLE IF NOT EXISTS `vaccinations_linktable`(
   `healthID`			INTEGER,
   CONSTRAINT `PK_vaccinations_linktable` PRIMARY KEY (`vaccinationID`)
 );
+-- INSERT data into vaccinations_linktable
 
 
 DROP TABLE IF EXISTS `tests_linktable`;
