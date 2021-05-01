@@ -260,77 +260,93 @@ INSERT INTO covidTestResult VALUES(NULL, 'yes', 'hospital', '2020-07-15', '2021-
 INSERT INTO covidTestResult VALUES(NULL, 'yes', 'isolation', '2021-03-07', '2021-03-21');
 -- SELECT * FROM covidTestResult;
 
+-- Table for vaccination_linktable 
+DROP TABLE IF EXISTS `vaccinations_linktable`;
+CREATE TABLE IF NOT EXISTS `vaccinations_linktable`( 
+  `vaccinationID`		INTEGER NOT NULL AUTO_INCREMENT,
+  `healthID`			INTEGER,
+  CONSTRAINT `PK_vaccinations_linktable` PRIMARY KEY (`vaccinationID`)
+);
+
+
+DROP TABLE IF EXISTS `tests_linktable`;
+CREATE TABLE IF NOT EXISTS `tests_linktable`( 
+  `testID`			INTEGER NOT NULL AUTO_INCREMENT,
+  `healthID`		INTEGER,
+  CONSTRAINT `PK_tests_linktable` PRIMARY KEY (`testID`)
+);
+
 
 -- Table for health_linktable
-DROP TABLE IF EXISTS `health_linktable`;
-CREATE TABLE IF NOT EXISTS `health_linktable` (
-	`healthID`				INTEGER NOT NULL AUTO_INCREMENT,
-    `vaccinationID`			INTEGER,
-    `testID`				INTEGER,
-    CONSTRAINT `PK_health_linktable` PRIMARY KEY (`healthID`)
-);
--- INSERT data into health_linktable
-INSERT INTO health_linktable VALUES(NULL, 1, 1);
-INSERT INTO health_linktable VALUES(NULL, 2, 2);
-INSERT INTO health_linktable VALUES(NULL, 3, 3);
-INSERT INTO health_linktable VALUES(NULL, 4, 4);
-INSERT INTO health_linktable VALUES(NULL, 5, 5);
-INSERT INTO health_linktable VALUES(NULL, 6, 6);
-INSERT INTO health_linktable VALUES(NULL, 7, 7);
-INSERT INTO health_linktable VALUES(NULL, 8, 8);
-INSERT INTO health_linktable VALUES(NULL, 9, 9);
-INSERT INTO health_linktable VALUES(NULL, 10, 10);
-INSERT INTO health_linktable VALUES(NULL, 11, 11);
-INSERT INTO health_linktable VALUES(NULL, 12, 12);
-INSERT INTO health_linktable VALUES(NULL, 13, 13);
-INSERT INTO health_linktable VALUES(NULL, 14, 14);
-INSERT INTO health_linktable VALUES(NULL, 15, 15);
-INSERT INTO health_linktable VALUES(NULL, 16, 16);
-INSERT INTO health_linktable VALUES(NULL, 17, 17);
-INSERT INTO health_linktable VALUES(NULL, 18, 18);
-INSERT INTO health_linktable VALUES(NULL, 19, 19);
-INSERT INTO health_linktable VALUES(NULL, 20, 20);
-INSERT INTO health_linktable VALUES(NULL, 21, 21);
-INSERT INTO health_linktable VALUES(NULL, 22, 22);
-INSERT INTO health_linktable VALUES(NULL, 23, 23);
-INSERT INTO health_linktable VALUES(NULL, 24, 24);
-INSERT INTO health_linktable VALUES(NULL, 25, 25);
-INSERT INTO health_linktable VALUES(NULL, 26, 26);
-INSERT INTO health_linktable VALUES(NULL, 27, 27);
-INSERT INTO health_linktable VALUES(NULL, 28, 28);
-INSERT INTO health_linktable VALUES(NULL, 29, 29);
-INSERT INTO health_linktable VALUES(NULL, 30, 30);
+-- DROP TABLE IF EXISTS `health_linktable`;
+-- CREATE TABLE IF NOT EXISTS `health_linktable` (
+-- 	`healthID`				INTEGER NOT NULL AUTO_INCREMENT,
+--     `vaccinationID`			INTEGER,
+--     `testID`				INTEGER,
+--     CONSTRAINT `PK_health_linktable` PRIMARY KEY (`healthID`)
+-- );
+-- -- INSERT data into health_linktable
+-- INSERT INTO health_linktable VALUES(NULL, 1, 1);
+-- INSERT INTO health_linktable VALUES(NULL, 2, 2);
+-- INSERT INTO health_linktable VALUES(NULL, 3, 3);
+-- INSERT INTO health_linktable VALUES(NULL, 4, 4);
+-- INSERT INTO health_linktable VALUES(NULL, 5, 5);
+-- INSERT INTO health_linktable VALUES(NULL, 6, 6);
+-- INSERT INTO health_linktable VALUES(NULL, 7, 7);
+-- INSERT INTO health_linktable VALUES(NULL, 8, 8);
+-- INSERT INTO health_linktable VALUES(NULL, 9, 9);
+-- INSERT INTO health_linktable VALUES(NULL, 10, 10);
+-- INSERT INTO health_linktable VALUES(NULL, 11, 11);
+-- INSERT INTO health_linktable VALUES(NULL, 12, 12);
+-- INSERT INTO health_linktable VALUES(NULL, 13, 13);
+-- INSERT INTO health_linktable VALUES(NULL, 14, 14);
+-- INSERT INTO health_linktable VALUES(NULL, 15, 15);
+-- INSERT INTO health_linktable VALUES(NULL, 16, 16);
+-- INSERT INTO health_linktable VALUES(NULL, 17, 17);
+-- INSERT INTO health_linktable VALUES(NULL, 18, 18);
+-- INSERT INTO health_linktable VALUES(NULL, 19, 19);
+-- INSERT INTO health_linktable VALUES(NULL, 20, 20);
+-- INSERT INTO health_linktable VALUES(NULL, 21, 21);
+-- INSERT INTO health_linktable VALUES(NULL, 22, 22);
+-- INSERT INTO health_linktable VALUES(NULL, 23, 23);
+-- INSERT INTO health_linktable VALUES(NULL, 24, 24);
+-- INSERT INTO health_linktable VALUES(NULL, 25, 25);
+-- INSERT INTO health_linktable VALUES(NULL, 26, 26);
+-- INSERT INTO health_linktable VALUES(NULL, 27, 27);
+-- INSERT INTO health_linktable VALUES(NULL, 28, 28);
+-- INSERT INTO health_linktable VALUES(NULL, 29, 29);
+-- INSERT INTO health_linktable VALUES(NULL, 30, 30);
 
-INSERT INTO health_linktable VALUES(NULL, 31, 31);
-INSERT INTO health_linktable VALUES(NULL, 32, 32);
-INSERT INTO health_linktable VALUES(NULL, 33, 33);
-INSERT INTO health_linktable VALUES(NULL, 34, 34);
-INSERT INTO health_linktable VALUES(NULL, 35, 35);
-INSERT INTO health_linktable VALUES(NULL, 36, 36);
-INSERT INTO health_linktable VALUES(NULL, 37, 37);
-INSERT INTO health_linktable VALUES(NULL, 38, 38);
-INSERT INTO health_linktable VALUES(NULL, 39, 39);
-INSERT INTO health_linktable VALUES(NULL, 40, 40);
-INSERT INTO health_linktable VALUES(NULL, 41, 41);
-INSERT INTO health_linktable VALUES(NULL, 42, 42);
-INSERT INTO health_linktable VALUES(NULL, 43, 43);
-INSERT INTO health_linktable VALUES(NULL, 44, 44);
-INSERT INTO health_linktable VALUES(NULL, 45, 45);
-INSERT INTO health_linktable VALUES(NULL, 46, 46);
-INSERT INTO health_linktable VALUES(NULL, 47, 47);
-INSERT INTO health_linktable VALUES(NULL, 48, 48);
-INSERT INTO health_linktable VALUES(NULL, 49, 49);
-INSERT INTO health_linktable VALUES(NULL, 50, 50);
-INSERT INTO health_linktable VALUES(NULL, 51, 51);
-INSERT INTO health_linktable VALUES(NULL, 52, 52);
-INSERT INTO health_linktable VALUES(NULL, 53, 53);
-INSERT INTO health_linktable VALUES(NULL, 54, 54);
-INSERT INTO health_linktable VALUES(NULL, 55, 55);
-INSERT INTO health_linktable VALUES(NULL, 56, 56);
-INSERT INTO health_linktable VALUES(NULL, 57, 57);
-INSERT INTO health_linktable VALUES(NULL, 58, 58);
-INSERT INTO health_linktable VALUES(NULL, 59, 59);
-INSERT INTO health_linktable VALUES(NULL, 60, 60);
+-- INSERT INTO health_linktable VALUES(NULL, 31, 31);
+-- INSERT INTO health_linktable VALUES(NULL, 32, 32);
+-- INSERT INTO health_linktable VALUES(NULL, 33, 33);
+-- INSERT INTO health_linktable VALUES(NULL, 34, 34);
+-- INSERT INTO health_linktable VALUES(NULL, 35, 35);
+-- INSERT INTO health_linktable VALUES(NULL, 36, 36);
+-- INSERT INTO health_linktable VALUES(NULL, 37, 37);
+-- INSERT INTO health_linktable VALUES(NULL, 38, 38);
+-- INSERT INTO health_linktable VALUES(NULL, 39, 39);
+-- INSERT INTO health_linktable VALUES(NULL, 40, 40);
+-- INSERT INTO health_linktable VALUES(NULL, 41, 41);
+-- INSERT INTO health_linktable VALUES(NULL, 42, 42);
+-- INSERT INTO health_linktable VALUES(NULL, 43, 43);
+-- INSERT INTO health_linktable VALUES(NULL, 44, 44);
+-- INSERT INTO health_linktable VALUES(NULL, 45, 45);
+-- INSERT INTO health_linktable VALUES(NULL, 46, 46);
+-- INSERT INTO health_linktable VALUES(NULL, 47, 47);
+-- INSERT INTO health_linktable VALUES(NULL, 48, 48);
+-- INSERT INTO health_linktable VALUES(NULL, 49, 49);
+-- INSERT INTO health_linktable VALUES(NULL, 50, 50);
+-- INSERT INTO health_linktable VALUES(NULL, 51, 51);
+-- INSERT INTO health_linktable VALUES(NULL, 52, 52);
+-- INSERT INTO health_linktable VALUES(NULL, 53, 53);
+-- INSERT INTO health_linktable VALUES(NULL, 54, 54);
+-- INSERT INTO health_linktable VALUES(NULL, 55, 55);
+-- INSERT INTO health_linktable VALUES(NULL, 56, 56);
+-- INSERT INTO health_linktable VALUES(NULL, 57, 57);
+-- INSERT INTO health_linktable VALUES(NULL, 58, 58);
+-- INSERT INTO health_linktable VALUES(NULL, 59, 59);
+-- INSERT INTO health_linktable VALUES(NULL, 60, 60);
 -- SELECT * FROM health_linktable;
 
 -- ADDING FOREIGN KEYS
@@ -409,16 +425,16 @@ CONSTRAINT `PK_CovidCaseFigures` PRIMARY KEY (`CasesReportID`)
 
 
 -- Table for VaccinationFigures
-DROP TABLE IF EXISTS `VaccinationFigures`;
-CREATE TABLE IF NOT EXISTS `VaccinationFigures` (
-`VaccinatedID` 			INTEGER NOT NULL AUTO_INCREMENT,
-`Date` 						VARCHAR(10) NOT NULL,
-`AreaName`					VARCHAR(40) NOT NULL,
-`AreaType` 					VARCHAR(20) NOT NULL,
-CONSTRAINT `PK_VaccinationFigures` PRIMARY KEY (`VaccinatedID`)
-);
--- INSERT data into VaccinationFigures
-INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
+-- DROP TABLE IF EXISTS `VaccinationFigures`;
+-- CREATE TABLE IF NOT EXISTS `VaccinationFigures` (
+-- `VaccinatedID` 			INTEGER NOT NULL AUTO_INCREMENT,
+-- `Date` 						VARCHAR(10) NOT NULL,
+-- `AreaName`					VARCHAR(40) NOT NULL,
+-- `AreaType` 					VARCHAR(20) NOT NULL,
+-- CONSTRAINT `PK_VaccinationFigures` PRIMARY KEY (`VaccinatedID`)
+-- );
+-- -- INSERT data into VaccinationFigures
+-- INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
 -- SELECT * FROM VaccinationFigures;
 
 
