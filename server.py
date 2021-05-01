@@ -189,6 +189,7 @@ def editData(tenantID): # tenantID=None
         updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         updateTenantVacType = request.form.get("vaccinationType", default="Error")
         updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        updateTenantVacType = int(updateTenantVacType)
 
         updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
         updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,

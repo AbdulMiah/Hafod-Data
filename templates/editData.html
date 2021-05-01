@@ -105,10 +105,23 @@
         <label for="" class="dataTitle">Date Vaccination Effective </label>
         <input type="text" class="dataInput" value="{{d[13]}}" name="dateVacEffective">
       </div>
-      <div class="dataTile">
+      <!-- <div class="dataTile">
         <label for="" class="dataTitle">Vaccination Type</label>
         <input type="text" class="dataInput" value="{{d[14]}}" name="vaccinationType">
+      </div> -->
+
+      <div class="dataTile">
+        <div class="form-group">
+          <label>Vaccination Type (Select One):</label>
+          <select class="form-control" name="vaccinationType">
+            <option>{{d[14]}}</option>
+            <option value="Pfizer">Pfizer</option>
+            <option value="Moderna">Moderna</option>
+            <option value="Astrazeneca">Astrazeneca</option>
+          </select>
+        </div>
       </div>
+
       <div class="dataTile">
         <label for="" class="dataTitle">Reason For No Vaccination</label>
         <input type="text" class="dataInput" value="{{d[15]}}" name="reasonForNoVac">
@@ -149,6 +162,20 @@
     var reasonForNoVac = document.forms["updateTenantsForm"]["reasonForNoVac"].value;
     console.log(dob)
     console.log(firstName)
+    console.log(vaccinationType)
+
+    switch (vaccinationType) {
+      case "Pfizer":
+        vaccinationType=1;
+        break;
+      case "Moderna":
+        vaccinationType=2;
+        break;
+      case "Astrazeneca":
+        vaccinationType=3;
+        break;
+    }
+    console.log(vaccinationType)
 
     params = 'tenancyNo=' + tenancyNo + '&firstName=' + firstName + '&surname=' + surname + '&dob=' + dob + '&postcode=' + postcode + '&localAuthority=' + localAuthority + '&businessArea=' + businessArea + '&positiveCase=' + positiveCase +
       '&status=' + status + '&resultDate=' + resultDate + '&endOfIsolation=' + endOfIsolation + '&vaccinated=' + vaccinated + '&dateVaccinated=' + dateVaccinated + '&dateVacEffective=' + dateVacEffective + '&vaccinationType=' + vaccinationType +

@@ -414,7 +414,7 @@ INSERT INTO vaccinationTypes VALUES(NULL, 'Astrazeneca');
 
 -- Table for testTypes
 DROP TABLE IF EXISTS `testTypes`;
-CREATE TABLE IF NOT EXISTS `vaccinationTypes`( 
+CREATE TABLE IF NOT EXISTS `testTypes`( 
   `testTypeID`			INTEGER NOT NULL AUTO_INCREMENT,
   `testType`		VARCHAR(25),
   CONSTRAINT `PK_testTypes` PRIMARY KEY (`testTypeID`)
@@ -519,12 +519,14 @@ CONSTRAINT `PK_CovidCaseFigures` PRIMARY KEY (`CasesReportID`)
 DROP VIEW IF EXISTS `tenantsVaccinations`;
 CREATE VIEW tenantsVaccinations AS
 SELECT tenants.tenancyNo, tenants.healthID, tenants.locationID,
-tenants.dob, vaccinations.vaccinated, vaccinations.vaccinationType, vaccinations.reasonForNoVaccination
+tenants.dob, vaccinations.vaccinated, vaccinationTypes.vaccinationType, vaccinations.reasonForNoVaccination
 FROM tenants
 INNER JOIN vaccinations_linktable 
 ON tenants.healthID = vaccinations_linktable.healthID
 INNER JOIN vaccinations
-ON vaccinations_linktable.vaccinationID = vaccinations.vaccinationID;
+ON vaccinations_linktable.vaccinationID = vaccinations.vaccinationID
+INNER JOIN vaccinationTypes
+ON vaccinations.vaccTypeID=vaccinationTypes.vaccTypeID;
 -- SELECT * FROM tenantsVaccinations;
 
 -- VIEW for tenants COVID cases
@@ -560,13 +562,14 @@ JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- VIEW for data to edit on the tenants edit page
 DROP VIEW IF EXISTS `tenantsEditData`;
 CREATE VIEW tenantsEditData AS
-SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, v.vaccinationType, v.reasonForNoVaccination
+SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, vt.vaccinationType, v.reasonForNoVaccination
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
 JOIN tests_linktable test ON t.healthID = test.healthID
 JOIN covidTestResult c ON test.testID = c.testID
 JOIN vaccinations_linktable vacc ON t.healthID = vacc.healthID
-JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
+JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID
+JOIN vaccinationTypes vt ON v.vaccTypeID=vt.vaccTypeID;
 -- SELECT * FROM tenantsEditData;
 
 -- VIEW for carer data 
@@ -695,7 +698,7 @@ RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
 		SELECT COUNT(*)
-		FROM vaccinations
+		FROM vaccinationTypes
 		WHERE vaccinationType = 'Pfizer'
 	);
 END //
@@ -711,7 +714,7 @@ RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
 		SELECT COUNT(*)
-		FROM vaccinations
+		FROM vaccinationTypes
 		WHERE vaccinationType = 'Moderna'
 	);
 END //
@@ -727,7 +730,7 @@ RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
 		SELECT COUNT(*)
-		FROM vaccinations
+		FROM vaccinationTypes
 		WHERE vaccinationType = 'Astrazeneca'
 	);
 END //
@@ -774,7 +777,7 @@ BEGIN
 		IF NEW.vaccinated = "no" THEN 
 			SET NEW.dateVaccinated = NULL;
 			SET NEW.dateVacEffective = NULL;
-			SET NEW.vaccinationType = NULL;
+			SET NEW.vaccTypeID = NULL;
             SET NEW.reasonForNoVaccination = 'Refused';
 			
 		ELSEIF NEW.vaccinated = "yes" THEN 
@@ -789,16 +792,6 @@ DELIMITER ;
 -- WHERE tenancyNo = 1;
 -- SELECT * FROM tenantseditdata;
 
-
-DELIMITER // 
--- CREATE OR REPLACE TRIGGER healthIDUpdate_After_Tenants_Insert
-CREATE TRIGGER healthIDUpdate_After_Tenants_Insert
-AFTER INSERT ON tenants
-FOR EACH ROW 
-BEGIN 
-		SET healthID = tenancyNo;
-END // 
-DELIMITER ; 
 
 
 -- --------------------------------------------- -- 
