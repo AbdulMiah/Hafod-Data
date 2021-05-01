@@ -570,10 +570,10 @@ CREATE VIEW tenantsVaccinations AS
 SELECT tenants.tenancyNo, tenants.healthID, tenants.locationID,
 tenants.dob, vaccinations.vaccinated, vaccinations.vaccinationType, vaccinations.reasonForNoVaccination
 FROM tenants
-INNER JOIN health_linktable 
-ON tenants.healthID = health_linktable.healthID
+INNER JOIN vaccinations_linktable 
+ON tenants.healthID = vaccinations_linktable.healthID
 INNER JOIN vaccinations
-ON health_linktable.vaccinationID = vaccinations.vaccinationID;
+ON vaccinations_linktable.vaccinationID = vaccinations.vaccinationID;
 -- SELECT * FROM tenantsVaccinations;
 
 -- VIEW for tenants COVID cases
@@ -581,8 +581,8 @@ DROP VIEW IF EXISTS `tenantsCases`;
 CREATE VIEW tenantsCases AS
 SELECT t.firstname, t.surname, t.dob, ctr.positiveCase
 FROM tenants t
-JOIN health_linktable h ON t.healthID = h.healthID
-JOIN covidTestResult ctr ON h.testID = ctr.testID;
+JOIN tests_linktable test ON t.healthID = test.healthID
+JOIN covidTestResult ctr ON test.testID = ctr.testID;
 -- SELECT * FROM tenantsCases;
 
 -- VIEW for carer COVID cases
@@ -590,19 +590,20 @@ DROP VIEW IF EXISTS `carersCases`;
 CREATE VIEW carersCases AS 
 SELECT c.firstname, c.surname, c.dob, ctr.positiveCase
 FROM carers c
-JOIN health_linktable h ON c.healthID = h.healthID
-JOIN covidTestResult ctr ON h.testID = ctr.testID;
+JOIN tests_linktable test ON c.healthID = test.healthID
+JOIN covidTestResult ctr ON test.testID = ctr.testID;
 -- SELECT * FROM carersCases;
 
 -- VIEW for relevent data for tenants
 DROP VIEW IF EXISTS `adminViewOfData`;
 CREATE VIEW adminViewOfData AS
-SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, v.vaccinated
+SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, ctr.positiveCase, v.vaccinated
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
-JOIN health_linktable h ON t.healthID = h.healthID
-JOIN covidTestResult c ON h.testID = c.testID
-JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
+JOIN tests_linktable test ON t.healthID = test.healthID
+JOIN covidTestResult ctr ON test.testID = ctr.testID
+JOIN vaccinations_linktable vacc ON t.healthID = vacc.healthID
+JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfData;
 
 -- VIEW for data to edit on the tenants edit page
@@ -611,9 +612,10 @@ CREATE VIEW tenantsEditData AS
 SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, v.vaccinationType, v.reasonForNoVaccination
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
-JOIN health_linktable h ON t.healthID = h.healthID
-JOIN covidTestResult c ON h.testID = c.testID
-JOIN vaccinations v ON h.vaccinationID = v.vaccinationID;
+JOIN tests_linktable test ON t.healthID = test.healthID
+JOIN covidTestResult c ON test.testID = c.testID
+JOIN vaccinations_linktable vacc ON t.healthID = vacc.healthID
+JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM tenantsEditData;
 
 -- VIEW for carer data 
@@ -621,9 +623,10 @@ CREATE VIEW adminViewOfCarersData AS
 SELECT c.staffNo, c.firstname, c.surname, c.role, c.dob, l.postcode, l.localAuthority, l.businessArea, ctr.positiveCase, v.vaccinated
 FROM carers c
 JOIN locations l ON l.locationID = c.locationID
-JOIN health_linktable h ON c.healthID = h.healthID
-JOIN covidTestResult ctr ON h.testID = ctr.testID
-JOIN vaccinations v ON v.vaccinationID = h.vaccinationID;
+JOIN tests_linktable test ON c.healthID = test.healthID
+JOIN covidTestResult ctr ON test.testID = ctr.testID
+JOIN vaccinations_linktable vacc ON c.healthID = vacc.healthID
+JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfCarersData;
 
 -- STORED PROCEDURES -- --
