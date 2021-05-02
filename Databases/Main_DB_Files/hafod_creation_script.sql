@@ -699,8 +699,8 @@ RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
 		SELECT COUNT(*)
-		FROM vaccinationTypes
-		WHERE vaccinationType = 'Pfizer'
+		FROM vaccinations
+		WHERE vaccTypeID = 1
 	);
 END //
 DELIMITER ;
@@ -715,8 +715,8 @@ RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
 		SELECT COUNT(*)
-		FROM vaccinationTypes
-		WHERE vaccinationType = 'Moderna'
+		FROM vaccinations
+		WHERE vaccTypeID = 2
 	);
 END //
 DELIMITER ;
@@ -731,8 +731,8 @@ RETURNS VARCHAR(50)
 BEGIN
 	RETURN (
 		SELECT COUNT(*)
-		FROM vaccinationTypes
-		WHERE vaccinationType = 'Astrazeneca'
+		FROM vaccinations
+		WHERE vaccTypeID = 3
 	);
 END //
 DELIMITER ;

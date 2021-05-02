@@ -143,7 +143,7 @@ var myChart = new Chart(tenantsVaccChart, {
     data: {
         labels: ['Vaccinated', 'Not Vaccinated'],
         datasets: [{
-            label: 'Graph of Number Residences Vaccinated',
+            label: 'Number of Tenants Vaccinated',
 
             data: [{{ tenantsVaccinated }}, {{ tenantsNonVaccinated }} ],
             backgroundColor: [
@@ -158,6 +158,10 @@ var myChart = new Chart(tenantsVaccChart, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: 'Bar Graph of Number of Tenants Vaccinated'
+      },
     scales: {
         yAxes: [{
             ticks: {
@@ -174,7 +178,7 @@ var myChart = new Chart(tenantsInfChart, {
     data: {
         labels: ['Positive', 'Negative'],
         datasets: [{
-            label: 'Graph of Number Residences Infected',
+            label: 'Number of Tenants Infected',
 
             data: [{{ tenantsInfected }}, {{ tenantsNotInfected }} ],
             backgroundColor: [
@@ -189,6 +193,10 @@ var myChart = new Chart(tenantsInfChart, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: 'Bar Graph of Number of Tenants Infected by COVID-19'
+      },
     scales: {
         yAxes: [{
             ticks: {
@@ -224,7 +232,7 @@ var myChart = new Chart(pieChartVaccines, {
   options: {
     title: {
       display: true,
-      text: 'Pie Chart of Popular Vaccines'
+      text: 'Pie Chart of Vaccines Taken By Tenants and Carers'
     },
     scales: {
       yAxes: [{
