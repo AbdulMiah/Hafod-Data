@@ -331,11 +331,13 @@ def insertTenantData():
         insertTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         insertTenantVacType = request.form.get("vaccinationType", default="Error")
         insertTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        insertTenantVacType = int(insertTenantVacType)
+        print(insertTenantVacType)
 
         insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantlocationID,
         insertTenantCovidCase, insertTenantStatus, insertTenantDateOfRes, insertTenantIsoDate, insertTenantVaccinated, insertTenantDateVac, insertTenantDateVacEff,
         insertTenantVacType, insertTenantRFNV, insertTenantNo]
-        print(insertData)
+        # print(insertData)
 
 
         # Replace fields with string None or Error with None type value
@@ -368,7 +370,7 @@ def insertTenantData():
 
             print("Starting Vac Insert")
             insertVac = ("INSERT INTO vaccinations "
-                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccinationType, reasonForNoVaccination)"
+                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccTypeID, reasonForNoVaccination)"
                         " VALUES(%s, %s, %s, %s, %s, %s)")
             cur.execute(insertVac, [None, insertData[8], insertData[9], insertData[10], insertData[11], insertData[12]])
             print("Success inserting vaccinations")
