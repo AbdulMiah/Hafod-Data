@@ -115,6 +115,7 @@
           <label>Vaccination Type (Select One):</label>
           <select class="form-control" name="vaccinationType">
             <option>{{d[14]}}</option>
+            <option value="None">None</option>
             <option value="Pfizer">Pfizer</option>
             <option value="Moderna">Moderna</option>
             <option value="Astrazeneca">Astrazeneca</option>
@@ -173,6 +174,9 @@
         break;
       case "Astrazeneca":
         vaccinationType=3;
+        break;
+      case "None":
+        vaccinationType=4;
         break;
     }
     console.log(vaccinationType)

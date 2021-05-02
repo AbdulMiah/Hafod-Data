@@ -148,10 +148,6 @@ def loadEditPage():
 @app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
 @admin_login_required
 def editData(tenantID): # tenantID=None
-    # usertype = 'null'
-    # if 'usertype' in session:
-    #     usertype = escape(session['usertype'])
-    # if usertype == 'Admin':
     if request.method == 'GET':
         try:
             conn = mysql.connector.connect(**config)
@@ -190,6 +186,7 @@ def editData(tenantID): # tenantID=None
         updateTenantVacType = request.form.get("vaccinationType", default="Error")
         updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
         updateTenantVacType = int(updateTenantVacType)
+        print(updateTenantVacType)
 
         updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
         updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,
@@ -201,15 +198,6 @@ def editData(tenantID): # tenantID=None
                 pos = updateData.index(i)
                 updateData.remove(i)
                 updateData.insert(pos, None)
-            # print(i)
-
-        # if updateTenantDateOfRes == "None":
-        #     updateTenantDateOfRes = None
-        # if updateTenantIsoDate == "None":
-        #     updateTenantIsoDate = None
-        # print(updateData[8])
-        # print(updateData[0])
-        # print(updateData[13])
 
         try:
             conn = mysql.connector.connect(**config)
@@ -220,24 +208,21 @@ def editData(tenantID): # tenantID=None
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
             print("Success in updating tenants")
-            # conn.commit()
 
             updateLocations = ("UPDATE tenantsEditData "
                             " SET postcode=%s, localAuthority=%s, businessArea=%s"
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
             print("Success in updating locations")
-            # conn.commit()
 
             updateCTR = ("UPDATE tenantsEditData "
                         " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
             print("Success in updating ctr")
-            # conn.commit()
 
             updateVac = ("UPDATE tenantsEditData "
-                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccTypeID=%s, reasonForNoVaccination=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
             print("Success in updating vaccinations")
@@ -254,7 +239,6 @@ def editData(tenantID): # tenantID=None
             conn.close()
             cur.close()
             print("End of fetch")
-            # print(allData)
             return msg;
 
 #retrieve carer data and edit - Mahi

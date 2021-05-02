@@ -122,67 +122,67 @@ CREATE TABLE IF NOT EXISTS `vaccinations` (
 -- INSERT data into vaccinations
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-24', '2021-04-07', 3, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-1', '2021-04-14', 2, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Not Effective');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Not Effective');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-3', '2021-03-17', 3, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-3', '2021-03-17', 2, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-4', '2021-03-18', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-6', '2021-03-20', 2, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-14', '2021-03-28', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-17', '2021-03-31', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-8', '2021-03-22', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Pregnant');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-8', '2021-03-22', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-10', '2021-03-24', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-10', '2021-03-24', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Pregnant');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-10', '2021-02-24', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-11', '2021-02-25', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-12', '2021-02-26', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-16', '2021-03-2', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-16', '2021-03-2', 3, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-17', '2021-03-3', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-17', '2021-03-3', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-20', '2021-03-6', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-04', '2021-02-15', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-12', '2021-01-22', 2, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Not Effective');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Not Effective');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-11-03', '2021-11-17', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Not Effective');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Not Effective');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-12-04', '2020-12-18', 3, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-06', '2021-03-24', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-04-01', '2021-04-14', 2, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-06', '2021-01-20', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-23', 2, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Pregnant');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-08', '2020-10-22', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-09-24', '2020-10-06', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-01', '2020-10-16', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Pregnant');
-INSERT INTO vaccinations VALUES(NULL, 'yes', NULL, NULL, NULL, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Pregnant');
+INSERT INTO vaccinations VALUES(NULL, 'yes', NULL, NULL, 4, 'N/A');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-02-14', '2021-02-26', 1, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-12-09', '2020-12-23', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Allergic');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-01-01', '2021-01-16', 1, 'N/A');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2021-03-13', '2021-03-23', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 INSERT INTO vaccinations VALUES(NULL, 'yes', '2020-10-20', '2021-11-06', 3, 'N/A');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Allergic');
-INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, NULL, 'Refused');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Allergic');
+INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 -- SELECT * FROM vaccinations;
 
 
@@ -411,6 +411,7 @@ CREATE TABLE IF NOT EXISTS `vaccinationTypes`(
 INSERT INTO vaccinationTypes VALUES(NULL, 'Pfizer');
 INSERT INTO vaccinationTypes VALUES(NULL, 'Moderna');
 INSERT INTO vaccinationTypes VALUES(NULL, 'Astrazeneca');
+INSERT INTO vaccinationTypes VALUES(NULL, 'None');
 
 -- Table for testTypes
 DROP TABLE IF EXISTS `testTypes`;
@@ -562,7 +563,7 @@ JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- VIEW for data to edit on the tenants edit page
 DROP VIEW IF EXISTS `tenantsEditData`;
 CREATE VIEW tenantsEditData AS
-SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, vt.vaccinationType, v.reasonForNoVaccination
+SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, vt.vaccinationType, v.reasonForNoVaccination, v.vaccTypeID
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
 JOIN tests_linktable test ON t.healthID = test.healthID
@@ -570,7 +571,7 @@ JOIN covidTestResult c ON test.testID = c.testID
 JOIN vaccinations_linktable vacc ON t.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID
 JOIN vaccinationTypes vt ON v.vaccTypeID=vt.vaccTypeID;
--- SELECT * FROM tenantsEditData;
+SELECT * FROM tenantsEditData;
 
 -- VIEW for carer data 
 CREATE VIEW adminViewOfCarersData AS 
