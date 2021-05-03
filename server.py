@@ -396,17 +396,27 @@ def insertTenantData():
 
             ########################################
 
-            insertHeathLinkTable = ("INSERT INTO health_linktable"
-                            " (healthID, testID, vaccinationID)"
-                            " VALUES (%s, %s, %s)")
-            cur.execute(insertHeathLinkTable, [None, tenantTestID, tenantVacID])
-            print("Success inserting health_linktable")
+            insertTestsLinkTable = ("INSERT INTO tests_linktable"
+                            " (healthID, testID)"
+                            " VALUES (%s, %s)")
+            cur.execute(insertTestsLinkTable, [None, tenantTestID])
+            print("Success inserting tests_linktable")
             # conn.commit()
 
-            getTenantHealthID = cur.execute("SELECT healthID FROM health_linktable ORDER BY healthID DESC LIMIT 1")
+            getTenantHealthID = cur.execute("SELECT healthID FROM tests_linktable ORDER BY healthID DESC LIMIT 1")
             tenantHealthID = cur.fetchall()
             tenantHealthID = tenantHealthID[0][0]
             print(tenantHealthID)
+
+            ########################################
+
+            insertVaccLinkTable = ("INSERT INTO vaccinations_linktable"
+                            " (healthID, vaccinationID)"
+                            " VALUES (%s, %s)")
+            cur.execute(insertVaccLinkTable, [None, tenantVacID])
+            print("Success inserting vaccinations_linktable")
+            # conn.commit()
+
 
             ##########################################
 
