@@ -787,7 +787,7 @@ BEGIN
    IF OLD.positiveCase <> NEW.positiveCase THEN
 		IF NEW.positiveCase = "no" THEN 
 			SET NEW.`status` = "At Home";
-			SET NEW.resultDate = NULL;
+			SET NEW.resultDate = NOW();
 			SET NEW.endOfIsolation = Null;
 			
 		ELSEIF NEW.positiveCase = "yes" THEN 
@@ -814,7 +814,7 @@ BEGIN
 		IF NEW.vaccinated = "no" THEN 
 			SET NEW.dateVaccinated = NULL;
 			SET NEW.dateVacEffective = NULL;
-			SET NEW.vaccTypeID = NULL;
+			SET NEW.vaccTypeID = 4;
             SET NEW.reasonForNoVaccination = 'Refused';
 			
 		ELSEIF NEW.vaccinated = "yes" THEN 
