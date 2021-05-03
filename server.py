@@ -76,7 +76,11 @@ def loadMainPage():
     tenantsNonVaccinated = call_numberOfNonVaccinatedTenants()
     tenantsInfected = call_numberOfInfectedTenants()
     tenantsNotInfected = call_numberOfNonInfectedTenants()
-    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected)
+    vaccinePfizer = call_pfizer()
+    vaccineModerna = call_moderna()
+    vaccineAstrazeneca = call_astrazeneca()
+
+    return render_template('mainPage.html', title='Hafod', tenantsVaccinated=tenantsVaccinated, tenantsNonVaccinated=tenantsNonVaccinated, tenantsInfected=tenantsInfected, tenantsNotInfected=tenantsNotInfected, vaccinePfizer=vaccinePfizer, vaccineModerna = vaccineModerna, vaccineAstrazeneca = vaccineAstrazeneca)
     # else:
     #     flash("Please Login first to access the site!")
     #     return redirect("/Login")
@@ -144,10 +148,6 @@ def loadEditPage():
 @app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
 @admin_login_required
 def editData(tenantID): # tenantID=None
-    # usertype = 'null'
-    # if 'usertype' in session:
-    #     usertype = escape(session['usertype'])
-    # if usertype == 'Admin':
     if request.method == 'GET':
         try:
             conn = mysql.connector.connect(**config)
@@ -185,6 +185,8 @@ def editData(tenantID): # tenantID=None
         updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         updateTenantVacType = request.form.get("vaccinationType", default="Error")
         updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        updateTenantVacType = int(updateTenantVacType)
+        print(updateTenantVacType)
 
         updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
         updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,
@@ -196,15 +198,6 @@ def editData(tenantID): # tenantID=None
                 pos = updateData.index(i)
                 updateData.remove(i)
                 updateData.insert(pos, None)
-            # print(i)
-
-        # if updateTenantDateOfRes == "None":
-        #     updateTenantDateOfRes = None
-        # if updateTenantIsoDate == "None":
-        #     updateTenantIsoDate = None
-        # print(updateData[8])
-        # print(updateData[0])
-        # print(updateData[13])
 
         try:
             conn = mysql.connector.connect(**config)
@@ -215,24 +208,21 @@ def editData(tenantID): # tenantID=None
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
             print("Success in updating tenants")
-            # conn.commit()
 
             updateLocations = ("UPDATE tenantsEditData "
                             " SET postcode=%s, localAuthority=%s, businessArea=%s"
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
             print("Success in updating locations")
-            # conn.commit()
 
             updateCTR = ("UPDATE tenantsEditData "
                         " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
             print("Success in updating ctr")
-            # conn.commit()
 
             updateVac = ("UPDATE tenantsEditData "
-                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccTypeID=%s, reasonForNoVaccination=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
             print("Success in updating vaccinations")
@@ -249,7 +239,6 @@ def editData(tenantID): # tenantID=None
             conn.close()
             cur.close()
             print("End of fetch")
-            # print(allData)
             return msg;
 
 #retrieve carer data and edit - Mahi
@@ -342,11 +331,13 @@ def insertTenantData():
         insertTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         insertTenantVacType = request.form.get("vaccinationType", default="Error")
         insertTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        insertTenantVacType = int(insertTenantVacType)
+        print(insertTenantVacType)
 
         insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantlocationID,
         insertTenantCovidCase, insertTenantStatus, insertTenantDateOfRes, insertTenantIsoDate, insertTenantVaccinated, insertTenantDateVac, insertTenantDateVacEff,
         insertTenantVacType, insertTenantRFNV, insertTenantNo]
-        print(insertData)
+        # print(insertData)
 
 
         # Replace fields with string None or Error with None type value
@@ -379,7 +370,7 @@ def insertTenantData():
 
             print("Starting Vac Insert")
             insertVac = ("INSERT INTO vaccinations "
-                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccinationType, reasonForNoVaccination)"
+                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccTypeID, reasonForNoVaccination)"
                         " VALUES(%s, %s, %s, %s, %s, %s)")
             cur.execute(insertVac, [None, insertData[8], insertData[9], insertData[10], insertData[11], insertData[12]])
             print("Success inserting vaccinations")
@@ -392,17 +383,27 @@ def insertTenantData():
 
             ########################################
 
-            insertHeathLinkTable = ("INSERT INTO health_linktable"
-                            " (healthID, testID, vaccinationID)"
-                            " VALUES (%s, %s, %s)")
-            cur.execute(insertHeathLinkTable, [None, tenantTestID, tenantVacID])
-            print("Success inserting health_linktable")
+            insertTestsLinkTable = ("INSERT INTO tests_linktable"
+                            " (healthID, testID)"
+                            " VALUES (%s, %s)")
+            cur.execute(insertTestsLinkTable, [None, tenantTestID])
+            print("Success inserting tests_linktable")
             # conn.commit()
 
-            getTenantHealthID = cur.execute("SELECT healthID FROM health_linktable ORDER BY healthID DESC LIMIT 1")
+            getTenantHealthID = cur.execute("SELECT healthID FROM tests_linktable ORDER BY healthID DESC LIMIT 1")
             tenantHealthID = cur.fetchall()
             tenantHealthID = tenantHealthID[0][0]
             print(tenantHealthID)
+
+            ########################################
+
+            insertVaccLinkTable = ("INSERT INTO vaccinations_linktable"
+                            " (healthID, vaccinationID)"
+                            " VALUES (%s, %s)")
+            cur.execute(insertVaccLinkTable, [None, tenantVacID])
+            print("Success inserting vaccinations_linktable")
+            # conn.commit()
+
 
             ##########################################
 
@@ -677,6 +678,15 @@ def loadTenantsInfectedGraph():
     # else:
     #     flash("Please Login first to access the site!")
     #     return redirect("/Login")
+
+@app.route("/pieChart/Vaccines", methods = ["GET", "POST"])
+@login_required
+def loadVaccinePieChart():
+    if request.method == "GET":
+        pfizer = call_pfizer()
+        moderna = call_moderna()
+        astrazeneca = call_astrazeneca()
+        return render_template("popularVaccinesPieChart.html", pfizer = pfizer, moderna = moderna, astrazeneca = astrazeneca)
 
 ###=======UNFINISHED=====================
 def userLoginTracker():
@@ -955,6 +965,61 @@ def call_numberOfNonInfectedTenants():
         conn.close()
         cur.close()
     return totalNumberOfNonInfectedTenants
+
+def call_pfizer():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.execute('SELECT pfizerVaccine()')
+        res = cur.fetchall()
+        for result in res:
+            totalNumberOfPfizer = int(res[0][0])
+            print("Total Number Of pfizer:",totalNumberOfPfizer) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfPfizer
+
+def call_moderna():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.execute('SELECT modernaVaccine()')
+        res = cur.fetchall()
+        for result in res:
+            totalNumberOfModerna = int(res[0][0])
+            print("Total Number Of Moderna:",totalNumberOfModerna) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfModerna
+
+def call_astrazeneca():
+    try:
+        conn = mysql.connector.connect(**config)
+        cur = conn.cursor()
+        # print("FUNCTION CALLED ") #To test if function calls
+        cur.execute('SELECT astrazenecaVaccine()')
+        res = cur.fetchall()
+        for result in res:
+            totalNumberOfAstrazeneca = int(res[0][0])
+            print("Total Number Of Astrazeneca:",totalNumberOfAstrazeneca) #Prints returned value to console
+
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        cur.close()
+    return totalNumberOfAstrazeneca
+
 
 if __name__ == "__main__":
     app.run(debug=True)
