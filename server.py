@@ -148,10 +148,6 @@ def loadEditPage():
 @app.route("/EditData/<int:tenantID>", methods = ['GET', 'POST'])
 @admin_login_required
 def editData(tenantID): # tenantID=None
-    # usertype = 'null'
-    # if 'usertype' in session:
-    #     usertype = escape(session['usertype'])
-    # if usertype == 'Admin':
     if request.method == 'GET':
         try:
             conn = mysql.connector.connect(**config)
@@ -189,6 +185,8 @@ def editData(tenantID): # tenantID=None
         updateTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         updateTenantVacType = request.form.get("vaccinationType", default="Error")
         updateTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        updateTenantVacType = int(updateTenantVacType)
+        print(updateTenantVacType)
 
         updateData = [updateTenantFirstName, updateTenantSurname, updateTenantDOB, updateTenantPostCode, updateTenantLocalAuth, updateTenantBusArea,
         updateTenantCovidCase, updateTenantStatus, updateTenantDateOfRes, updateTenantIsoDate, updateTenantVaccinated, updateTenantDateVac, updateTenantDateVacEff,
@@ -200,15 +198,6 @@ def editData(tenantID): # tenantID=None
                 pos = updateData.index(i)
                 updateData.remove(i)
                 updateData.insert(pos, None)
-            # print(i)
-
-        # if updateTenantDateOfRes == "None":
-        #     updateTenantDateOfRes = None
-        # if updateTenantIsoDate == "None":
-        #     updateTenantIsoDate = None
-        # print(updateData[8])
-        # print(updateData[0])
-        # print(updateData[13])
 
         try:
             conn = mysql.connector.connect(**config)
@@ -219,24 +208,21 @@ def editData(tenantID): # tenantID=None
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateTenants, [updateData[0], updateData[1], updateData[2], tenantID])
             print("Success in updating tenants")
-            # conn.commit()
 
             updateLocations = ("UPDATE tenantsEditData "
                             " SET postcode=%s, localAuthority=%s, businessArea=%s"
                             " WHERE tenancyNo=%s; ")
             cur.execute(updateLocations, [updateData[3], updateData[4], updateData[5], tenantID])
             print("Success in updating locations")
-            # conn.commit()
 
             updateCTR = ("UPDATE tenantsEditData "
                         " SET positiveCase=%s, status=%s, resultDate=%s, endOfIsolation=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateCTR, [updateData[6], updateData[7], updateData[8], updateData[9], tenantID])
             print("Success in updating ctr")
-            # conn.commit()
 
             updateVac = ("UPDATE tenantsEditData "
-                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccinationType=%s, reasonForNoVaccination=%s"
+                        " SET vaccinated=%s, dateVaccinated=%s, dateVacEffective=%s, vaccTypeID=%s, reasonForNoVaccination=%s"
                         " WHERE tenancyNo=%s; ")
             cur.execute(updateVac, [updateData[10], updateData[11], updateData[12], updateData[13], updateData[14], tenantID])
             print("Success in updating vaccinations")
@@ -253,7 +239,6 @@ def editData(tenantID): # tenantID=None
             conn.close()
             cur.close()
             print("End of fetch")
-            # print(allData)
             return msg;
 
 #retrieve carer data and edit - Mahi
@@ -346,11 +331,13 @@ def insertTenantData():
         insertTenantDateVacEff = request.form.get("dateVacEffective", default="Error")
         insertTenantVacType = request.form.get("vaccinationType", default="Error")
         insertTenantRFNV = request.form.get("reasonForNoVac", default="Error")
+        insertTenantVacType = int(insertTenantVacType)
+        print(insertTenantVacType)
 
         insertData = [insertTenantFirstName, insertTenantSurname, insertTenantDOB, insertTenantlocationID,
         insertTenantCovidCase, insertTenantStatus, insertTenantDateOfRes, insertTenantIsoDate, insertTenantVaccinated, insertTenantDateVac, insertTenantDateVacEff,
         insertTenantVacType, insertTenantRFNV, insertTenantNo]
-        print(insertData)
+        # print(insertData)
 
 
         # Replace fields with string None or Error with None type value
@@ -383,7 +370,7 @@ def insertTenantData():
 
             print("Starting Vac Insert")
             insertVac = ("INSERT INTO vaccinations "
-                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccinationType, reasonForNoVaccination)"
+                        "(vaccinationID, vaccinated, dateVaccinated, dateVacEffective, vaccTypeID, reasonForNoVaccination)"
                         " VALUES(%s, %s, %s, %s, %s, %s)")
             cur.execute(insertVac, [None, insertData[8], insertData[9], insertData[10], insertData[11], insertData[12]])
             print("Success inserting vaccinations")

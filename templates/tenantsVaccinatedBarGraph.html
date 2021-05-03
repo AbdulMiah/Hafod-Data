@@ -16,7 +16,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['Vaccinated', 'Not Vaccinated'],
         datasets: [{
-            label: 'Graph of Number Residences Vaccinated',
+            label: 'Number of Tenants Vaccinated',
 
             data: [{{ vaccinated }}, {{ nonVaccinated }} ],
             backgroundColor: [
@@ -31,6 +31,10 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+      title: {
+        display: true,
+        text: 'Bar Graph of Number of Tenants Vaccinated'
+      },
     scales: {
         yAxes: [{
             ticks: {
