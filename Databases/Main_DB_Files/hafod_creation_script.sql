@@ -536,7 +536,7 @@ CREATE VIEW tenantsCases AS
 SELECT t.firstname, t.surname, t.dob, ctr.positiveCase
 FROM tenants t
 JOIN testsLinkTable test ON t.healthID = test.healthID
-JOIN covidTestResult ctr ON test.testID = ctr.testID;
+JOIN covidTestResults ctr ON test.testID = ctr.testID;
 -- SELECT * FROM tenantsCases;
 
 -- VIEW for carer COVID cases
@@ -545,7 +545,7 @@ CREATE VIEW carersCases AS
 SELECT c.firstname, c.surname, c.dob, ctr.positiveCase
 FROM carers c
 JOIN testsLinkTable test ON c.healthID = test.healthID
-JOIN covidTestResult ctr ON test.testID = ctr.testID;
+JOIN covidTestResults ctr ON test.testID = ctr.testID;
 -- SELECT * FROM carersCases;
 
 -- VIEW for relevent data for tenants
@@ -555,7 +555,7 @@ SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority,
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
 JOIN testsLinkTable test ON t.healthID = test.healthID
-JOIN covidTestResult ctr ON test.testID = ctr.testID
+JOIN covidTestResults ctr ON test.testID = ctr.testID
 JOIN vaccinationsLinkTable vacc ON t.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfData;
@@ -567,7 +567,7 @@ SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority,
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
 JOIN testsLinkTable test ON t.healthID = test.healthID
-JOIN covidTestResult c ON test.testID = c.testID
+JOIN covidTestResults c ON test.testID = c.testID
 JOIN vaccinationsLinkTable vacc ON t.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID
 JOIN vaccinationTypes vt ON v.vaccTypeID=vt.vaccTypeID;
@@ -579,7 +579,7 @@ SELECT c.staffNo, c.firstname, c.surname, c.role, c.dob, l.postcode, l.localAuth
 FROM carers c
 JOIN locations l ON l.locationID = c.locationID
 JOIN testsLinkTable test ON c.healthID = test.healthID
-JOIN covidTestResult ctr ON test.testID = ctr.testID
+JOIN covidTestResults ctr ON test.testID = ctr.testID
 JOIN vaccinationsLinkTable vacc ON c.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfCarersData;

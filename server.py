@@ -509,7 +509,7 @@ def checkLoginDetails():
                 #    print("Connected to database 2 successfully")
                 #
                 #    # SELECT query for appropriate fields and used WHERE clause to compare the values
-                #    query = ("INSERT INTO `AdminLog` VALUES (%s, %s, %s, %s)")
+                #    query = ("INSERT INTO `adminLog` VALUES (%s, %s, %s, %s)")
                 #    VALUES = (None, session["AdminID"], session["loginTime"], None)
                 #    # Execute query
                 #    cur.execute(query, VALUES)
