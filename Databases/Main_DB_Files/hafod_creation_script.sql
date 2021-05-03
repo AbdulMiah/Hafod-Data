@@ -187,219 +187,219 @@ INSERT INTO vaccinations VALUES(NULL, 'no', NULL, NULL, 4, 'Refused');
 
 
 -- Table for covidTestResult
-DROP TABLE IF EXISTS `covidTestResult`;
-CREATE TABLE IF NOT EXISTS `covidTestResult` (
+DROP TABLE IF EXISTS `covidTestResults`;
+CREATE TABLE IF NOT EXISTS `covidTestResults` (
 	`testID`				INTEGER NOT NULL AUTO_INCREMENT,
     `testTypeID`			INTEGER,
     `positiveCase`			ENUM('yes','no') NOT NULL,
     `status`				VARCHAR(50),
     `resultDate`			DATE,
     `endOfIsolation`		DATE,
-    CONSTRAINT `PK_covidTestResult` PRIMARY KEY (`testID`)
+    CONSTRAINT `PK_covidTestResults` PRIMARY KEY (`testID`)
 );
--- INSERT data into covidTestResult
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'isolation', '2021-04-03', '2021-05-11');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'isolation', '2021-04-09', '2021-05-13');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'isolation', '2020-05-12', '2021-05-24');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'isolation', '2020-07-15', '2021-08-13');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'hospital', '2020-07-21', '2020-12-24');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'isolation', '2020-07-22', '2020-12-10');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'hospital', '2020-07-24', '2020-12-7');
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'hospital', '2021-01-01', '2021-01-26');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'hospital', '2021-01-03', '2021-01-25');
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'hospital', '2021-02-07', '2021-03-05');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'hospital', '2021-03-09', '2021-04-05');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'hospital', '2021-03-11', '2021-04-05');
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+-- INSERT data into covidTestResults
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'isolation', '2021-04-03', '2021-05-11');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'isolation', '2021-04-09', '2021-05-13');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'isolation', '2020-05-12', '2021-05-24');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'isolation', '2020-07-15', '2021-08-13');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'hospital', '2020-07-21', '2020-12-24');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'isolation', '2020-07-22', '2020-12-10');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'hospital', '2020-07-24', '2020-12-7');
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'hospital', '2021-01-01', '2021-01-26');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'hospital', '2021-01-03', '2021-01-25');
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'hospital', '2021-02-07', '2021-03-05');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'hospital', '2021-03-09', '2021-04-05');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'hospital', '2021-03-11', '2021-04-05');
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
 
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'isolation', '2021-05-01', '2021-05-22');
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'isolation', '2021-05-02', '2021-05-18');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'isolation', '2020-05-03', '2021-05-16');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'hospital', '2020-08-13', '2021-08-30');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'hospital', '2021-02-06', '2021-02-12');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'hospital', '2021-04-16', '2021-04-30');
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'hospital', '2020-11-11', '2021-12-25');
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'hospital', '2021-01-03', '2021-02-12');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'yes', 'hospital', '2020-05-12', '2020-06-18');
-INSERT INTO covidTestResult VALUES(NULL, 3, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 3, 'yes', 'hospital', '2020-10-17', '2020-10-31');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 1, 'no', NULL, NULL, NULL);
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'hospital', '2020-07-15', '2021-08-01');
-INSERT INTO covidTestResult VALUES(NULL, 2, 'yes', 'isolation', '2021-03-07', '2021-03-21');
--- SELECT * FROM covidTestResult;
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'isolation', '2021-05-01', '2021-05-22');
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'isolation', '2021-05-02', '2021-05-18');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'isolation', '2020-05-03', '2021-05-16');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'hospital', '2020-08-13', '2021-08-30');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'hospital', '2021-02-06', '2021-02-12');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'hospital', '2021-04-16', '2021-04-30');
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'hospital', '2020-11-11', '2021-12-25');
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'hospital', '2021-01-03', '2021-02-12');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'yes', 'hospital', '2020-05-12', '2020-06-18');
+INSERT INTO covidTestResults VALUES(NULL, 3, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 3, 'yes', 'hospital', '2020-10-17', '2020-10-31');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 1, 'no', NULL, NULL, NULL);
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'hospital', '2020-07-15', '2021-08-01');
+INSERT INTO covidTestResults VALUES(NULL, 2, 'yes', 'isolation', '2021-03-07', '2021-03-21');
+-- SELECT * FROM covidTestResults;
 
--- Table for vaccination_linktable 
-DROP TABLE IF EXISTS `vaccinations_linktable`;
-CREATE TABLE IF NOT EXISTS `vaccinations_linktable`( 
+-- Table for vaccinationsLinkTable 
+DROP TABLE IF EXISTS `vaccinationsLinkTable`;
+CREATE TABLE IF NOT EXISTS `vaccinationsLinkTable`( 
   `vaccinationID`		INTEGER NOT NULL AUTO_INCREMENT,
   `healthID`			INTEGER,
-  CONSTRAINT `PK_vaccinations_linktable` PRIMARY KEY (`vaccinationID`)
+  CONSTRAINT `PK_vaccinationsLinkTable` PRIMARY KEY (`vaccinationID`)
 );
--- INSERT data into vaccinations_linktable
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 1);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 2);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 3);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 4);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 5);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 6);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 7);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 8);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 9);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 10);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 11);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 12);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 13);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 14);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 15);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 16);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 17);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 18);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 19);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 20);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 21);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 22);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 23);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 24);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 25);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 26);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 27);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 28);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 29);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 30);
+-- INSERT data into vaccinationsLinkTable
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 1);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 2);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 3);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 4);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 5);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 6);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 7);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 8);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 9);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 10);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 11);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 12);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 13);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 14);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 15);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 16);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 17);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 18);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 19);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 20);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 21);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 22);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 23);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 24);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 25);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 26);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 27);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 28);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 29);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 30);
 
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 31);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 32);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 33);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 34);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 35);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 36);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 37);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 38);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 39);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 40);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 41);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 42);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 43);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 44);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 45);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 46);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 47);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 48);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 49);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 50);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 51);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 52);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 53);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 54);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 55);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 56);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 57);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 58);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 59);
-INSERT INTO `vaccinations_linktable` VALUES(NULL, 60);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 31);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 32);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 33);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 34);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 35);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 36);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 37);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 38);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 39);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 40);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 41);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 42);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 43);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 44);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 45);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 46);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 47);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 48);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 49);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 50);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 51);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 52);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 53);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 54);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 55);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 56);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 57);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 58);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 59);
+INSERT INTO `vaccinationsLinkTable` VALUES(NULL, 60);
 
 
-DROP TABLE IF EXISTS `tests_linktable`;
-CREATE TABLE IF NOT EXISTS `tests_linktable`( 
+DROP TABLE IF EXISTS `testsLinkTable`;
+CREATE TABLE IF NOT EXISTS `testsLinkTable`( 
   `testID`			INTEGER NOT NULL AUTO_INCREMENT,
   `healthID`		INTEGER,
-  CONSTRAINT `PK_tests_linktable` PRIMARY KEY (`testID`)
+  CONSTRAINT `PK_testsLinkTable` PRIMARY KEY (`testID`)
 );
--- INSERT data into tests_linktable
-INSERT INTO `tests_linktable` VALUES(NULL, 1);
-INSERT INTO `tests_linktable` VALUES(NULL, 2);
-INSERT INTO `tests_linktable` VALUES(NULL, 3);
-INSERT INTO `tests_linktable` VALUES(NULL, 4);
-INSERT INTO `tests_linktable` VALUES(NULL, 5);
-INSERT INTO `tests_linktable` VALUES(NULL, 6);
-INSERT INTO `tests_linktable` VALUES(NULL, 7);
-INSERT INTO `tests_linktable` VALUES(NULL, 8);
-INSERT INTO `tests_linktable` VALUES(NULL, 9);
-INSERT INTO `tests_linktable` VALUES(NULL, 10);
-INSERT INTO `tests_linktable` VALUES(NULL, 11);
-INSERT INTO `tests_linktable` VALUES(NULL, 12);
-INSERT INTO `tests_linktable` VALUES(NULL, 13);
-INSERT INTO `tests_linktable` VALUES(NULL, 14);
-INSERT INTO `tests_linktable` VALUES(NULL, 15);
-INSERT INTO `tests_linktable` VALUES(NULL, 16);
-INSERT INTO `tests_linktable` VALUES(NULL, 17);
-INSERT INTO `tests_linktable` VALUES(NULL, 18);
-INSERT INTO `tests_linktable` VALUES(NULL, 19);
-INSERT INTO `tests_linktable` VALUES(NULL, 20);
-INSERT INTO `tests_linktable` VALUES(NULL, 21);
-INSERT INTO `tests_linktable` VALUES(NULL, 22);
-INSERT INTO `tests_linktable` VALUES(NULL, 23);
-INSERT INTO `tests_linktable` VALUES(NULL, 24);
-INSERT INTO `tests_linktable` VALUES(NULL, 25);
-INSERT INTO `tests_linktable` VALUES(NULL, 26);
-INSERT INTO `tests_linktable` VALUES(NULL, 27);
-INSERT INTO `tests_linktable` VALUES(NULL, 28);
-INSERT INTO `tests_linktable` VALUES(NULL, 29);
-INSERT INTO `tests_linktable` VALUES(NULL, 30);
+-- INSERT data into testsLinkTable
+INSERT INTO `testsLinkTable` VALUES(NULL, 1);
+INSERT INTO `testsLinkTable` VALUES(NULL, 2);
+INSERT INTO `testsLinkTable` VALUES(NULL, 3);
+INSERT INTO `testsLinkTable` VALUES(NULL, 4);
+INSERT INTO `testsLinkTable` VALUES(NULL, 5);
+INSERT INTO `testsLinkTable` VALUES(NULL, 6);
+INSERT INTO `testsLinkTable` VALUES(NULL, 7);
+INSERT INTO `testsLinkTable` VALUES(NULL, 8);
+INSERT INTO `testsLinkTable` VALUES(NULL, 9);
+INSERT INTO `testsLinkTable` VALUES(NULL, 10);
+INSERT INTO `testsLinkTable` VALUES(NULL, 11);
+INSERT INTO `testsLinkTable` VALUES(NULL, 12);
+INSERT INTO `testsLinkTable` VALUES(NULL, 13);
+INSERT INTO `testsLinkTable` VALUES(NULL, 14);
+INSERT INTO `testsLinkTable` VALUES(NULL, 15);
+INSERT INTO `testsLinkTable` VALUES(NULL, 16);
+INSERT INTO `testsLinkTable` VALUES(NULL, 17);
+INSERT INTO `testsLinkTable` VALUES(NULL, 18);
+INSERT INTO `testsLinkTable` VALUES(NULL, 19);
+INSERT INTO `testsLinkTable` VALUES(NULL, 20);
+INSERT INTO `testsLinkTable` VALUES(NULL, 21);
+INSERT INTO `testsLinkTable` VALUES(NULL, 22);
+INSERT INTO `testsLinkTable` VALUES(NULL, 23);
+INSERT INTO `testsLinkTable` VALUES(NULL, 24);
+INSERT INTO `testsLinkTable` VALUES(NULL, 25);
+INSERT INTO `testsLinkTable` VALUES(NULL, 26);
+INSERT INTO `testsLinkTable` VALUES(NULL, 27);
+INSERT INTO `testsLinkTable` VALUES(NULL, 28);
+INSERT INTO `testsLinkTable` VALUES(NULL, 29);
+INSERT INTO `testsLinkTable` VALUES(NULL, 30);
 
-INSERT INTO `tests_linktable` VALUES(NULL, 31);
-INSERT INTO `tests_linktable` VALUES(NULL, 32);
-INSERT INTO `tests_linktable` VALUES(NULL, 33);
-INSERT INTO `tests_linktable` VALUES(NULL, 34);
-INSERT INTO `tests_linktable` VALUES(NULL, 35);
-INSERT INTO `tests_linktable` VALUES(NULL, 36);
-INSERT INTO `tests_linktable` VALUES(NULL, 37);
-INSERT INTO `tests_linktable` VALUES(NULL, 38);
-INSERT INTO `tests_linktable` VALUES(NULL, 39);
-INSERT INTO `tests_linktable` VALUES(NULL, 40);
-INSERT INTO `tests_linktable` VALUES(NULL, 41);
-INSERT INTO `tests_linktable` VALUES(NULL, 42);
-INSERT INTO `tests_linktable` VALUES(NULL, 43);
-INSERT INTO `tests_linktable` VALUES(NULL, 44);
-INSERT INTO `tests_linktable` VALUES(NULL, 45);
-INSERT INTO `tests_linktable` VALUES(NULL, 46);
-INSERT INTO `tests_linktable` VALUES(NULL, 47);
-INSERT INTO `tests_linktable` VALUES(NULL, 48);
-INSERT INTO `tests_linktable` VALUES(NULL, 49);
-INSERT INTO `tests_linktable` VALUES(NULL, 50);
-INSERT INTO `tests_linktable` VALUES(NULL, 51);
-INSERT INTO `tests_linktable` VALUES(NULL, 52);
-INSERT INTO `tests_linktable` VALUES(NULL, 53);
-INSERT INTO `tests_linktable` VALUES(NULL, 54);
-INSERT INTO `tests_linktable` VALUES(NULL, 55);
-INSERT INTO `tests_linktable` VALUES(NULL, 56);
-INSERT INTO `tests_linktable` VALUES(NULL, 57);
-INSERT INTO `tests_linktable` VALUES(NULL, 58);
-INSERT INTO `tests_linktable` VALUES(NULL, 59);
-INSERT INTO `tests_linktable` VALUES(NULL, 60);
+INSERT INTO `testsLinkTable` VALUES(NULL, 31);
+INSERT INTO `testsLinkTable` VALUES(NULL, 32);
+INSERT INTO `testsLinkTable` VALUES(NULL, 33);
+INSERT INTO `testsLinkTable` VALUES(NULL, 34);
+INSERT INTO `testsLinkTable` VALUES(NULL, 35);
+INSERT INTO `testsLinkTable` VALUES(NULL, 36);
+INSERT INTO `testsLinkTable` VALUES(NULL, 37);
+INSERT INTO `testsLinkTable` VALUES(NULL, 38);
+INSERT INTO `testsLinkTable` VALUES(NULL, 39);
+INSERT INTO `testsLinkTable` VALUES(NULL, 40);
+INSERT INTO `testsLinkTable` VALUES(NULL, 41);
+INSERT INTO `testsLinkTable` VALUES(NULL, 42);
+INSERT INTO `testsLinkTable` VALUES(NULL, 43);
+INSERT INTO `testsLinkTable` VALUES(NULL, 44);
+INSERT INTO `testsLinkTable` VALUES(NULL, 45);
+INSERT INTO `testsLinkTable` VALUES(NULL, 46);
+INSERT INTO `testsLinkTable` VALUES(NULL, 47);
+INSERT INTO `testsLinkTable` VALUES(NULL, 48);
+INSERT INTO `testsLinkTable` VALUES(NULL, 49);
+INSERT INTO `testsLinkTable` VALUES(NULL, 50);
+INSERT INTO `testsLinkTable` VALUES(NULL, 51);
+INSERT INTO `testsLinkTable` VALUES(NULL, 52);
+INSERT INTO `testsLinkTable` VALUES(NULL, 53);
+INSERT INTO `testsLinkTable` VALUES(NULL, 54);
+INSERT INTO `testsLinkTable` VALUES(NULL, 55);
+INSERT INTO `testsLinkTable` VALUES(NULL, 56);
+INSERT INTO `testsLinkTable` VALUES(NULL, 57);
+INSERT INTO `testsLinkTable` VALUES(NULL, 58);
+INSERT INTO `testsLinkTable` VALUES(NULL, 59);
+INSERT INTO `testsLinkTable` VALUES(NULL, 60);
 
 -- Table for vaccinationTypes
 DROP TABLE IF EXISTS `vaccinationTypes`;
@@ -425,17 +425,17 @@ INSERT INTO testTypes VALUES(NULL, 'Antigen Test');
 INSERT INTO testTypes VALUES(NULL, 'Antibody Test');
 
 -- ADDING FOREIGN KEYS
--- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_locations`
+-- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenantsLocations`
 -- 	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
--- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenants_health`
+-- ALTER TABLE `tenants` ADD CONSTRAINT `FK_tenantsHealth`
 -- 	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
 --     
--- ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_locations`
+-- ALTER TABLE `carers` ADD CONSTRAINT `FK_carersLocations`
 -- 	FOREIGN KEY (`locationID`) REFERENCES `locations` (`locationID`);
--- ALTER TABLE `carers` ADD CONSTRAINT `FK_carers_health`
+-- ALTER TABLE `carers` ADD CONSTRAINT `FK_carersHealth`
 -- 	FOREIGN KEY (`healthID`) REFERENCES `health_linktable` (`healthID`);
 --     
--- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_vaccinations`
+-- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_healthVaccinations`
 -- 	FOREIGN KEY (`vaccinationID`) REFERENCES `vaccinations` (`vaccinationID`);
 -- ALTER TABLE `health_linktable` ADD CONSTRAINT `FK_health_covidTestResult`
 -- 	FOREIGN KEY (`testID`) REFERENCES `covidTestResult` (`testID`);
@@ -444,73 +444,73 @@ INSERT INTO testTypes VALUES(NULL, 'Antibody Test');
 ------------------------------------------------
 
 
--- Table for AdminCredentials
-DROP TABLE IF EXISTS `AdminCredentials`;
-CREATE TABLE `AdminCredentials` (
-	`AdminID`			INTEGER NOT NULL AUTO_INCREMENT,
-    `Username`			VARCHAR(25) NOT NULL,
-    `Email`				VARCHAR(50) NOT NULL,
-    `Password`			VARCHAR(25) NOT NULL,
+-- Table for adminCredentials
+DROP TABLE IF EXISTS `adminCredentials`;
+CREATE TABLE `adminCredentials` (
+	`adminID`			INTEGER NOT NULL AUTO_INCREMENT,
+    `username`			VARCHAR(25) NOT NULL,
+    `email`				VARCHAR(50) NOT NULL,
+    `password`			VARCHAR(25) NOT NULL,
     `role`				ENUM('admin','staff') NOT NULL,
-    CONSTRAINT `PK_AdminCredentials` PRIMARY KEY (`AdminID`)
+    CONSTRAINT `PK_adminCredentials` PRIMARY KEY (`adminID`)
 );
--- INSERT data into AdminCredentials
-INSERT INTO `AdminCredentials` VALUES (null, 'admin', 'admin@admin.com', 'adminpass', 'admin');
-INSERT INTO `AdminCredentials` VALUES (null, 'staff', 'staff@staff.com', 'staffpass', 'staff');
-INSERT INTO `AdminCredentials` VALUES (null, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass', 'staff');
--- SELECT * FROM AdminCredentials;
+-- INSERT data into adminCredentials
+INSERT INTO `adminCredentials` VALUES (NULL, 'admin', 'admin@admin.com', 'adminpass', 'admin');
+INSERT INTO `adminCredentials` VALUES (NULL, 'staff', 'staff@staff.com', 'staffpass', 'staff');
+INSERT INTO `adminCredentials` VALUES (NULL, 'abdulmiah', 'miaham@cardiff.ac.uk', 'abdulpass', 'staff');
+-- SELECT * FROM adminCredentials;
 
 
--- Table for AdminLog
-DROP TABLE IF EXISTS`AdminLog`;
-CREATE TABLE IF NOT EXISTS `AdminLog` (
-`SessionID`         INTEGER NOT NULL AUTO_INCREMENT,
-`AdminID`			INTEGER,
-`TimeLoggedOn`      TIMESTAMP NOT NULL, 
-`TimeLoggedOff`     TIMESTAMP NOT NULL, 
-CONSTRAINT `FK_AdminCredentials` FOREIGN KEY (`AdminID`) REFERENCES admincredentials(AdminID), 
-CONSTRAINT `PK_AdminLog` PRIMARY KEY (`SessionID`)
+-- Table for adminLog
+DROP TABLE IF EXISTS`adminLog`;
+CREATE TABLE IF NOT EXISTS `adminLog` (
+`sessionID`         INTEGER NOT NULL AUTO_INCREMENT,
+`adminID`			INTEGER,
+`timeLoggedOn`      TIMESTAMP NOT NULL, 
+`timeLoggedOff`     TIMESTAMP NOT NULL, 
+CONSTRAINT `FK_adminCredentials` FOREIGN KEY (`adminID`) REFERENCES adminCredentials(adminID), 
+CONSTRAINT `PK_adminLog` PRIMARY KEY (`sessionID`)
 );
-##Mile Stone 2 turn this into a function where admin ID is a parameter
--- INSERT INTO `AdminLog` VALUES (null, 1, NOW(), NOW()+1000);
--- UPDATE `AdminLog`
--- SET TimeLoggedOff = '2021-03-25 19:26:36'  
--- WHERE SessionID IN
--- (SELECT MAX(SessionID)
--- FROM AdminLog
--- WHERE AdminID = 1);
--- SELECT * FROM AdminLog;
+##Mile Stone 2 turn this into a function where adminID is a parameter
+-- INSERT INTO `adminLog` VALUES (NULL, 1, NOW(), NOW()+1000);
+-- UPDATE `adminLog`
+-- SET timeLoggedOff = '2021-03-25 19:26:36'  
+-- WHERE sessionID IN
+-- (SELECT MAX(sessionID)
+-- FROM adminLog
+-- WHERE adminID = 1);
+-- SELECT * FROM adminLog;
 
--- Table for CovidCaseFigures
--- DROP TABLE IF EXISTS `CovidCaseFigures`;
-CREATE TABLE IF NOT EXISTS `CovidCaseFigures` (
-`CasesReportID` 			INTEGER NOT NULL AUTO_INCREMENT,
-`Date` 						VARCHAR(10) NOT NULL,
-`AreaName`					VARCHAR(40) NOT NULL,
-`AreaType` 					VARCHAR(20) NOT NULL,
-`NewCasesOnGivenDay` 		INTEGER,
-`ReportedDeathsOnGivenDay`  INTEGER,
+-- Table for covidCaseFigures
+-- DROP TABLE IF EXISTS `covidCaseFigures`;
+CREATE TABLE IF NOT EXISTS `covidCaseFigures` (
+`casesReportID` 			INTEGER NOT NULL AUTO_INCREMENT,
+`date` 						VARCHAR(10) NOT NULL,
+`areaName`					VARCHAR(40) NOT NULL,
+`areaType` 					VARCHAR(20) NOT NULL,
+`newCasesOnGivenDay` 		INTEGER,
+`reportedDeathsOnGivenDay`  INTEGER,
 `latitude`       			DECIMAL(8,6),
 `longitude`      			DECIMAL(9,6),
-CONSTRAINT `PK_CovidCaseFigures` PRIMARY KEY (`CasesReportID`)
+CONSTRAINT `PK_covidCaseFigures` PRIMARY KEY (`casesReportID`)
 );
--- INSERT data into covidcasefigures
--- INSERT INTO `CovidCaseFigures` VALUES (null, '2021-04-03', 'Cardiff', 'ltlt', 1, Null);
--- SELECT * FROM CovidCaseFigures;
+-- INSERT data into covidCaseFigures
+-- INSERT INTO `covidCaseFigures` VALUES (NULL, '2021-04-03', 'Cardiff', 'ltlt', 1, NULL);
+-- SELECT * FROM covidCaseFigures;
 
 
--- Table for VaccinationFigures
--- DROP TABLE IF EXISTS `VaccinationFigures`;
--- CREATE TABLE IF NOT EXISTS `VaccinationFigures` (
--- `VaccinatedID` 			INTEGER NOT NULL AUTO_INCREMENT,
--- `Date` 						VARCHAR(10) NOT NULL,
--- `AreaName`					VARCHAR(40) NOT NULL,
--- `AreaType` 					VARCHAR(20) NOT NULL,
--- CONSTRAINT `PK_VaccinationFigures` PRIMARY KEY (`VaccinatedID`)
+-- Table for vaccinationFigures
+-- DROP TABLE IF EXISTS `vaccinationFigures`;
+-- CREATE TABLE IF NOT EXISTS `vaccinationFigures` (
+-- `vaccinatedID` 			INTEGER NOT NULL AUTO_INCREMENT,
+-- `date` 						VARCHAR(10) NOT NULL,
+-- `areaName`					VARCHAR(40) NOT NULL,
+-- `areaType` 					VARCHAR(20) NOT NULL,
+-- CONSTRAINT `PK_vaccinationFigures` PRIMARY KEY (`vaccinatedID`)
 -- );
--- -- INSERT data into VaccinationFigures
--- INSERT INTO `VaccinationFigures` VALUES (null, '2021-23-03', 'Cardiff', 'ltlt');
--- SELECT * FROM VaccinationFigures;
+-- -- INSERT data into vaccinationFigures
+-- INSERT INTO `vaccinationFigures` VALUES (NULL, '2021-23-03', 'Cardiff', 'ltlt');
+-- SELECT * FROM vaccinationFigures;
 
 
 
@@ -522,10 +522,10 @@ CREATE VIEW tenantsVaccinations AS
 SELECT tenants.tenancyNo, tenants.healthID, tenants.locationID,
 tenants.dob, vaccinations.vaccinated, vaccinationTypes.vaccinationType, vaccinations.reasonForNoVaccination
 FROM tenants
-INNER JOIN vaccinations_linktable 
-ON tenants.healthID = vaccinations_linktable.healthID
+INNER JOIN vaccinationsLinkTable
+ON tenants.healthID = vaccinationsLinkTable.healthID
 INNER JOIN vaccinations
-ON vaccinations_linktable.vaccinationID = vaccinations.vaccinationID
+ON vaccinationsLinkTable.vaccinationID = vaccinations.vaccinationID
 INNER JOIN vaccinationTypes
 ON vaccinations.vaccTypeID=vaccinationTypes.vaccTypeID;
 -- SELECT * FROM tenantsVaccinations;
@@ -535,7 +535,7 @@ DROP VIEW IF EXISTS `tenantsCases`;
 CREATE VIEW tenantsCases AS
 SELECT t.firstname, t.surname, t.dob, ctr.positiveCase
 FROM tenants t
-JOIN tests_linktable test ON t.healthID = test.healthID
+JOIN testsLinkTable test ON t.healthID = test.healthID
 JOIN covidTestResult ctr ON test.testID = ctr.testID;
 -- SELECT * FROM tenantsCases;
 
@@ -544,7 +544,7 @@ DROP VIEW IF EXISTS `carersCases`;
 CREATE VIEW carersCases AS 
 SELECT c.firstname, c.surname, c.dob, ctr.positiveCase
 FROM carers c
-JOIN tests_linktable test ON c.healthID = test.healthID
+JOIN testsLinkTable test ON c.healthID = test.healthID
 JOIN covidTestResult ctr ON test.testID = ctr.testID;
 -- SELECT * FROM carersCases;
 
@@ -554,9 +554,9 @@ CREATE VIEW adminViewOfData AS
 SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, ctr.positiveCase, v.vaccinated
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
-JOIN tests_linktable test ON t.healthID = test.healthID
+JOIN testsLinkTable test ON t.healthID = test.healthID
 JOIN covidTestResult ctr ON test.testID = ctr.testID
-JOIN vaccinations_linktable vacc ON t.healthID = vacc.healthID
+JOIN vaccinationsLinkTable vacc ON t.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfData;
 
@@ -566,9 +566,9 @@ CREATE VIEW tenantsEditData AS
 SELECT t.tenancyNo, t.firstname, t.surname, t.dob, l.postcode, l.localAuthority, l.businessArea, c.positiveCase, c.`status`, c.resultDate, c.endOfIsolation, v.vaccinated, v.dateVaccinated, v.dateVacEffective, vt.vaccinationType, v.reasonForNoVaccination, v.vaccTypeID
 FROM tenants t
 JOIN locations l ON t.locationID = l.locationID
-JOIN tests_linktable test ON t.healthID = test.healthID
+JOIN testsLinkTable test ON t.healthID = test.healthID
 JOIN covidTestResult c ON test.testID = c.testID
-JOIN vaccinations_linktable vacc ON t.healthID = vacc.healthID
+JOIN vaccinationsLinkTable vacc ON t.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID
 JOIN vaccinationTypes vt ON v.vaccTypeID=vt.vaccTypeID;
 SELECT * FROM tenantsEditData;
@@ -578,9 +578,9 @@ CREATE VIEW adminViewOfCarersData AS
 SELECT c.staffNo, c.firstname, c.surname, c.role, c.dob, l.postcode, l.localAuthority, l.businessArea, ctr.positiveCase, v.vaccinated
 FROM carers c
 JOIN locations l ON l.locationID = c.locationID
-JOIN tests_linktable test ON c.healthID = test.healthID
+JOIN testsLinkTable test ON c.healthID = test.healthID
 JOIN covidTestResult ctr ON test.testID = ctr.testID
-JOIN vaccinations_linktable vacc ON c.healthID = vacc.healthID
+JOIN vaccinationsLinkTable vacc ON c.healthID = vacc.healthID
 JOIN vaccinations v ON vacc.vaccinationID = v.vaccinationID;
 -- SELECT * FROM adminViewOfCarersData;
 
@@ -746,7 +746,7 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS changeCTR_BEFORE_UPDATE;
 DELIMITER // 
 CREATE TRIGGER changeCTR_BEFORE_UPDATE
-BEFORE UPDATE ON covidtestresult 
+BEFORE UPDATE ON covidTestResults
 FOR EACH ROW 
 BEGIN 
 
@@ -766,8 +766,8 @@ BEGIN
 END // 
 DELIMITER ; 
 
--- SELECT * FROM tenantseditdata;
--- UPDATE tenantseditdata SET positiveCase = "no" 
+-- SELECT * FROM tenantsEditData;
+-- UPDATE tenantsEditData SET positiveCase = "no" 
 -- WHERE tenancyNo = 1 
 DELIMITER // 
 CREATE TRIGGER changeVaccinations_BEFORE_UPDATE
@@ -789,9 +789,9 @@ BEGIN
 	END IF;
 END // 
 DELIMITER ;
--- UPDATE tenantseditdata SET vaccinated = "yes" 
+-- UPDATE tenantsEditData SET vaccinated = "yes" 
 -- WHERE tenancyNo = 1;
--- SELECT * FROM tenantseditdata;
+-- SELECT * FROM tenantsEditData;
 
 
 
@@ -803,21 +803,3 @@ DELIMITER ;
 
 -- SELECT * FROM tenants
 -- ORDER BY tenancyNo DESC LIMIT 1;
-
-
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
