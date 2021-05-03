@@ -355,13 +355,13 @@ def insertTenantData():
             print("Connected to database successfully")
 
             print("Starting Covid Test Result Insert")
-            insertCTR = ("INSERT INTO covidTestResult "
+            insertCTR = ("INSERT INTO covidTestResults "
                         "(testID, positiveCase, status, resultDate, endOfIsolation) VALUES (%s, %s, %s, %s, %s)")
             cur.execute(insertCTR, [None, insertData[4], insertData[5], insertData[6], insertData[7]])
             print("Success inserting covid test result")
             # conn.commit()
 
-            getTenantTestID = cur.execute("SELECT testID FROM covidTestResult ORDER BY testID DESC LIMIT 1")
+            getTenantTestID = cur.execute("SELECT testID FROM covidTestResults ORDER BY testID DESC LIMIT 1")
             tenantTestID = cur.fetchall()
             tenantTestID = tenantTestID[0][0]
             print(tenantTestID)
@@ -383,25 +383,25 @@ def insertTenantData():
 
             ########################################
 
-            insertTestsLinkTable = ("INSERT INTO tests_linktable"
+            insertTestsLinkTable = ("INSERT INTO testsLinkTable"
                             " (healthID, testID)"
                             " VALUES (%s, %s)")
             cur.execute(insertTestsLinkTable, [None, tenantTestID])
-            print("Success inserting tests_linktable")
+            print("Success inserting testsLinkTable")
             # conn.commit()
 
-            getTenantHealthID = cur.execute("SELECT healthID FROM tests_linktable ORDER BY healthID DESC LIMIT 1")
+            getTenantHealthID = cur.execute("SELECT healthID FROM testsLinkTable ORDER BY healthID DESC LIMIT 1")
             tenantHealthID = cur.fetchall()
             tenantHealthID = tenantHealthID[0][0]
             print(tenantHealthID)
 
             ########################################
 
-            insertVaccLinkTable = ("INSERT INTO vaccinations_linktable"
+            insertVaccLinkTable = ("INSERT INTO vaccinationsLinkTable"
                             " (healthID, vaccinationID)"
                             " VALUES (%s, %s)")
             cur.execute(insertVaccLinkTable, [None, tenantVacID])
-            print("Success inserting vaccinations_linktable")
+            print("Success inserting vaccinationsLinkTable")
             # conn.commit()
 
 
@@ -466,7 +466,7 @@ def checkLoginDetails():
             print("Connected to database successfully")
 
             # SELECT query for appropriate fields and used WHERE clause to compare the values
-            query = ("SELECT * FROM AdminCredentials "
+            query = ("SELECT * FROM adminCredentials "
                     "WHERE (Username=%s OR Email=%s) AND Password=%s")
 
             # Execute query
@@ -509,7 +509,7 @@ def checkLoginDetails():
                 #    print("Connected to database 2 successfully")
                 #
                 #    # SELECT query for appropriate fields and used WHERE clause to compare the values
-                #    query = ("INSERT INTO `AdminLog` VALUES (%s, %s, %s, %s)")
+                #    query = ("INSERT INTO `adminLog` VALUES (%s, %s, %s, %s)")
                 #    VALUES = (None, session["AdminID"], session["loginTime"], None)
                 #    # Execute query
                 #    cur.execute(query, VALUES)
@@ -610,15 +610,15 @@ def loadCovidFigures():
                     conn = mysql.connector.connect(**config)
                     cur = conn.cursor()
                     print("Connected to database")
-                    cur.execute("SELECT * FROM CovidCaseFigures")
+                    cur.execute("SELECT * FROM covidCaseFigures")
                     anyData = cur.fetchall()
 
                     # Created if statement that checks if there are any existing data in database table.
                     if (len(anyData)>=46):
                         print("Updating Existing dataset...")           # If there is data in database then update instead of insert
-                        updateQuery = ("UPDATE CovidCaseFigures "
-                                " SET Date=%s, AreaName=%s, AreaType=%s, NewCasesOnGivenDay=%s, ReportedDeathsOnGivenDay=%s, latitude=%s, longitude=%s"
-                                " WHERE AreaName = %s")
+                        updateQuery = ("UPDATE covidCaseFigures "
+                                " SET date=%s, areaName=%s, areaType=%s, newCasesOnGivenDay=%s, reportedDeathsOnGivenDay=%s, latitude=%s, longitude=%s"
+                                " WHERE areaName = %s")
 
                         updateVal = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long, apiAreaName)
                         cur.execute(updateQuery, updateVal)
@@ -628,8 +628,8 @@ def loadCovidFigures():
                     # Otherwise insert new data
                     else:
                         print("Inserting new data...")
-                        insertQuery = ("INSERT INTO CovidCaseFigures "
-                                " (Date, AreaName, AreaType, NewCasesOnGivenDay, ReportedDeathsOnGivenDay, latitude, longitude) "
+                        insertQuery = ("INSERT INTO covidCaseFigures "
+                                " (date, areaName, areaType, newCasesOnGivenDay, reportedDeathsOnGivenDay, latitude, longitude) "
                                 " VALUES (%s,%s,%s,%s,%s,%s,%s)")
                         insertVal = (apiDate, apiAreaName, apiAreaType, NewCasesByPublishDate, NewDeathsByDeathDate, lat, long)
                         cur.execute(insertQuery, insertVal)
@@ -706,11 +706,11 @@ def userLoginTracker():
             #         "WHERE `SessionID` > ANY "
             #         "(SELECT `SessionID` FROM `AdminLog` WHERE AdminID=%s)")
 
-            updateQuery = ("UPDATE AdminLog SET TimeLoggedOff=%s"
-                            "WHERE SessionID IN "
-                            "(SELECT MAX(SessionID) FROM AdminLog WHERE AdminID=%s)")
+            updateQuery = ("UPDATE adminLog SET TimeLoggedOff=%s"
+                            "WHERE sessionID IN "
+                            "(SELECT MAX(sessionID) FROM adminLog WHERE adminID=%s)")
             print("Phase 1 Complete")
-            value = (session["logoutTime"], session['AdminID'])
+            value = (session["logoutTime"], session['adminID'])
             print("Phase 2 Complete")
             print(f"Session Logout Time is {session['logoutTime']}")
             ##ERROR RAISED HERE
@@ -839,7 +839,7 @@ def infectedMap():
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            query = ("SELECT * FROM CovidCaseFigures")
+            query = ("SELECT * FROM covidCaseFigures")
             cur.execute(query)
             allData = cur.fetchall()
             print("Received all data")
@@ -867,7 +867,7 @@ def infectedandPropertiesMap():
             conn = mysql.connector.connect(**config)
             cur = conn.cursor()
             print("Connected to database successfully")
-            query = ("SELECT * FROM CovidCaseFigures")
+            query = ("SELECT * FROM covidCaseFigures")
             cur.execute(query)
             allCovidData = cur.fetchall()
             query = ("SELECT * FROM locations")
